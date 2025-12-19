@@ -214,7 +214,7 @@ def generate():
     elements.append(Spacer(1, 1 * cm))
 
     # Logo si disponible (conserver les proportions)
-    logo_path = r"C:\Users\zema\GeoBrain\docs\Logos\GeoMind_Logo_tsp.png"
+    logo_path = r"C:\Users\zema\GeoBrain\docs\Logos\GeoMind_Logo_tsp2.png"
     if os.path.exists(logo_path):
         try:
             img = Image(logo_path, width=5*cm, height=5*cm, kind='proportional')
@@ -230,7 +230,8 @@ def generate():
     elements.append(create_metadata_table({
         "Version :": "1.0 (QGIS 3.x)",
         "Date :": format_date(),
-        "Auteur original :": "Max Francken (Ville de Lausanne)",
+        "Auteur original :": "Christophe Gusthiot (Ville de Lausanne)",
+        "Adapté pour :": "Max Francken (BFSA)",
         "Migration QGIS 3 :": "GeoMind / Marc Zermatten",
         "Licence :": "GNU GPL v2"
     }))
