@@ -46,6 +46,7 @@ class MultiselectTool(AreaTool):
         :param iface: interface
         """
         AreaTool.__init__(self, iface)
+        self.__iface = iface  # Store iface reference for messageBar
         self.types = [Qgis.GeometryType.Point, Qgis.GeometryType.Line, Qgis.GeometryType.Polygon]
         self.releasedSignal.connect(self.__select)
         self.identified = identified
@@ -56,7 +57,9 @@ class MultiselectTool(AreaTool):
         to get disabled layers
         :return disabled layers
         """
-        return QgsProject.instance().readListEntry("Identify", "disabledLayers", "None")[0]
+        # QGIS 3.x: readListEntry takes only 2 arguments (scope, key), returns (list, bool)
+        result = QgsProject.instance().readListEntry("Identify", "disabledLayers")
+        return result[0] if result[0] else []
 
     def __select(self):
         """

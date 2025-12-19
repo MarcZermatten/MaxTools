@@ -56,7 +56,7 @@ class AreaTool(QgsMapTool):
         self.__rubber = QgsRubberBand(self.canvas(), Qgis.GeometryType.Polygon)
         color = QColor("red")
         color.setAlphaF(0.6)
-        self.__rubber.setBorderColor(color)
+        self.__rubber.setStrokeColor(color)
         color = QColor("orange")
         color.setAlphaF(0.3)
         self.__rubber.setFillColor(color)

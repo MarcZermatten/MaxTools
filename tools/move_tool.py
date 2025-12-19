@@ -176,11 +176,8 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
                 else:
                     Signal.safelyDisconnect(self.__layer.editingStarted, self.startEditing)
             self.__layer = layer
-
-            if self.__layer.geometryType() == Qgis.GeometryType.Point:
-                self.setMode(self.CaptureLine)
-            else:
-                self.setMode(self.CaptureNone)
+            # Note: setMode is called in activate() when the tool becomes active
+            # Calling it here before activation causes AttributeError
 
             if self.__layer.isEditable():
                 self.action().setEnabled(True)

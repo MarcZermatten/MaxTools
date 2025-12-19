@@ -359,7 +359,7 @@ class ShowSettings(QObject):
         layer_id = None
         if pointsLayer:
             layer_id = pointsLayer.id()
-            self.__memoryPointsLayer.layerDeleted.connect(self.__memoryPointsLayerDeleted)
+            self.__memoryPointsLayer.willBeDeleted.connect(self.__memoryPointsLayerDeleted)
         QgsProject.instance().writeEntry("MaxTools", "memory_points_layer", layer_id)
 
     @linesLayer.setter
@@ -427,7 +427,7 @@ class ShowSettings(QObject):
         layer_id = None
         if self.__linesLayer:
             layer_id = self.__linesLayer.id()
-            self.__memoryLinesLayer.layerDeleted.connect(self.__memoryLinesLayerDeleted)
+            self.__memoryLinesLayer.willBeDeleted.connect(self.__memoryLinesLayerDeleted)
         QgsProject.instance().writeEntry("MaxTools", "memory_lines_layer", layer_id)
         self.__cancel()
 
@@ -502,7 +502,7 @@ class ShowSettings(QObject):
         layer_id = None
         if drawdownLayer:
             layer_id = drawdownLayer.id()
-            self.__drawdownLayer.layerDeleted.connect(self.__drawdownLayerDeleted)
+            self.__drawdownLayer.willBeDeleted.connect(self.__drawdownLayerDeleted)
         QgsProject.instance().writeEntry("MaxTools", "drawdown_layer", layer_id)
 
     @pipeDiam.setter

@@ -221,7 +221,7 @@ class IntersectTool(QgsMapTool):
             layer = QgsVectorLayer("LineString?crs=%s&index=yes&field=distance:double&field=x:double&field=y:double"
                                    % epsg, "Memory Lines", "memory")
             QgsProject.instance().addMapLayer(layer)
-            layer.layerDeleted.connect(self.__lineLayerDeleted)
+            layer.willBeDeleted.connect(self.__lineLayerDeleted)
             self.__lineLayerID = layer.id()
             if self.ownSettings is not None:
                 self.ownSettings.linesLayer = layer
@@ -250,7 +250,7 @@ class IntersectTool(QgsMapTool):
             epsg = self.canvas().mapSettings().destinationCrs().authid()
             layer = QgsVectorLayer("Point?crs=%s&index=yes" % epsg, "Memory Points", "memory")
             QgsProject.instance().addMapLayer(layer)
-            layer.layerDeleted.connect(self.__pointLayerDeleted)
+            layer.willBeDeleted.connect(self.__pointLayerDeleted)
             self.__pointLayerID = layer.id()
             if self.ownSettings is not None:
                 self.ownSettings.pointsLayer = layer

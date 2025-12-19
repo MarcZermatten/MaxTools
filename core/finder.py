@@ -168,16 +168,22 @@ class Finder(object):
     def calcCanvasTolerance(pixPoint, layer, mapTool, distance):
         """
         To transform the tolerance from screen coordinates to layer coordinates
-        :param pixPoint: a screen position
+        :param pixPoint: a screen position (QPointF from toCanvasCoordinates)
         :param layer: the layer in which we are working
         :param mapTool: a QgsMapTool instance
-        :param distance: the tolerance in map coordinates
+        :param distance: the tolerance in pixels
         :return: the tolerance in layer coordinates
         """
-        pt1 = QPoint(pixPoint.x(), pixPoint.y())
-        pt2 = QPoint(pixPoint.x() + distance, pixPoint.y())
-        layerPt1 = mapTool.toLayerCoordinates(layer, pt1)
-        layerPt2 = mapTool.toLayerCoordinates(layer, pt2)
+        # Convert pixel coordinates to map coordinates first, then to layer coordinates
+        # pixPoint is a QPointF, need to convert to QPoint for toMapCoordinates
+        pt1 = QPoint(int(pixPoint.x()), int(pixPoint.y()))
+        pt2 = QPoint(int(pixPoint.x() + distance), int(pixPoint.y()))
+        # Convert from canvas pixels to map coordinates
+        mapPt1 = mapTool.toMapCoordinates(pt1)
+        mapPt2 = mapTool.toMapCoordinates(pt2)
+        # Convert from map coordinates to layer coordinates
+        layerPt1 = mapTool.toLayerCoordinates(layer, mapPt1)
+        layerPt2 = mapTool.toLayerCoordinates(layer, mapPt2)
         tolerance = layerPt2.x() - layerPt1.x()
         return tolerance
 
