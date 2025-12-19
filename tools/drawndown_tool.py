@@ -50,6 +50,19 @@ class DrawdownTool(QgsMapTool):
     ALT_TOLERANCE = 0.0005
     SEARCH_TOLERANCE = 0.001
 
+    @staticmethod
+    def _geom_to_polyline(geom):
+        """
+        Convert a geometry to polyline, handling MultiLineString cases.
+        :param geom: QgsGeometry (LineString or MultiLineString)
+        :return: list of QgsPointXY (polyline)
+        """
+        if geom.isMultipart():
+            multi = geom.asMultiPolyline()
+            return multi[0] if multi else []
+        else:
+            return geom.asPolyline()
+
     def __init__(self, iface):
         """
         Constructor
@@ -699,7 +712,7 @@ class DrawdownTool(QgsMapTool):
                         self.__cancel()
                 else:
                     if feat is not None and (self.__selectedIds is None or feat.id() not in self.__selectedIds):
-                        line = feat.geometry().asPolyline()
+                        line = self._geom_to_polyline(feat.geometry())
                         if self.__contains(line, self.__endVertex) > -1:
                             self.__lastFeature = feat
                             self.__lastFeatureId = feat.id()
@@ -736,7 +749,7 @@ class DrawdownTool(QgsMapTool):
             if self.__lastFeature is not None and \
                     (self.__selectedIds is None or self.__lastFeature.id() not in self.__selectedIds):
                 self.__inSelection = True
-                line = self.__lastFeature.geometry().asPolyline()
+                line = self._geom_to_polyline(self.__lastFeature.geometry())
                 self.__iface.messageBar().pushMessage(
                     QCoreApplication.translate("MaxTools",
                                                "Select more lines with click left or process "
