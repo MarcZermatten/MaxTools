@@ -25,6 +25,8 @@
 from qgis.PyQt.QtWidgets import (QDialog, QWidget, QScrollArea, QGridLayout, QPushButton, QLabel, QRadioButton, QButtonGroup, QCheckBox)
 from qgis.PyQt.QtCore import QCoreApplication
 
+from .theme import apply_theme, add_geomind_footer, style_accent_button
+
 
 class ImportJobsDialog(QDialog):
     """
@@ -38,6 +40,7 @@ class ImportJobsDialog(QDialog):
         :param selected: True if features are selected
         """
         QDialog.__init__(self)
+        apply_theme(self)
         self.__jobs = jobs
         self.__selected = selected
         self.setWindowTitle(QCoreApplication.translate("MaxTools", "What to process"))

@@ -25,6 +25,8 @@
 from qgis.PyQt.QtWidgets import (QDialog, QWidget, QScrollArea, QButtonGroup, QCheckBox, QGridLayout, QPushButton, QLabel)
 from qgis.PyQt.QtCore import QCoreApplication
 
+from .theme import apply_theme, add_geomind_footer, style_accent_button
+
 
 class ChooseControlDialog(QDialog):
     """
@@ -36,6 +38,7 @@ class ChooseControlDialog(QDialog):
         Constructor
         """
         QDialog.__init__(self)
+        apply_theme(self)
         self.__listReq = names # récupération de la liste des requêtes possible
         self.setWindowTitle(QCoreApplication.translate("MaxTools", "Choose Controls"))
         self.__layout = QGridLayout()

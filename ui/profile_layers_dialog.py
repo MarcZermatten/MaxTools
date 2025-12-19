@@ -25,6 +25,8 @@
 from qgis.PyQt.QtWidgets import (QDialog, QWidget, QScrollArea, QGridLayout, QPushButton, QLabel, QCheckBox)
 from qgis.PyQt.QtCore import QCoreApplication
 
+from .theme import apply_theme, add_geomind_footer, style_accent_button
+
 
 class ProfileLayersDialog(QDialog):
     """
@@ -38,6 +40,7 @@ class ProfileLayersDialog(QDialog):
         :param with_mnt: use mnt or not
         """
         QDialog.__init__(self)
+        apply_theme(self)
         self.__pointLayers = pointLayers
         self.__with_mnt = with_mnt
         self.setWindowTitle(QCoreApplication.translate("MaxTools", "Add Points Layers Profiles"))

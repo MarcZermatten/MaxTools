@@ -25,6 +25,8 @@
 from qgis.PyQt.QtWidgets import (QDialog, QWidget, QScrollArea, QGridLayout, QPushButton, QLabel, QCheckBox)
 from qgis.PyQt.QtCore import QCoreApplication
 
+from .theme import apply_theme, add_geomind_footer, style_accent_button
+
 
 class DrawdownAdjustmentDialog(QDialog):
     """
@@ -36,6 +38,7 @@ class DrawdownAdjustmentDialog(QDialog):
         Constructor
         """
         QDialog.__init__(self)
+        apply_theme(self)
         self.__adjustements = adjustments
         self.__altitudes = altitudes
         self.setWindowTitle(QCoreApplication.translate("MaxTools", "Elevations adjustments"))

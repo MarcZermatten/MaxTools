@@ -25,6 +25,8 @@
 from qgis.PyQt.QtWidgets import (QDialog, QWidget, QScrollArea, QGridLayout, QPushButton, QLabel, QCheckBox)
 from qgis.PyQt.QtCore import QCoreApplication
 
+from .theme import apply_theme, add_geomind_footer, style_accent_button
+
 
 class ProfileZerosDialog(QDialog):
     """
@@ -36,6 +38,7 @@ class ProfileZerosDialog(QDialog):
         :param zeros: zeros to display
         """
         QDialog.__init__(self)
+        apply_theme(self)
         self.__zeros = zeros
         self.setWindowTitle(QCoreApplication.translate("MaxTools", "Zeros"))
         self.__layout = QGridLayout()

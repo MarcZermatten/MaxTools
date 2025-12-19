@@ -26,6 +26,8 @@
 from qgis.PyQt.QtWidgets import (QDialog, QGridLayout, QPushButton, QLabel)
 from qgis.PyQt.QtCore import QCoreApplication
 
+from .theme import apply_theme, add_geomind_footer, style_accent_button
+
 
 class FieldsSettingsDialog(QDialog):
     """
@@ -37,6 +39,7 @@ class FieldsSettingsDialog(QDialog):
         Constructor
         """
         QDialog.__init__(self)
+        apply_theme(self)
         self.setWindowTitle(QCoreApplication.translate("MaxTools", "Memory lines layer fields"))
 
         self.resize(400, 200)

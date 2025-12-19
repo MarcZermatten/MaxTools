@@ -25,6 +25,8 @@
 from qgis.PyQt.QtWidgets import (QDialog, QWidget, QScrollArea, QButtonGroup, QGridLayout, QRadioButton, QPushButton, QLabel)
 from qgis.PyQt.QtCore import QCoreApplication
 
+from .theme import apply_theme, add_geomind_footer, style_accent_button
+
 
 class InterpolateConfirmDialog(QDialog):
     """
@@ -36,6 +38,7 @@ class InterpolateConfirmDialog(QDialog):
         Constructor
         """
         QDialog.__init__(self)
+        apply_theme(self)
         self.setWindowTitle(QCoreApplication.translate("MaxTools", "Edition Confirmation"))
         self.__layout = QGridLayout()
 

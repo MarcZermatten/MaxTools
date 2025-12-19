@@ -25,6 +25,8 @@
 from qgis.PyQt.QtWidgets import (QDialog, QGridLayout, QPushButton, QLabel)
 from qgis.PyQt.QtCore import QCoreApplication
 
+from .theme import apply_theme, add_geomind_footer, style_accent_button
+
 
 class ImportMeasuresDialog(QDialog):
     """
@@ -37,6 +39,7 @@ class ImportMeasuresDialog(QDialog):
         :param data: data to be imported
         """
         QDialog.__init__(self)
+        apply_theme(self)
         self.__data = data
         self.setWindowTitle(QCoreApplication.translate("MaxTools", "Delete Measures"))
         self.resize(300, 100)

@@ -31,6 +31,7 @@ from qgis.core import (Qgis,
 from qgis.PyQt.QtCore import QCoreApplication
 from ..core.db_connector import DBConnector
 from ..core.signal import Signal
+from .theme import apply_theme, add_geomind_footer, style_accent_button
 
 
 class ShowSettingsDialog(QDialog):
@@ -62,6 +63,7 @@ class ShowSettingsDialog(QDialog):
         :param moreTools: if more tools or not
         """
         QDialog.__init__(self)
+        apply_theme(self)
         self.__iface = iface
         self.__memoryPointsLayer = memoryPointsLayer
         self.__memoryLinesLayer = memoryLinesLayer

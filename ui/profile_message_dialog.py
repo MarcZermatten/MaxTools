@@ -25,6 +25,8 @@
 from qgis.PyQt.QtWidgets import (QDialog, QWidget, QScrollArea, QGridLayout, QPushButton, QLabel, QCheckBox)
 from qgis.PyQt.QtCore import QCoreApplication
 
+from .theme import apply_theme, add_geomind_footer, style_accent_button
+
 
 class ProfileMessageDialog(QDialog):
     """
@@ -40,6 +42,7 @@ class ProfileMessageDialog(QDialog):
         :param points: vertices positions
         """
         QDialog.__init__(self)
+        apply_theme(self)
         self.__situations = situations
         self.__differences = differences
         self.__names = names
