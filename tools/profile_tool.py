@@ -34,8 +34,8 @@ from qgis.gui import (QgsMapTool,
                       QgsRubberBand)
 from qgis.PyQt.QtCore import (Qt,
                           QCoreApplication)
-from qgis.PyQt.QtWidgets import (QMessageBox
-from qgis.PyQt.QtGui import QColor)
+from qgis.PyQt.QtWidgets import QMessageBox
+from qgis.PyQt.QtGui import QColor
 from ..core.finder import Finder
 from ..core.geometry_v2 import GeometryV2
 from ..ui.profile_layers_dialog import ProfileLayersDialog
@@ -979,14 +979,14 @@ class ProfileTool(QgsMapTool):
                 pt = self.__points[situation['point']]
                 point = QgsPoint(pt['x'], pt['y'])
                 if self.__rubberSit.numberOfVertices() == 0:
-                    self.__rubberSit.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point), None)
+                    self.__rubberSit.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point)), None)
                 else:
                     self.__rubberSit.addPoint(point)
             for difference in differences:
                 pt = self.__points[difference['point']]
                 point = QgsPoint(pt['x'], pt['y'])
                 if self.__rubberDif.numberOfVertices() == 0:
-                    self.__rubberDif.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point), None)
+                    self.__rubberDif.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point)), None)
                 else:
                     self.__rubberDif.addPoint(point)
 

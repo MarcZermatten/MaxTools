@@ -144,7 +144,7 @@ class IntersectTool(QgsMapTool):
         pointLayer = self.__pointLayer()
         pointLayer.startEditing()
         feature = QgsFeature()
-        feature.setGeometry(QgsGeometry.fromPointXY(QgsPointXY(self.__dstDlg.mapPoint()))
+        feature.setGeometry(QgsGeometry.fromPointXY(QgsPointXY(self.__dstDlg.mapPoint())))
         feature.setFields(pointLayer.fields())
         ok, outs = pointLayer.dataProvider().addFeatures([feature])
         pointLayer.updateExtents()
@@ -184,7 +184,7 @@ class IntersectTool(QgsMapTool):
                         point = intersection
                     else:
                         self.__rubber.setIcon(3)
-                self.__rubber.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point), None)
+                self.__rubber.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point)), None)
 
     def canvasReleaseEvent(self, mouseEvent):
         """

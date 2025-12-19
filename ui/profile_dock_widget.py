@@ -35,15 +35,10 @@ import json
 import requests
 from ..core.signal import Signal
 try:
-# Qwt5 not available in QGIS 3.x - using matplotlib instead
-                                QwtText,
-                                QwtPlotZoomer,
-                                QwtPicker,
-                                QwtPlotItem,
-                                QwtPlotGrid,
-                                QwtPlotMarker,
-                                QwtPlotCurve)
-    Qwt5_loaded = False  # Qwt5 not available in QGIS 3.x
+    # Qwt5 not available in QGIS 3.x - using matplotlib instead
+    from PyQt4.Qwt5 import (QwtText, QwtPlotZoomer, QwtPicker,
+                            QwtPlotItem, QwtPlotGrid, QwtPlotMarker, QwtPlotCurve)
+    Qwt5_loaded = True
 except ImportError:
     Qwt5_loaded = False
 try:

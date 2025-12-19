@@ -355,7 +355,7 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
             self.__rubberBand.setColor(color)
             self.__rubberBand.setIcon(4)
             self.__rubberBand.setIconSize(20)
-            self.__rubberBand.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(closest[0]), None)
+            self.__rubberBand.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(closest[0])), None)
         elif self.__onMove:
             if self.__rubberBand is not None:
                 self.__rubberBand.reset()
@@ -396,7 +396,7 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
                         point = intersection
                     else:
                         self.__rubberSnap.setIcon(3)
-                self.__rubberSnap.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point), None)
+                self.__rubberSnap.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point)), None)
 
     def cadCanvasReleaseEvent(self, event):
         """

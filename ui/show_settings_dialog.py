@@ -25,10 +25,9 @@
 
 from qgis.gui import QgsMessageBar
 from qgis.PyQt.QtWidgets import (QDialog, QScrollArea, QLineEdit, QGridLayout, QHBoxLayout, QPushButton, QLabel, QCheckBox, QWidget, QComboBox)
-from qgis.core import Qgis, (QgsMapLayer,
-                       QgsWKBTypes,
-                       QgsMapLayerRegistry,
-                       QGis)
+from qgis.core import (Qgis,
+                       QgsMapLayer,
+                       QgsWkbTypes)
 from qgis.PyQt.QtCore import QCoreApplication
 from ..core.db_connector import DBConnector
 from ..core.signal import Signal

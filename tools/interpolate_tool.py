@@ -240,7 +240,7 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
                     if match.layer() is not None and self.__selectedFeature.id() == match.featureId() \
                             and match.layer().id() == self.__lastLayer.id():
                         self.__rubber.setIcon(4)
-                        self.__rubber.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point), None)
+                        self.__rubber.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point)), None)
                     else:
                         intersection = Finder.snapCurvedIntersections(point, self.canvas(), self,
                                                                       self.__selectedFeature.id())
@@ -249,7 +249,7 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
                                 self.__rubber.setIcon(4)
                             else:
                                 self.__rubber.setIcon(1)
-                            self.__rubber.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(intersection), None)
+                            self.__rubber.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(intersection)), None)
                 if match.hasEdge():
                     intersection = Finder.snapCurvedIntersections(point, self.canvas(), self,
                                                                   self.__selectedFeature.id())
@@ -258,11 +258,11 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
                             self.__rubber.setIcon(4)
                         else:
                             self.__rubber.setIcon(1)
-                        self.__rubber.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(intersection), None)
+                        self.__rubber.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(intersection)), None)
                     elif self.__selectedFeature.id() == match.featureId() \
                             and match.layer().id() == self.__lastLayer.id():
                         self.__rubber.setIcon(3)
-                        self.__rubber.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point), None)
+                        self.__rubber.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point)), None)
 
     def __isVertexUnderPoint(self, point, snap_layers):
         """
