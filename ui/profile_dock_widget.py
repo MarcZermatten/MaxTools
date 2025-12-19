@@ -34,6 +34,7 @@ import traceback
 import sys
 import json
 import requests
+from urllib.error import HTTPError, URLError
 from ..core.signal import Signal
 try:
     # Qwt5 not available in QGIS 3.x - using matplotlib instead

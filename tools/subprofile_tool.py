@@ -141,7 +141,8 @@ class SubProfileTool(QgsMapTool):
         """
         if event.button() == Qt.RightButton:
             self.__isSelected = False
-            self.__rubberDots.reset()
+            if self.__rubberDots is not None:
+                self.__rubberDots.reset()
             self.__calculateProfile()
 
         elif event.button() == Qt.LeftButton:
