@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Script de correction des problèmes d'imports résiduels
-Auteur: GeoBrain
+Auteur: GeoMind
 Date: 2025-12-19
 """
 

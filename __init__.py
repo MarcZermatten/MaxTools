@@ -2,13 +2,13 @@
 """
 /***************************************************************************
  MaxTools
-                                 A QGIS plugin for the Max Zermatten
+                                 A QGIS plugin for the Max Francken
                               -------------------
         begin                : 2016-04-05
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Max Zermatten
-        author               : Max Zermatten
-        email                : max@bussigny.ch
+        copyright            : (C) 2016 Max Francken
+        author               : Max Francken
+        email                : max.francken@lausanne.ch
  ***************************************************************************/
 
 /***************************************************************************

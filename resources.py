@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Migrated to QGIS 3.x by GeoBrain (2025)
+# Migrated to QGIS 3.x by GeoMind (2025)
 
 # Resource object code
 #

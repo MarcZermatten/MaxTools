@@ -1,7 +1,7 @@
 # MaxTools UI Migration to QGIS 3.x - Report
 
 **Date**: 2025-12-19
-**Auteur**: GeoBrain
+**Auteur**: GeoMind
 **Objectif**: Migration complète de PyQt4 vers qgis.PyQt (QGIS 3.x compatible)
 
 ## Fichiers migrés
@@ -246,5 +246,5 @@ grep -r "QgsMessageBar\.(CRITICAL|WARNING|INFO)" ui/
 
 ---
 
-**Généré par**: GeoBrain (Claude AI)
-**Script de migration**: `C:/Users/zema/GeoBrain/MaxTools/migrate_ui.py`
+**Généré par**: GeoMind (Claude AI)
+**Script de migration**: `C:/Users/zema/GeoMind/MaxTools/migrate_ui.py`

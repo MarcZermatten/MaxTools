@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-# Migrated to QGIS 3.x by GeoBrain (2025)
+# Migrated to QGIS 3.x by GeoMind (2025)
 """
 /***************************************************************************
  MaxTools
-                                 A QGIS plugin for the Max Zermatten
+                                 A QGIS plugin for the Max Francken
                               -------------------
         begin                : 2019-11-05
         git sha              : $Format:%H$
-        copyright            : (C) 2019 Max Zermatten
-        author               : Ingénierie Informatique Gusthiot, Max Zermatten
+        copyright            : (C) 2019 Max Francken
+        author               : Ingénierie Informatique Gusthiot, Max Francken
         email                : i2g@gusthiot.ch
  ***************************************************************************/
 

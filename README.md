@@ -1,8 +1,8 @@
 # MaxTools
-Outils QGIS pour la Max Zermatten
+Outils QGIS pour Max Francken
 -------------------------------------
 
-> **Version 1.0.0** - Migré vers QGIS 3.x par GeoBrain (2025)
+> **Version 1.0.0** - Migré vers QGIS 3.x par Marc Zermatten via GeoMind (2025)
 
 ## Compatibilité
 
@@ -154,8 +154,9 @@ Cette version a été migrée de QGIS 2.18 vers QGIS 3.x. Principales modificati
 
 ## Crédits
 
-- **Auteur original** : Max Zermatten (Max Zermatten)
-- **Migration QGIS 3.x** : GeoBrain (2025)
+- **Auteur original** : Christophe Gusthiot (Ville de Lausanne)
+- **Migration QGIS 3.x** : Marc Zermatten via GeoMind (2025)
+- **Pour** : Max Francken
 - **Licence** : GPL v2
 
 ## Changelog

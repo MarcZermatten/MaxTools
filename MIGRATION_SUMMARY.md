@@ -6,7 +6,7 @@
 
 ## Résultat
 
-Tous les fichiers Python du dossier `C:\Users\zema\GeoBrain\MaxTools\ui\` ont été migrés de PyQt4 vers qgis.PyQt (compatible QGIS 3.x).
+Tous les fichiers Python du dossier `C:\Users\zema\GeoMind\MaxTools\ui\` ont été migrés de PyQt4 vers qgis.PyQt (compatible QGIS 3.x).
 
 ### Fichiers migrés
 
@@ -171,7 +171,7 @@ ui/drawdown_adjustment_dialog.py.bak
 Exécutez cette commande pour vérifier qu'il ne reste aucun import PyQt4:
 
 ```bash
-cd C:\Users\zema\GeoBrain\MaxTools\ui
+cd C:\Users\zema\GeoMind\MaxTools\ui
 grep -r "from PyQt4" *.py
 grep -r "import PyQt4" *.py
 ```
@@ -183,7 +183,7 @@ grep -r "import PyQt4" *.py
 Si nécessaire, exécutez le script de correction:
 
 ```bash
-cd C:\Users\zema\GeoBrain\MaxTools
+cd C:\Users\zema\GeoMind\MaxTools
 python fix_import_issues.py
 ```
 
@@ -252,7 +252,7 @@ dialog.show()
 ```python
 # Test rapide dans QGIS Python console
 import sys
-sys.path.append(r'C:\Users\zema\GeoBrain')
+sys.path.append(r'C:\Users\zema\GeoMind')
 
 # Tester un import simple
 from MaxTools.ui.attributes_table_view import AttributesTableView
@@ -273,11 +273,11 @@ print("\n✅ Migration réussie!")
 ## Contact
 
 En cas de problème, contacter:
-- **GeoBrain** (Assistant SIT Bussigny)
+- **GeoMind** (Assistant SIT Bussigny)
 - **Marc** (Responsable SIT)
 
 ---
 
-**Généré par**: GeoBrain
+**Généré par**: GeoMind
 **Date**: 2025-12-19
-**Localisation**: `C:\Users\zema\GeoBrain\MaxTools\`
+**Localisation**: `C:\Users\zema\GeoMind\MaxTools\`
