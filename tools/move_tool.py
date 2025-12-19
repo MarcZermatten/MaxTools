@@ -144,11 +144,15 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
         self.__confDlg = None
         self.__newFeature = None
         self.__selectedVertex = None
-        self.__layer.removeSelection()
-        if self.__layer.geometryType() == Qgis.GeometryType.Point:
-            self.setMode(self.CaptureLine)
-        else:
-            self.setMode(self.CaptureNone)
+        # Only access layer if it exists
+        if self.__layer is not None:
+            self.__layer.removeSelection()
+            # setMode only works when tool is active as map tool
+            if self.canvas().mapTool() == self:
+                if self.__layer.geometryType() == Qgis.GeometryType.Point:
+                    self.setMode(self.CaptureLine)
+                else:
+                    self.setMode(self.CaptureNone)
 
     def __removeLayer(self):
         """
