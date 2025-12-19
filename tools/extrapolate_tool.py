@@ -175,7 +175,7 @@ class ExtrapolateTool(QgsMapTool):
             feat = Finder.findClosestFeatureAt(event.mapPoint(), laySettings, self)
             if feat is not None:
                 self.__lastFeatureId = feat.id()
-                self.__layer.setSelectedFeatures([feat.id()])
+                self.__layer.selectByIds([feat.id()])
                 self.__rubber.reset()
                 geom = feat.geometry()
                 index = geom.closestVertex(event.mapPoint())[1]

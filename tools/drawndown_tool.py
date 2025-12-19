@@ -694,7 +694,7 @@ class DrawdownTool(QgsMapTool):
                     if feat is not None and self.__lastFeatureId != feat.id():
                         self.__lastFeature = feat
                         self.__lastFeatureId = feat.id()
-                        self.ownSettings.drawdownLayer.setSelectedFeatures([feat.id()])
+                        self.ownSettings.drawdownLayer.selectByIds([feat.id()])
                     if feat is None:
                         self.__cancel()
                 else:
@@ -704,22 +704,22 @@ class DrawdownTool(QgsMapTool):
                             self.__lastFeature = feat
                             self.__lastFeatureId = feat.id()
                             features = self.__selectedIds + [feat.id()]
-                            self.ownSettings.drawdownLayer.setSelectedFeatures(features)
+                            self.ownSettings.drawdownLayer.selectByIds(features)
 
                         elif self.__contains(line, self.__startVertex) > -1:
                             self.__lastFeature = feat
                             self.__lastFeatureId = feat.id()
                             features = self.__selectedIds + [feat.id()]
-                            self.ownSettings.drawdownLayer.setSelectedFeatures(features)
+                            self.ownSettings.drawdownLayer.selectByIds(features)
 
                         else:
-                            self.ownSettings.drawdownLayer.setSelectedFeatures(self.__selectedIds)
+                            self.ownSettings.drawdownLayer.selectByIds(self.__selectedIds)
                             self.__lastFeatureId = None
                             self.__lastFeature = None
 
                 if feat is None:
                     if self.__selectedIds is not None:
-                        self.ownSettings.drawdownLayer.setSelectedFeatures(self.__selectedIds)
+                        self.ownSettings.drawdownLayer.selectByIds(self.__selectedIds)
                     self.__lastFeatureId = None
                     self.__lastFeature = None
 
@@ -770,7 +770,7 @@ class DrawdownTool(QgsMapTool):
                             direction = False
                             self.__endVertex = line[0]
                         self.__selectedDirections.append(direction)
-                    self.ownSettings.drawdownLayer.setSelectedFeatures(self.__selectedIds)
+                    self.ownSettings.drawdownLayer.selectByIds(self.__selectedIds)
 
     def __calculateProfile(self):
         """

@@ -74,10 +74,10 @@ class PointerTool(QgsMapTool):
                     display += layer.name() + " : \n"
                     for f in features:
                         if f.geometry().type() == Qgis.GeometryType.Point:
-                            alt = f.geometry().geometry().z()
+                            alt = f.geometry().constGet().z()
                         elif f.geometry().type() == Qgis.GeometryType.Line:
                             closest = f.geometry().closestVertex(event.mapPoint())
-                            alt = f.geometry().geometry().zAt(closest[1])
+                            alt = f.geometry().constGet().zAt(closest[1])
                         elif f.geometry().type() == Qgis.GeometryType.Polygon:
                             self.__iface.messageBar().pushMessage(
                                 QCoreApplication.translate("MaxTools", "Polygon not yet implemented"),

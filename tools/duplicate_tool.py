@@ -337,7 +337,7 @@ class DuplicateTool(QgsMapTool):
             angle1 = Circle.angle(curve_v2.pointN(pos1), curve_v2.pointN(pos2))
             angle2 = Circle.angle(curve_v2.pointN(pos), curve_v2.pointN(pos3))
             angle = (float(pi + angle1 + angle2) / 2)
-            dist = (float(distance) / sin(old_div(float(pi + angle1 - angle2), 2)))
+            dist = (float(distance) / sin((float(pi + angle1 - angle2) / 2)))
             points.append(self.__newPoint(angle, curve_v2.pointN(pos), dist))
         new_line_v2.setPoints(points)
         return new_line_v2
@@ -379,7 +379,7 @@ class DuplicateTool(QgsMapTool):
             feat = Finder.findClosestFeatureAt(event.mapPoint(), laySettings, self)
             if feat is not None and self.__lastFeatureId != feat.id():
                 self.__lastFeatureId = feat.id()
-                self.__layer.setSelectedFeatures([feat.id()])
+                self.__layer.selectByIds([feat.id()])
             if feat is None:
                 self.__layer.removeSelection()
                 self.__lastFeatureId = None
