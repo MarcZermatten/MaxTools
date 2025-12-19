@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,10 +21,9 @@
  *                                                                         *
  ***************************************************************************/
 """
-from future.builtins import object
 
-from PyQt4.QtCore import QCoreApplication
-from PyQt4.QtGui import QProgressBar, QPushButton, QProgressDialog
+from qgis.PyQt.QtCore import QCoreApplication
+from qgis.PyQt.QtWidgets import QProgressBar, QPushButton, QProgressDialog
 
 
 class RebuildIndex(object):

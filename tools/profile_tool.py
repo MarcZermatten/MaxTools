@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,25 +21,21 @@
  *                                                                         *
  ***************************************************************************/
 """
-from __future__ import division
-from future.builtins import str
-from future.builtins import range
-from past.utils import old_div
 from qgis.core import (QgsMapLayer,
                        QgsPointLocator,
                        QgsSnappingUtils,
                        QgsGeometry,
-                       QGis,
+                       Qgis,
                        QgsTolerance,
                        QgsPoint,
                        QgsWKBTypes)
 from qgis.gui import (QgsMapTool,
                       QgsMessageBar,
                       QgsRubberBand)
-from PyQt4.QtCore import (Qt,
+from qgis.PyQt.QtCore import (Qt,
                           QCoreApplication)
-from PyQt4.QtGui import (QMessageBox,
-                         QColor)
+from qgis.PyQt.QtWidgets import (QMessageBox
+from qgis.PyQt.QtGui import QColor)
 from ..core.finder import Finder
 from ..core.geometry_v2 import GeometryV2
 from ..ui.profile_layers_dialog import ProfileLayersDialog
@@ -110,8 +107,8 @@ class ProfileTool(QgsMapTool):
         else:
            self.__iface.addDockWidget(Qt.BottomDockWidgetArea, self.__dockWdg)
         self.__dockWdg.closeSignal.connect(self.__closed)
-        self.__rubberSit = QgsRubberBand(self.canvas(), QGis.Point)
-        self.__rubberDif = QgsRubberBand(self.canvas(), QGis.Point)
+        self.__rubberSit = QgsRubberBand(self.canvas(), Qgis.GeometryType.Point)
+        self.__rubberDif = QgsRubberBand(self.canvas(), Qgis.GeometryType.Point)
         color = QColor("red")
         color.setAlphaF(0.78)
         self.__rubberSit.setColor(color)
@@ -167,7 +164,7 @@ class ProfileTool(QgsMapTool):
         To check if we can enable the action for the selected layer
         :param layer: selected layer
         """
-        if layer is not None and layer.type() == QgsMapLayer.VectorLayer and QGis.fromOldWkbType(layer.wkbType()) == \
+        if layer is not None and layer.type() == QgsMapLayer.VectorLayer and QgsWkbTypes.geometryType(layer.wkbType()) == \
                 QgsWKBTypes.LineStringZ:
             self.__lineLayer = layer
             self.action().setEnabled(True)
@@ -253,7 +250,7 @@ class ProfileTool(QgsMapTool):
         types = [QgsWKBTypes.PointZ, QgsWKBTypes.LineStringZ, QgsWKBTypes.CircularStringZ, QgsWKBTypes.CompoundCurveZ,
                  QgsWKBTypes.CurvePolygonZ, QgsWKBTypes.PolygonZ]
         for layer in self.canvas().layers():
-            if layer.type() == QgsMapLayer.VectorLayer and QGis.fromOldWkbType(layer.wkbType()) in types:
+            if layer.type() == QgsMapLayer.VectorLayer and QgsWkbTypes.geometryType(layer.wkbType()) in types:
                 layerList.append(layer)
         return layerList
 
@@ -331,8 +328,8 @@ class ProfileTool(QgsMapTool):
                                                         self.__points[1]['y'], self.__points[2]['y'])
                         small_d = Finder.sqrDistForCoords(self.__points[0]['x'], self.__points[1]['x'],
                                                           self.__points[0]['y'], self.__points[1]['y'])
-                        zextra = round(app + (1 + old_div(small_d, big_d)) * (ap - app), 3)
-                        if small_d < (old_div(big_d, 4)):
+                        zextra = round(app + (1 + (small_d / big_d)) * (ap - app), 3)
+                        if small_d < ((big_d / 4)):
                             self.__zeros.append([0, zextra, nb_not_none[0], 'E'])
                         else:
                             self.__zeros.append([0, None, None, 'E'])
@@ -350,8 +347,8 @@ class ProfileTool(QgsMapTool):
                                                         self.__points[last-1]['y'], self.__points[last-2]['y'])
                         small_d = Finder.sqrDistForCoords(self.__points[last]['x'], self.__points[last-1]['x'],
                                                           self.__points[last]['y'], self.__points[last-1]['y'])
-                        zextra = round(avv + (1 + old_div(small_d, big_d)) * (av - avv), 3)
-                        if small_d < (old_div(big_d, 4)):
+                        zextra = round(avv + (1 + (small_d / big_d)) * (av - avv), 3)
+                        if small_d < ((big_d / 4)):
                             self.__zeros.append([last, zextra, nb_not_none[last], 'E'])
                         else:
                             self.__zeros.append([last, None, None, 'E'])
@@ -384,7 +381,7 @@ class ProfileTool(QgsMapTool):
                         d1 = Finder.sqrDistForCoords(
                             self.__points[i+ap]['x'], self.__points[i]['x'], self.__points[i+ap]['y'],
                             self.__points[i]['y'])
-                        zinter = round(old_div((d0*alts[i+ap] + d1*alts[i-av]), (d0 + d1)), 3)
+                        zinter = round(((d0*alts[i+ap] + d1*alts[i-av]) / (d0 + d1)), 3)
                         self.__zeros.append([i, zinter, nb_not_none[i], 'I'])
 
         if len(self.__extras) == 0:
@@ -576,7 +573,7 @@ class ProfileTool(QgsMapTool):
         :param feat: QgsFeature of the object
         :param newZ: new elevation
         """
-        if layer.geometryType() == QGis.Polygon:
+        if layer.geometryType() == Qgis.GeometryType.Polygon:
             closest = feat.geometry().closestVertex(
                 QgsPoint(self.__points[pos]['x'], self.__points[pos]['y']))
             feat_v2, curved = GeometryV2.asPolygonV2(feat.geometry(), self.__iface)
@@ -585,7 +582,7 @@ class ProfileTool(QgsMapTool):
             feat_v2.deleteVertex(position)
             vertex.setZ(newZ)
             feat_v2.insertVertex(position, vertex)
-        elif layer.geometryType() == QGis.Line:
+        elif layer.geometryType() == Qgis.GeometryType.Line:
             closest = feat.geometry().closestVertex(
                 QgsPoint(self.__points[pos]['x'], self.__points[pos]['y']))
             feat_v2, curved = GeometryV2.asLineV2(feat.geometry(), self.__iface)
@@ -627,7 +624,7 @@ class ProfileTool(QgsMapTool):
                     break
             if selected is None:
                 self.__iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools", "Error on selected"), level=QgsMessageBar.CRITICAL,
+                    QCoreApplication.translate("VDLTools", "Error on selected"), level=Qgis.Critical,
                     duration=0
                 )
                 continue
@@ -649,7 +646,7 @@ class ProfileTool(QgsMapTool):
                            QCoreApplication.translate("VDLTools", " has 2 identical summits on the vertex ") +
                            str(i-1) + QCoreApplication.translate("VDLTools", " same coordinates (X and Y). "
                                                                              "Please correct the line geometry."),
-                           level=QgsMessageBar.CRITICAL, duration=0
+                           level=Qgis.Critical, duration=0
                         )
                         doublon = True
                         break
@@ -730,7 +727,7 @@ class ProfileTool(QgsMapTool):
                     feats = []
                     zs = []
                     for f in fs:
-                        if layer.geometryType() == QGis.Polygon:
+                        if layer.geometryType() == Qgis.GeometryType.Polygon:
                             closest = f.geometry().closestVertex(QgsPoint(x, y))
                             if closest[4] < self.SEARCH_TOLERANCE:
                                 polygon_v2, curved = GeometryV2.asPolygonV2(f.geometry(), self.__iface)
@@ -740,7 +737,7 @@ class ProfileTool(QgsMapTool):
                                     zs.append(0)
                                 else:
                                     zs.append(zp)
-                        elif layer.geometryType() == QGis.Line:
+                        elif layer.geometryType() == Qgis.GeometryType.Line:
                             closest = f.geometry().closestVertex(QgsPoint(x, y))
                             if closest[4] < self.SEARCH_TOLERANCE:
                                 if layer == self.__lineLayer:
@@ -879,7 +876,7 @@ class ProfileTool(QgsMapTool):
                     QCoreApplication.translate("VDLTools",
                                                "Select more lines with click left or process "
                                                "with click right (ESC to undo)"),
-                    level=QgsMessageBar.INFO, duration=3)
+                    level=Qgis.Info, duration=3)
                 if self.__selectedIds is None:
                     self.__selectedIds = []
                     self.__startVertex = line[0]
@@ -938,7 +935,7 @@ class ProfileTool(QgsMapTool):
                     zz.append(i)
             if len(zz) == 0:
                 self.__iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools", "No line z ?!?"), level=QgsMessageBar.WARNING)
+                    QCoreApplication.translate("VDLTools", "No line z ?!?"), level=Qgis.Warning)
             elif len(zz) == 1:
                 z0 = pt['z'][zz[0]]
                 for i in range(num_lines, len(pt['z'])):
@@ -972,7 +969,7 @@ class ProfileTool(QgsMapTool):
                                 situations.append({'point': p, 'layer': (i-num_lines+1), 'vertex': z0})
             else:
                 self.__iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools", "More than 2 lines z ?!?"), level=QgsMessageBar.WARNING)
+                    QCoreApplication.translate("VDLTools", "More than 2 lines z ?!?"), level=Qgis.Warning)
 
         if (len(situations) > 0) or (len(differences) > 0):
             self.__setMessageDialog(situations, differences, self.__getNames())
@@ -982,14 +979,14 @@ class ProfileTool(QgsMapTool):
                 pt = self.__points[situation['point']]
                 point = QgsPoint(pt['x'], pt['y'])
                 if self.__rubberSit.numberOfVertices() == 0:
-                    self.__rubberSit.setToGeometry(QgsGeometry().fromPoint(point), None)
+                    self.__rubberSit.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point), None)
                 else:
                     self.__rubberSit.addPoint(point)
             for difference in differences:
                 pt = self.__points[difference['point']]
                 point = QgsPoint(pt['x'], pt['y'])
                 if self.__rubberDif.numberOfVertices() == 0:
-                    self.__rubberDif.setToGeometry(QgsGeometry().fromPoint(point), None)
+                    self.__rubberDif.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point), None)
                 else:
                     self.__rubberDif.addPoint(point)
 

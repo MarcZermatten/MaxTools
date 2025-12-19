@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,12 +21,8 @@
  *                                                                         *
  ***************************************************************************/
 """
-from __future__ import division
-from future.builtins import str
-from future.builtins import range
-from past.utils import old_div
 from qgis.core import (QgsPointLocator,
-                       QGis,
+                       Qgis,
                        QgsSnappingUtils,
                        QgsGeometry,
                        QgsFeatureRequest,
@@ -35,7 +32,7 @@ from qgis.core import (QgsPointLocator,
     )
 from qgis.gui import (QgsMapTool,
                       QgsMessageBar)
-from PyQt4.QtCore import (Qt,
+from qgis.PyQt.QtCore import (Qt,
                           QCoreApplication)
 from ..core.finder import Finder
 from ..core.geometry_v2 import GeometryV2
@@ -260,7 +257,7 @@ class DrawdownTool(QgsMapTool):
                                 self.__iface.messageBar().pushMessage(
                                     QCoreApplication.translate(
                                         "VDLTools", "More than one reference point, with 2 different elevations !!"),
-                                    level=QgsMessageBar.CRITICAL, duration=0)
+                                    level=Qgis.Critical, duration=0)
                                 self.__cancel()
                                 return
                         level = point_v2.z()
@@ -375,7 +372,7 @@ class DrawdownTool(QgsMapTool):
                         pt = self.__points[i]
                         d0 = Finder.sqrDistForCoords(pt['x'], prev_pt['x'], pt['y'], prev_pt['y'])
                         d1 = Finder.sqrDistForCoords(next_pt['x'], pt['x'], next_pt['y'], pt['y'])
-                        inter_alt = round(old_div((d0*next_alt + d1*prev_alt), (d0 + d1)), 3)
+                        inter_alt = round(((d0*next_alt + d1*prev_alt) / (d0 + d1)), 3)
                         self.__altitudes[i]['alt'] = inter_alt
                         self.__altitudes[i]['drawdown'] = "interpolation"
                 elif i == 0 and len(self.__altitudes) > 2:
@@ -387,8 +384,8 @@ class DrawdownTool(QgsMapTool):
                         pt = self.__points[0]
                         big_d = Finder.sqrDistForCoords(pt2['x'], pt1['x'], pt2['y'], pt1['y'])
                         small_d = Finder.sqrDistForCoords(pt1['x'], pt['x'], pt1['y'], pt['y'])
-                        extra_alt = round(alt2 + (1 + old_div(small_d, big_d)) * (alt1 - alt2), 3)
-                        if small_d < (old_div(big_d, 4)):
+                        extra_alt = round(alt2 + (1 + (small_d / big_d)) * (alt1 - alt2), 3)
+                        if small_d < ((big_d / 4)):
                             self.__altitudes[i]['alt'] = extra_alt
                             self.__altitudes[i]['drawdown'] = "extrapolation"
                         else:
@@ -402,8 +399,8 @@ class DrawdownTool(QgsMapTool):
                         pt = self.__points[i]
                         big_d = Finder.sqrDistForCoords(pt2['x'], pt1['x'], pt2['y'], pt1['y'])
                         small_d = Finder.sqrDistForCoords(pt1['x'], pt['x'], pt1['y'], pt['y'])
-                        extra_alt = round(alt2 + (1 + old_div(small_d, big_d)) * (alt1 - alt2), 3)
-                        if small_d < (old_div(big_d, 4)):
+                        extra_alt = round(alt2 + (1 + (small_d / big_d)) * (alt1 - alt2), 3)
+                        if small_d < ((big_d / 4)):
                             self.__altitudes[i]['alt'] = extra_alt
                             self.__altitudes[i]['drawdown'] = "extrapolation"
                         else:
@@ -543,7 +540,7 @@ class DrawdownTool(QgsMapTool):
         :param feat: QgsFeature of the object
         :param newZ: new elevation
         """
-        if layer.geometryType() == QGis.Line:
+        if layer.geometryType() == Qgis.GeometryType.Line:
             closest = feat.geometry().closestVertex(
                 QgsPoint(self.__points[pos]['x'], self.__points[pos]['y']))
             feat_v2, curved = GeometryV2.asLineV2(feat.geometry(), self.__iface)
@@ -575,7 +572,7 @@ class DrawdownTool(QgsMapTool):
                     break
             if selected is None:
                 self.__iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools", "Error on selected"), level=QgsMessageBar.CRITICAL,
+                    QCoreApplication.translate("VDLTools", "Error on selected"), level=Qgis.Critical,
                     duration=0
                 )
                 continue
@@ -597,7 +594,7 @@ class DrawdownTool(QgsMapTool):
                            QCoreApplication.translate("VDLTools", " has 2 identical summits on the vertex ") +
                            str(i-1) + QCoreApplication.translate("VDLTools", " same coordinates (X and Y). "
                                                                              "Please correct the line geometry."),
-                           level=QgsMessageBar.CRITICAL, duration=0
+                           level=Qgis.Critical, duration=0
                         )
                         doublon = True
                         break
@@ -743,7 +740,7 @@ class DrawdownTool(QgsMapTool):
                     QCoreApplication.translate("VDLTools",
                                                "Select more lines with click left or process "
                                                "with click right (ESC to undo)"),
-                    level=QgsMessageBar.INFO, duration=3)
+                    level=Qgis.Info, duration=3)
                 if self.__selectedIds is None:
                     self.__selectedIds = []
                     self.__startVertex = line[0]

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,22 +21,21 @@
  *                                                                         *
  ***************************************************************************/
 """
-from future.builtins import range
-from PyQt4.QtCore import (Qt,
+from qgis.PyQt.QtCore import (Qt,
                           QCoreApplication)
-from PyQt4.QtGui import QColor, QMoveEvent
-from qgis.core import (QgsPointV2,
+from qgis.PyQt.QtGui import QColor, QMoveEvent
+from qgis.core import (QgsPoint,
                        QgsEditFormConfig,
                        QgsSnappingUtils,
                        QgsTolerance,
                        QgsPointLocator,
-                       QgsLineStringV2,
-                       QgsCircularStringV2,
-                       QgsCompoundCurveV2,
-                       QgsDataSourceURI,
+                       QgsLineString,
+                       QgsCircularString,
+                       QgsCompoundCurve,
+                       QgsDataSourceUri,
                        QgsFeature,
-                       QgsCurvePolygonV2,
-                       QGis,
+                       QgsCurvePolygon,
+                       Qgis,
                        QgsGeometry,
                        QgsMapLayer)
 from qgis.gui import (QgsMapToolAdvancedDigitizing,
@@ -79,7 +79,7 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
         When the action is selected
         """
         QgsMapToolAdvancedDigitizing.activate(self)
-        if self.__layer.geometryType() == QGis.Point:
+        if self.__layer.geometryType() == Qgis.GeometryType.Point:
             self.setMode(self.CaptureLine)
         else:
             self.setMode(self.CaptureNone)
@@ -143,7 +143,7 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
         self.__newFeature = None
         self.__selectedVertex = None
         self.__layer.removeSelection()
-        if self.__layer.geometryType() == QGis.Point:
+        if self.__layer.geometryType() == Qgis.GeometryType.Point:
             self.setMode(self.CaptureLine)
         else:
             self.setMode(self.CaptureNone)
@@ -175,7 +175,7 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
                     Signal.safelyDisconnect(self.__layer.editingStarted, self.startEditing)
             self.__layer = layer
 
-            if self.__layer.geometryType() == QGis.Point:
+            if self.__layer.geometryType() == Qgis.GeometryType.Point:
                 self.setMode(self.CaptureLine)
             else:
                 self.setMode(self.CaptureNone)
@@ -200,9 +200,9 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
         :param point: new position as mapPoint
         """
         point_v2 = GeometryV2.asPointV2(self.__selectedFeature.geometry(), self.__iface)
-        self.__newFeature = QgsPointV2(point.x(), point.y())
+        self.__newFeature = QgsPoint(point.x(), point.y())
         self.__newFeature.addZValue(point_v2.z())
-        self.__rubberBand = QgsRubberBand(self.canvas(), QGis.Point)
+        self.__rubberBand = QgsRubberBand(self.canvas(), Qgis.GeometryType.Point)
         self.__rubberBand.setToGeometry(QgsGeometry(self.__newFeature.clone()), None)
 
     def __linePreview(self, point):
@@ -211,13 +211,13 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
         :param point: new position as mapPoint
         """
         line_v2, curved = GeometryV2.asLineV2(self.__selectedFeature.geometry(), self.__iface)
-        vertex = QgsPointV2()
+        vertex = QgsPoint()
         line_v2.pointAt(self.__selectedVertex, vertex)
-        self.__rubberBand = QgsRubberBand(self.canvas(), QGis.Line)
+        self.__rubberBand = QgsRubberBand(self.canvas(), Qgis.GeometryType.Line)
         dx = vertex.x() - point.x()
         dy = vertex.y() - point.y()
         if isinstance(curved, (list, tuple)):
-            self.__newFeature = QgsCompoundCurveV2()
+            self.__newFeature = QgsCompoundCurve()
             for pos in range(line_v2.nCurves()):
                 curve_v2 = self.__newCurve(curved[pos], line_v2.curveAt(pos), dx, dy)
                 self.__newFeature.addCurve(curve_v2)
@@ -240,14 +240,14 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
         :return: the new line
         """
         if curved:
-            newCurve = QgsCircularStringV2()
+            newCurve = QgsCircularString()
         else:
-            newCurve = QgsLineStringV2()
+            newCurve = QgsLineString()
         points = []
         for pos in range(line_v2.numPoints()):
             x = line_v2.pointN(pos).x() - dx
             y = line_v2.pointN(pos).y() - dy
-            pt = QgsPointV2(x, y)
+            pt = QgsPoint(x, y)
             pt.addZValue(line_v2.pointN(pos).z())
             points.append(pt)
         newCurve.setPoints(points)
@@ -262,8 +262,8 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
         vertex = polygon_v2.vertexAt(GeometryV2.polygonVertexId(polygon_v2, self.__selectedVertex))
         dx = vertex.x() - point.x()
         dy = vertex.y() - point.y()
-        self.__newFeature = QgsCurvePolygonV2()
-        self.__rubberBand = QgsRubberBand(self.canvas(), QGis.Line)
+        self.__newFeature = QgsCurvePolygon()
+        self.__rubberBand = QgsRubberBand(self.canvas(), Qgis.GeometryType.Line)
         line_v2 = self.__newCurve(curved[0], polygon_v2.exteriorRing(), dx, dy)
         self.__newFeature.setExteriorRing(line_v2)
         self.__rubberBand.setToGeometry(QgsGeometry(line_v2.curveToLine()), None)
@@ -285,7 +285,7 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
         geometry = QgsGeometry(self.__newFeature)
         if not geometry.isGeosValid():
             self.__iface.messageBar().pushMessage(
-                QCoreApplication.translate("VDLTools", "Geos geometry problem"), level=QgsMessageBar.CRITICAL, duration=0)
+                QCoreApplication.translate("VDLTools", "Geos geometry problem"), level=Qgis.Critical, duration=0)
         self.__layer.changeGeometry(self.__selectedFeature.id(), geometry)
         self.__confDlg.accept()
         self.__cancel()
@@ -297,20 +297,20 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
         geometry = QgsGeometry(self.__newFeature)
         if not geometry.isGeosValid():
             self.__iface.messageBar().pushMessage(
-                QCoreApplication.translate("VDLTools", "Geos geometry problem"), level=QgsMessageBar.CRITICAL, duration=0)
-        feature = QgsFeature(self.__layer.pendingFields())
+                QCoreApplication.translate("VDLTools", "Geos geometry problem"), level=Qgis.Critical, duration=0)
+        feature = QgsFeature(self.__layer.fields())
         feature.setGeometry(geometry)
-        primaryKey = QgsDataSourceURI(self.__layer.source()).keyColumn()
+        primaryKey = QgsDataSourceUri(self.__layer.source()).keyColumn()
         for field in self.__selectedFeature.fields():
             if field.name() != primaryKey:
                 feature.setAttribute(field.name(), self.__selectedFeature.attribute(field.name()))
         if len(self.__selectedFeature.fields()) > 0 and self.__layer.editFormConfig().suppress() != \
-                QgsEditFormConfig.SuppressOn:
+                Qgis.AttributeFormSuppression.On:
             self.__iface.openFeatureForm(self.__layer, feature)
         else:
             ok, outs = self.__layer.dataProvider().addFeatures([feature])
             self.__layer.updateExtents()
-            self.__layer.setCacheImage(None)
+            self.__layer  # setCacheImage obsolete in QGIS 3
             self.__layer.triggerRepaint()
             self.__layer.featureAdded.emit(outs[0].id())  # emit signal so feature is added to snapping index
 
@@ -355,13 +355,13 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
             self.__rubberBand.setColor(color)
             self.__rubberBand.setIcon(4)
             self.__rubberBand.setIconSize(20)
-            self.__rubberBand.setToGeometry(QgsGeometry().fromPoint(closest[0]), None)
+            self.__rubberBand.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(closest[0]), None)
         elif self.__onMove:
             if self.__rubberBand is not None:
                 self.__rubberBand.reset()
-            if self.__layer.geometryType() == QGis.Polygon:
+            if self.__layer.geometryType() == Qgis.GeometryType.Polygon:
                 self.__polygonPreview(map_point)
-            elif self.__layer.geometryType() == QGis.Line:
+            elif self.__layer.geometryType() == Qgis.GeometryType.Line:
                 self.__linePreview(map_point)
             else:
                 self.__pointPreview(map_point)
@@ -369,7 +369,7 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
             color.setAlphaF(0.78)
             self.__rubberBand.setColor(color)
             self.__rubberBand.setWidth(2)
-            if self.__layer.geometryType() != QGis.Point:
+            if self.__layer.geometryType() != Qgis.GeometryType.Point:
                 self.__rubberBand.setLineStyle(Qt.DotLine)
             else:
                 self.__rubberBand.setIcon(4)
@@ -377,7 +377,7 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
             if self.__rubberSnap is not None:
                 self.__rubberSnap.reset()
             else:
-                self.__rubberSnap = QgsRubberBand(self.canvas(), QGis.Point)
+                self.__rubberSnap = QgsRubberBand(self.canvas(), Qgis.GeometryType.Point)
             self.__rubberSnap.setColor(color)
             self.__rubberSnap.setWidth(2)
             self.__rubberSnap.setIconSize(20)
@@ -396,7 +396,7 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
                         point = intersection
                     else:
                         self.__rubberSnap.setIcon(3)
-                self.__rubberSnap.setToGeometry(QgsGeometry().fromPoint(point), None)
+                self.__rubberSnap.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point), None)
 
     def cadCanvasReleaseEvent(self, event):
         """
@@ -408,17 +408,17 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
             if len(found_features) > 0:
                 if len(found_features) > 1:
                     self.__iface.messageBar().pushMessage(
-                        QCoreApplication.translate("VDLTools", "One feature at a time"), level=QgsMessageBar.INFO)
+                        QCoreApplication.translate("VDLTools", "One feature at a time"), level=Qgis.Info)
                     return
                 self.__selectedFeature = found_features[0]
-                if self.__layer.geometryType() != QGis.Point:
+                if self.__layer.geometryType() != Qgis.GeometryType.Point:
                     self.__iface.messageBar().pushMessage(
                         QCoreApplication.translate("VDLTools",
                                                    "Select vertex for moving (ESC to undo)"),
-                        level=QgsMessageBar.INFO, duration=3)
+                        level=Qgis.Info, duration=3)
                     self.__findVertex = True
                     self.setMode(self.CaptureLine)
-                    self.__rubberBand = QgsRubberBand(self.canvas(), QGis.Point)
+                    self.__rubberBand = QgsRubberBand(self.canvas(), Qgis.GeometryType.Point)
                 else:
                     self.setMode(self.CaptureNone)
                     self.__onMove = True
@@ -441,16 +441,16 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
             self.__isEditing = True
             if self.__rubberBand is not None:
                 self.__rubberBand.reset()
-            if self.__layer.geometryType() == QGis.Polygon:
+            if self.__layer.geometryType() == Qgis.GeometryType.Polygon:
                 self.__polygonPreview(mapPoint)
-            elif self.__layer.geometryType() == QGis.Line:
+            elif self.__layer.geometryType() == Qgis.GeometryType.Line:
                 self.__linePreview(mapPoint)
             else:
                 self.__pointPreview(mapPoint)
             color = QColor("red")
             color.setAlphaF(0.78)
             self.__rubberBand.setColor(color)
-            if self.__layer.geometryType() != QGis.Point:
+            if self.__layer.geometryType() != Qgis.GeometryType.Point:
                 self.__rubberBand.setWidth(2)
                 self.__rubberBand.setLineStyle(Qt.DotLine)
             else:

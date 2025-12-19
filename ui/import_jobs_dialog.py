@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -21,16 +22,8 @@
  ***************************************************************************/
 """
 
-from PyQt4.QtGui import (QDialog,
-                         QWidget,
-                         QScrollArea,
-                         QGridLayout,
-                         QPushButton,
-                         QLabel,
-                         QRadioButton,
-                         QButtonGroup,
-                         QCheckBox)
-from PyQt4.QtCore import QCoreApplication
+from qgis.PyQt.QtWidgets import (QDialog, QWidget, QScrollArea, QGridLayout, QPushButton, QLabel, QRadioButton, QButtonGroup, QCheckBox)
+from qgis.PyQt.QtCore import QCoreApplication
 
 
 class ImportJobsDialog(QDialog):

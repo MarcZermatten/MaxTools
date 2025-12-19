@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -25,12 +26,12 @@ from qgis.core import (QgsWKBTypes,
                        QgsSnappingUtils,
                        QgsTolerance,
                        QgsPointLocator,
-                       QGis)
+                       Qgis)
 from qgis.gui import (QgsMapTool,
                       QgsMessageBar)
-from PyQt4.QtCore import (Qt,
+from qgis.PyQt.QtCore import (Qt,
                           QCoreApplication)
-from PyQt4.QtGui import QMessageBox
+from qgis.PyQt.QtWidgets import QMessageBox
 from ..core.finder import Finder
 
 
@@ -65,21 +66,21 @@ class PointerTool(QgsMapTool):
                  QgsWKBTypes.CurvePolygonZ, QgsWKBTypes.PolygonZ]
         display = ""
         for layer in self.canvas().layers():
-            if layer.type() == QgsMapLayer.VectorLayer and QGis.fromOldWkbType(layer.wkbType()) in types:
+            if layer.type() == QgsMapLayer.VectorLayer and QgsWkbTypes.geometryType(layer.wkbType()) in types:
                 layerConfig = QgsSnappingUtils.LayerConfig(layer, QgsPointLocator.Vertex, 10, QgsTolerance.Pixels)
                 features = Finder.findFeaturesAt(event.mapPoint(), layerConfig, self)
                 if len(features) > 0:
                     display += layer.name() + " : \n"
                     for f in features:
-                        if f.geometry().type() == QGis.Point:
+                        if f.geometry().type() == Qgis.GeometryType.Point:
                             alt = f.geometry().geometry().z()
-                        elif f.geometry().type() == QGis.Line:
+                        elif f.geometry().type() == Qgis.GeometryType.Line:
                             closest = f.geometry().closestVertex(event.mapPoint())
                             alt = f.geometry().geometry().zAt(closest[1])
-                        elif f.geometry().type() == QGis.Polygon:
+                        elif f.geometry().type() == Qgis.GeometryType.Polygon:
                             self.__iface.messageBar().pushMessage(
                                 QCoreApplication.translate("VDLTools", "Polygon not yet implemented"),
-                                level=QgsMessageBar.WARNING)
+                                level=Qgis.Warning)
                             continue
                         else:
                             continue

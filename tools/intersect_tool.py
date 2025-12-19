@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,19 +21,18 @@
  *                                                                         *
  ***************************************************************************/
 """
-from future.builtins import range
 from math import (cos,
                   sin,
                   pi)
-from PyQt4.QtCore import (Qt,
+from qgis.PyQt.QtCore import (Qt,
                           QCoreApplication)
-from PyQt4.QtGui import QColor
+from qgis.PyQt.QtGui import QColor
 from qgis.core import (QgsGeometry,
-                       QgsPointV2,
-                       QgsCircularStringV2,
+                       QgsPoint,
+                       QgsCircularString,
                        QgsFeature,
-                       QGis,
-                       QgsMapLayerRegistry,
+                       Qgis,
+                       QgsProject,
                        QgsVectorLayer)
 from qgis.gui import (QgsMapTool,
                       QgsRubberBand)
@@ -73,7 +73,7 @@ class IntersectTool(QgsMapTool):
         When the action is selected
         """
         QgsMapTool.activate(self)
-        self.__rubber = QgsRubberBand(self.canvas(), QGis.Point)
+        self.__rubber = QgsRubberBand(self.canvas(), Qgis.GeometryType.Point)
         color = QColor("red")
         color.setAlphaF(0.78)
         self.__rubber.setColor(color)
@@ -116,16 +116,16 @@ class IntersectTool(QgsMapTool):
         When the Ok button in Intersect Distance Dialog is pushed
         """
         self.__distance = self.__dstDlg.observation().value()
-        circle = QgsCircularStringV2()
+        circle = QgsCircularString()
         x = self.__dstDlg.mapPoint().x()
         y = self.__dstDlg.mapPoint().y()
-        circle.setPoints([QgsPointV2(x + self.__distance * cos(pi / 180 * a), y + self.__distance * sin(pi / 180 * a))
+        circle.setPoints([QgsPoint(x + self.__distance * cos(pi / 180 * a), y + self.__distance * sin(pi / 180 * a))
                           for a in range(0, 361, 90)])
         lineLayer = self.__lineLayer()
         lineLayer.startEditing()
         feature = QgsFeature()
         feature.setGeometry(QgsGeometry(circle))
-        fields = lineLayer.pendingFields()
+        fields = lineLayer.fields()
         feature.setFields(fields)
         fieldsNames = [fields.at(pos).name() for pos in range(fields.count())]
         if "distance" in fieldsNames:
@@ -136,7 +136,7 @@ class IntersectTool(QgsMapTool):
             feature.setAttribute("y", y)
         ok, outs = lineLayer.dataProvider().addFeatures([feature])
         lineLayer.updateExtents()
-        lineLayer.setCacheImage(None)
+        lineLayer  # setCacheImage obsolete in QGIS 3
         lineLayer.triggerRepaint()
         lineLayer.featureAdded.emit(outs[0].id())  # emit signal so feature is added to snapping index
 
@@ -144,11 +144,11 @@ class IntersectTool(QgsMapTool):
         pointLayer = self.__pointLayer()
         pointLayer.startEditing()
         feature = QgsFeature()
-        feature.setGeometry(QgsGeometry().fromPoint(self.__dstDlg.mapPoint()))
-        feature.setFields(pointLayer.pendingFields())
+        feature.setGeometry(QgsGeometry.fromPointXY(QgsPointXY(self.__dstDlg.mapPoint()))
+        feature.setFields(pointLayer.fields())
         ok, outs = pointLayer.dataProvider().addFeatures([feature])
         pointLayer.updateExtents()
-        pointLayer.setCacheImage(None)
+        pointLayer  # setCacheImage obsolete in QGIS 3
         pointLayer.triggerRepaint()
         pointLayer.featureAdded.emit(outs[0].id())  # emit signal so feature is added to snapping index
 
@@ -184,7 +184,7 @@ class IntersectTool(QgsMapTool):
                         point = intersection
                     else:
                         self.__rubber.setIcon(3)
-                self.__rubber.setToGeometry(QgsGeometry().fromPoint(point), None)
+                self.__rubber.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point), None)
 
     def canvasReleaseEvent(self, mouseEvent):
         """
@@ -213,18 +213,18 @@ class IntersectTool(QgsMapTool):
                 layer = self.ownSettings.linesLayer
                 self.__lineLayerID = layer.id()
                 return layer
-        layer = QgsMapLayerRegistry.instance().mapLayer(self.__lineLayerID)
+        layer = QgsProject.instance().mapLayer(self.__lineLayerID)
         if layer is None:
-            epsg = self.canvas().mapRenderer().destinationCrs().authid()
+            epsg = self.canvas().mapSettings().destinationCrs().authid()
             layer = QgsVectorLayer("LineString?crs=%s&index=yes&field=distance:double&field=x:double&field=y:double"
                                    % epsg, "Memory Lines", "memory")
-            QgsMapLayerRegistry.instance().addMapLayer(layer)
+            QgsProject.instance().addMapLayer(layer)
             layer.layerDeleted.connect(self.__lineLayerDeleted)
             self.__lineLayerID = layer.id()
             if self.ownSettings is not None:
                 self.ownSettings.linesLayer = layer
         else:
-            self.__iface.legendInterface().setLayerVisible(layer, True)
+            QgsProject.instance().layerTreeRoot().findLayer(layer.id()).setItemVisibilityChecked(True)
         return layer
 
     def __lineLayerDeleted(self):
@@ -243,17 +243,17 @@ class IntersectTool(QgsMapTool):
                 layer = self.ownSettings.pointsLayer
                 self.__pointLayerID = layer.id()
                 return layer
-        layer = QgsMapLayerRegistry.instance().mapLayer(self.__pointLayerID)
+        layer = QgsProject.instance().mapLayer(self.__pointLayerID)
         if layer is None:
-            epsg = self.canvas().mapRenderer().destinationCrs().authid()
+            epsg = self.canvas().mapSettings().destinationCrs().authid()
             layer = QgsVectorLayer("Point?crs=%s&index=yes" % epsg, "Memory Points", "memory")
-            QgsMapLayerRegistry.instance().addMapLayer(layer)
+            QgsProject.instance().addMapLayer(layer)
             layer.layerDeleted.connect(self.__pointLayerDeleted)
             self.__pointLayerID = layer.id()
             if self.ownSettings is not None:
                 self.ownSettings.pointsLayer = layer
         else:
-            self.__iface.legendInterface().setLayerVisible(layer, True)
+            QgsProject.instance().layerTreeRoot().findLayer(layer.id()).setItemVisibilityChecked(True)
         return layer
 
     def __pointLayerDeleted(self):

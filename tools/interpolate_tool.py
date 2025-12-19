@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,14 +21,12 @@
  *                                                                         *
  ***************************************************************************/
 """
-from __future__ import division
-from past.utils import old_div
 
 from qgis.gui import (QgsMapToolAdvancedDigitizing,
                       QgsMessageBar,
                       QgsRubberBand)
-from qgis.core import (QGis,
-                       QgsDataSourceURI,
+from qgis.core import (Qgis,
+                       QgsDataSourceUri,
                        QgsExpression,
                        QgsEditFormConfig,
                        QgsSnappingUtils,
@@ -36,11 +35,11 @@ from qgis.core import (QGis,
                        QgsMapLayer,
                        QgsFeature,
                        QgsGeometry,
-                       QgsPointV2,
+                       QgsPoint,
                        QgsVertexId)
-from PyQt4.QtCore import (Qt,
+from qgis.PyQt.QtCore import (Qt,
                           QCoreApplication)
-from PyQt4.QtGui import QColor, QMoveEvent
+from qgis.PyQt.QtGui import QColor, QMoveEvent
 from ..core.finder import Finder
 from ..core.geometry_v2 import GeometryV2
 from ..ui.interpolate_confirm_dialog import InterpolateConfirmDialog
@@ -86,7 +85,7 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
         """
         QgsMapToolAdvancedDigitizing.activate(self)
         self.__updateList()
-        self.__rubber = QgsRubberBand(self.canvas(), QGis.Point)
+        self.__rubber = QgsRubberBand(self.canvas(), Qgis.GeometryType.Point)
         color = QColor("red")
         color.setAlphaF(0.78)
         self.__rubber.setColor(color)
@@ -163,7 +162,7 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
         To check if we can enable the action for the selected layer
         :param layer: selected layer
         """
-        if layer is not None and layer.type() == QgsMapLayer.VectorLayer and layer.geometryType() == QGis.Point:
+        if layer is not None and layer.type() == QgsMapLayer.VectorLayer and layer.geometryType() == Qgis.GeometryType.Point:
             if layer == self.__layer:
                 return
 
@@ -194,7 +193,7 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
         self.__layerList = []
         for layer in self.canvas().layers():
             if layer.type() == QgsMapLayer.VectorLayer and layer.hasGeometryType() \
-                    and layer.geometryType() == QGis.Line:
+                    and layer.geometryType() == Qgis.GeometryType.Line:
                         self.__layerList.append(QgsSnappingUtils.LayerConfig(layer, QgsPointLocator.All, 10,
                                                                              QgsTolerance.Pixels))
 
@@ -233,7 +232,7 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
                 self.__lastFeatureId = None
         elif self.__findVertex:
             self.__rubber.reset()
-            snap_layers = Finder.getLayersSettings(self.canvas(), [QGis.Line, QGis.Polygon], QgsPointLocator.All)
+            snap_layers = Finder.getLayersSettings(self.canvas(), [Qgis.GeometryType.Line, Qgis.GeometryType.Polygon], QgsPointLocator.All)
             match = Finder.snap(map_point, self.canvas(), snap_layers)
             if match.hasVertex() or match.hasEdge():
                 point = match.point()
@@ -241,7 +240,7 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
                     if match.layer() is not None and self.__selectedFeature.id() == match.featureId() \
                             and match.layer().id() == self.__lastLayer.id():
                         self.__rubber.setIcon(4)
-                        self.__rubber.setToGeometry(QgsGeometry().fromPoint(point), None)
+                        self.__rubber.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point), None)
                     else:
                         intersection = Finder.snapCurvedIntersections(point, self.canvas(), self,
                                                                       self.__selectedFeature.id())
@@ -250,7 +249,7 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
                                 self.__rubber.setIcon(4)
                             else:
                                 self.__rubber.setIcon(1)
-                            self.__rubber.setToGeometry(QgsGeometry().fromPoint(intersection), None)
+                            self.__rubber.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(intersection), None)
                 if match.hasEdge():
                     intersection = Finder.snapCurvedIntersections(point, self.canvas(), self,
                                                                   self.__selectedFeature.id())
@@ -259,11 +258,11 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
                             self.__rubber.setIcon(4)
                         else:
                             self.__rubber.setIcon(1)
-                        self.__rubber.setToGeometry(QgsGeometry().fromPoint(intersection), None)
+                        self.__rubber.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(intersection), None)
                     elif self.__selectedFeature.id() == match.featureId() \
                             and match.layer().id() == self.__lastLayer.id():
                         self.__rubber.setIcon(3)
-                        self.__rubber.setToGeometry(QgsGeometry().fromPoint(point), None)
+                        self.__rubber.setToGeometry(QgsGeometry.fromPointXY(QgsPointXY(point), None)
 
     def __isVertexUnderPoint(self, point, snap_layers):
         """
@@ -297,19 +296,19 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
             if len(found_features) > 0:
                 if len(found_features) > 1:
                     self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "One feature at a time"),
-                                                          level=QgsMessageBar.INFO)
+                                                          level=Qgis.Info)
                     return
                 self.__selectedFeature = found_features[0]
 
                 self.__iface.messageBar().pushMessage(
                     QCoreApplication.translate("VDLTools",
                                                "Select the position for interpolation (ESC to undo)"),
-                    level=QgsMessageBar.INFO, duration=3)
+                    level=Qgis.Info, duration=3)
                 self.setMode(self.CaptureNone)
                 self.__findVertex = True
         elif self.__findVertex:
             self.__rubber.reset()
-            snap_layers = Finder.getLayersSettings(self.canvas(), [QGis.Line, QGis.Polygon], QgsPointLocator.All)
+            snap_layers = Finder.getLayersSettings(self.canvas(), [Qgis.GeometryType.Line, Qgis.GeometryType.Polygon], QgsPointLocator.All)
             match = Finder.snap(event.mapPoint(), self.canvas(), snap_layers)
             if match.hasVertex() or match.hasEdge():
                 point = match.point()
@@ -393,9 +392,9 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
         :param withPoint: if we want a new interpolated point
         """
         line_v2, curved = GeometryV2.asLineV2(self.__selectedFeature.geometry(), self.__iface)
-        vertex_v2 = QgsPointV2()
+        vertex_v2 = QgsPoint()
         vertex_id = QgsVertexId()
-        line_v2.closestSegment(QgsPointV2(self.__mapPoint), vertex_v2, vertex_id, 0)
+        line_v2.closestSegment(QgsPoint(self.__mapPoint), vertex_v2, vertex_id, 0)
 
         x0 = line_v2.xAt(vertex_id.vertex-1)
         y0 = line_v2.yAt(vertex_id.vertex-1)
@@ -405,23 +404,23 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
         d1 = Finder.sqrDistForCoords(x1, vertex_v2.x(), y1, vertex_v2.y())
         z0 = line_v2.zAt(vertex_id.vertex-1)
         z1 = line_v2.zAt(vertex_id.vertex)
-        z = round(old_div((d0*z1 + d1*z0), (d0 + d1)), 3)
+        z = round(((d0*z1 + d1*z0) / (d0 + d1)), 3)
         vertex_v2.addZValue(z)
 
         if withPoint:
-            pt_feat = QgsFeature(self.__layer.pendingFields())
+            pt_feat = QgsFeature(self.__layer.fields())
             pt_feat.setGeometry(QgsGeometry(vertex_v2))
-            primaryKey = QgsDataSourceURI(self.__layer.source()).keyColumn()
-            for i in range(len(self.__layer.pendingFields())):
-                if self.__layer.pendingFields().field(i).name() != primaryKey:
+            primaryKey = QgsDataSourceUri(self.__layer.source()).keyColumn()
+            for i in range(len(self.__layer.fields())):
+                if self.__layer.fields().field(i).name() != primaryKey:
                     e = QgsExpression(self.__layer.defaultValueExpression(i))
                     default = e.evaluate(pt_feat)
                     pt_feat.setAttribute(i, default)
 
-            if self.__layer.editFormConfig().suppress() == QgsEditFormConfig.SuppressOn:
+            if self.__layer.editFormConfig().suppress() == Qgis.AttributeFormSuppression.On:
                 ok, outs = self.__layer.dataProvider().addFeatures([pt_feat])
                 self.__layer.updateExtents()
-                self.__layer.setCacheImage(None)
+                self.__layer  # setCacheImage obsolete in QGIS 3
                 self.__layer.triggerRepaint()
                 self.__layer.featureAdded.emit(outs[0].id())  # emit signal so feature is added to snapping index
             else:
@@ -435,12 +434,12 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
             if len(found_features) > 0:
                 if len(found_features) > 1:
                     self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "One feature at a time"),
-                                                          level=QgsMessageBar.INFO)
+                                                          level=Qgis.Info)
                 else:
                     self.__selectedFeature = found_features[0]
             else:
                 self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "No more feature selected"),
-                                                          level=QgsMessageBar.INFO)
+                                                          level=Qgis.Info)
 
         self.__iface.mapCanvas().refresh()
 

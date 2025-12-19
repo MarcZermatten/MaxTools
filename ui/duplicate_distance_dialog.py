@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,18 +21,9 @@
  *                                                                         *
  ***************************************************************************/
 """
-from future.builtins import range
 
-from PyQt4.QtGui import (QDialog,
-                         QGridLayout,
-                         QPushButton,
-                         QCheckBox,
-                         QLabel,
-                         QLineEdit,
-                         QDoubleValidator,
-                         QRadioButton,
-                         QButtonGroup)
-from PyQt4.QtCore import QCoreApplication
+from qgis.PyQt.QtWidgets import (QDialog, QGridLayout, QPushButton, QCheckBox, QLabel, QLineEdit, QDoubleValidator, QRadioButton, QButtonGroup)
+from qgis.PyQt.QtCore import QCoreApplication
 
 
 class DuplicateDistanceDialog(QDialog):

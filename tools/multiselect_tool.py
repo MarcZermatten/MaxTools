@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,17 +21,16 @@
  *                                                                         *
  ***************************************************************************/
 """
-from __future__ import division
-from PyQt4.QtCore import (pyqtSignal,
+from qgis.PyQt.QtCore import (pyqtSignal,
                           QCoreApplication)
 from qgis.gui import QgsMessageBar
-from qgis.core import (QGis,
+from qgis.core import (Qgis,
                        QgsFeatureRequest,
                        QgsRenderContext,
                        QgsProject,
                        QgsRectangle,
                        QgsMapLayer)
-from area_tool import AreaTool
+from .area_tool import AreaTool
 
 
 class MultiselectTool(AreaTool):
@@ -46,7 +46,7 @@ class MultiselectTool(AreaTool):
         :param iface: interface
         """
         AreaTool.__init__(self, iface)
-        self.types = [QGis.Point, QGis.Line, QGis.Polygon]
+        self.types = [Qgis.GeometryType.Point, Qgis.GeometryType.Line, Qgis.GeometryType.Polygon]
         self.releasedSignal.connect(self.__select)
         self.identified = identified
         self.request = None
@@ -66,10 +66,10 @@ class MultiselectTool(AreaTool):
         for layer in self.canvas().layers():
             if not self.identified or layer.id() not in self.disabled():
                 if layer.type() == QgsMapLayer.VectorLayer and layer.geometryType() in self.types:
-                    renderer = layer.rendererV2()
+                    renderer = layer.renderer()
                     context = QgsRenderContext()
                     if renderer:
-                        renderer.startRender(context,layer.pendingFields())
+                        renderer.startRender(context, layer.fields())
                         self.request = QgsFeatureRequest()
                         self.request.setFilterRect(searchRect)
                         self.request.setFlags(QgsFeatureRequest.ExactIntersect)
@@ -83,7 +83,7 @@ class MultiselectTool(AreaTool):
                                 except:
                                     self.__iface.messageBar().pushMessage(
                                         QCoreApplication.translate("VDLTools", "Error"),
-                                        "will renderer still not working", level=QgsMessageBar.CRITICAL, duration=0)
+                                        "will renderer still not working", level=Qgis.Critical, duration=0)
                                     return
                             if will:
                                 fIds.append(feature.id())

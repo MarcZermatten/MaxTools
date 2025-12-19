@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,15 +21,9 @@
  *                                                                         *
  ***************************************************************************/
 """
-from future.builtins import str
 
-from PyQt4.QtGui import (QDialog,
-                         QGridLayout,
-                         QPushButton,
-                         QLabel,
-                         QLineEdit,
-                         QDoubleSpinBox)
-from PyQt4.QtCore import (QCoreApplication)
+from qgis.PyQt.QtWidgets import (QDialog, QGridLayout, QPushButton, QLabel, QLineEdit, QDoubleSpinBox)
+from qgis.PyQt.QtCore import (QCoreApplication)
 
 
 class IntersectDistanceDialog(QDialog):

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,18 +21,16 @@
  *                                                                         *
  ***************************************************************************/
 """
-from future.builtins import range
-from future.builtins import object
 
-from PyQt4.QtCore import QPoint
-from qgis.core import (QgsPoint,QgsGeometry,
-                       QGis,
+from qgis.PyQt.QtCore import QPoint
+from qgis.core import (QgsPoint, QgsGeometry,
+                       Qgis,
                        QgsMapLayer,
                        QgsTolerance,
                        QgsPointLocator,
                        QgsProject,
-                       QgsSnapper,
                        QgsSnappingUtils,
+                       QgsSnappingConfig,
                        QgsRectangle,
                        QgsFeatureRequest,
                        QgsFeature)
@@ -149,17 +148,17 @@ class Finder(object):
         request.setFlags(QgsFeatureRequest.ExactIntersect)
         if closest:
             for feature in layerConfig.layer.getFeatures(request):
-                if layerConfig.layer.geometryType() == QGis.Polygon:
+                if layerConfig.layer.geometryType() == Qgis.GeometryType.Polygon:
                     dist, nearest, vertex = feature.geometry().closestSegmentWithContext(mapPoint)
-                    if not QgsGeometry.fromPoint(nearest).intersects(searchRect):
+                    if not QgsGeometry.fromPointXY(nearest).intersects(searchRect):
                         return None
                 return QgsFeature(feature)
         else:
             features = []
             for feature in layerConfig.layer.getFeatures(request):
-                if layerConfig.layer.geometryType() == QGis.Polygon:
+                if layerConfig.layer.geometryType() == Qgis.GeometryType.Polygon:
                     dist, nearest, vertex = feature.geometry().closestSegmentWithContext(mapPoint)
-                    if QgsGeometry.fromPoint(nearest).intersects(searchRect):
+                    if QgsGeometry.fromPointXY(nearest).intersects(searchRect):
                         features.append(QgsFeature(feature))
                 else:
                     features.append(QgsFeature(feature))
@@ -218,11 +217,11 @@ class Finder(object):
             if geometry2.type() == 0:
                 return geometry2.asPoint()
             if geometry1.type() == 2:
-                polygon = geometry1.geometry()
+                polygon = geometry1.constGet()
                 newG = polygon.boundary()
                 geometry1 = QgsGeometry(newG)
             if geometry2.type() == 2:
-                polygon = geometry2.geometry()
+                polygon = geometry2.constGet()
                 newG = polygon.boundary()
                 geometry2 = QgsGeometry(newG)
 
@@ -280,32 +279,32 @@ class Finder(object):
         :return: list of layers config
         """
         snap_layers = []
+        snap_util = mapCanvas.snappingUtils()
+        config = snap_util.config()
+
         for layer in mapCanvas.layers():
             if layer.type() == QgsMapLayer.VectorLayer and layer.geometryType() in types:
-                snap_util = mapCanvas.snappingUtils()
-                mode = snap_util.snapToMapMode()
-                if mode == QgsSnappingUtils.SnapCurrentLayer and layer.id() != mapCanvas.currentLayer().id():
+                mode = config.mode()
+
+                if mode == QgsSnappingConfig.ActiveLayer and layer.id() != mapCanvas.currentLayer().id():
                     continue
-                if mode == QgsSnappingUtils.SnapAllLayers:
-                    snap_index, tolerance, unitType = snap_util.defaultSettings()
-                    snap_type = QgsPointLocator.Type(snap_index)
+
+                if mode == QgsSnappingConfig.AllLayers:
+                    snap_type = QgsPointLocator.Type(config.typeFlag())
+                    tolerance = config.tolerance()
+                    unitType = config.units()
                 else:
-                    noUse, enabled, snappingType, unitType, tolerance, avoidIntersection = \
-                        QgsProject.instance().snapSettingsForLayer(layer.id())
-                    if layer.type() == QgsMapLayer.VectorLayer and enabled:
+                    individual_settings = config.individualLayerSettings(layer)
+                    if individual_settings.enabled():
                         if snapType is None:
-                            if snappingType == QgsSnapper.SnapToVertex:
-                                snap_type = QgsPointLocator.Vertex
-                            elif snappingType == QgsSnapper.SnapToSegment:
-                                snap_type = QgsPointLocator.Edge
-                            elif snappingType == QgsSnapper.SnapToVertexAndSegment:
-                                snap_type = QgsPointLocator.Edge and QgsPointLocator.Vertex
-                            else:
-                                snap_type = QgsPointLocator.All
+                            snap_type = QgsPointLocator.Type(individual_settings.typeFlag())
                         else:
                             snap_type = snapType
+                        tolerance = individual_settings.tolerance()
+                        unitType = individual_settings.units()
                     else:
                         continue
+
                 snap_layers.append(QgsSnappingUtils.LayerConfig(layer, snap_type, tolerance, unitType))
         return snap_layers
 
@@ -319,7 +318,7 @@ class Finder(object):
         :param featureId: if we want to snap on a given feature
         :return: intersection point
         """
-        snap_layers = Finder.getLayersSettings(mapCanvas, [QGis.Line, QGis.Polygon, QGis.Point])
+        snap_layers = Finder.getLayersSettings(mapCanvas, [Qgis.GeometryType.Line, Qgis.GeometryType.Polygon, Qgis.GeometryType.Point])
         features = Finder.findFeaturesLayersAt(mapPoint, snap_layers, mapTool)
         inter = None
         if len(features) > 1:
@@ -352,13 +351,15 @@ class Finder(object):
         snap_util = mapCanvas.snappingUtils()
         if layersConfigs is not None:
             old_layers = snap_util.layers()
-            old_mode = snap_util.snapToMapMode()
+            old_config = snap_util.config()
             snap_util.setLayers(layersConfigs)
             if mode is not None:
-                snap_util.setSnapToMapMode(mode)
+                new_config = snap_util.config()
+                new_config.setMode(mode)
+                snap_util.setConfig(new_config)
             match = snap_util.snapToMap(mapPoint)
             snap_util.setLayers(old_layers)
-            snap_util.setSnapToMapMode(old_mode)
+            snap_util.setConfig(old_config)
         else:
             match = snap_util.snapToMap(mapPoint)
         return match

@@ -9,10 +9,11 @@
 
 [general]
 name=VDL Tools
-qgisMinimumVersion=2.18.0
-description=Tools needed by the Ville de Lausanne
-version=0.9
-author=Christophe Gusthiot (Ville de Lausanne)
+qgisMinimumVersion=3.0
+qgisMaximumVersion=3.99
+description=Tools needed by the Ville de Lausanne (migrated to QGIS 3.x)
+version=1.0.0
+author=Christophe Gusthiot (Ville de Lausanne), migrated by GeoBrain
 email=cgusthiot@gmail.com
 
 about=This plugin contains tools needed by the Ville de Lausanne for water system.

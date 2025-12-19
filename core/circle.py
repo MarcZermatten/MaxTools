@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,11 +21,8 @@
  *                                                                         *
  ***************************************************************************/
 """
-from __future__ import division
-from future.builtins import object
-from past.utils import old_div
 
-from qgis.core import QgsPointV2
+from qgis.core import QgsPoint
 from math import (sqrt,
                   atan2)
 
@@ -50,42 +48,42 @@ class Circle(object):
         To get the middle between point 1 and point 2
         :return: the middle point 1-2
         """
-        return QgsPointV2(old_div((self.__p1.x() + self.__p2.x()), 2), old_div((self.__p1.y() + self.__p2.y()), 2))
+        return QgsPoint((self.__p1.x() + self.__p2.x()) / 2, (self.__p1.y() + self.__p2.y()) / 2)
 
     def __mid_23(self):
         """
         To get the middle between point 2 and point 3
         :return: the middle poinr 2-3
         """
-        return QgsPointV2(old_div((self.__p2.x() + self.__p3.x()), 2), old_div((self.__p2.y() + self.__p3.y()), 2))
+        return QgsPoint((self.__p2.x() + self.__p3.x()) / 2, (self.__p2.y() + self.__p3.y()) / 2)
 
     def __slop_12(self):
         """
         To get the slop between point 1 and point 2
         :return: the slop 1-2
         """
-        return old_div((self.__p1.y() - self.__p2.y()), (self.__p1.x() - self.__p2.x()))
+        return (self.__p1.y() - self.__p2.y()) / (self.__p1.x() - self.__p2.x())
 
     def __slop_23(self):
         """
         To get the slop between point 2 and point 3
         :return: the slop 2-3
         """
-        return old_div((self.__p2.y() - self.__p3.y()), (self.__p2.x() - self.__p3.x()))
+        return (self.__p2.y() - self.__p3.y()) / (self.__p2.x() - self.__p3.x())
 
     def __slop_p_12(self):
         """
         To get the bisector slop between point 1 and point 2
         :return: the bisector slop 1-2
         """
-        return old_div(-1, self.__slop_12())
+        return -1 / self.__slop_12()
 
     def __slop_p_23(self):
         """
         To get the bisector slop between point 2 and point 3
         :return: the bisector slop 2-3
         """
-        return old_div(-1, self.__slop_23())
+        return -1 / self.__slop_23()
 
     def center(self):
         """
@@ -96,9 +94,9 @@ class Circle(object):
         mid_23 = self.__mid_23()
         slop_12 = self.__slop_p_12()
         slop_23 = self.__slop_p_23()
-        x = old_div((mid_23.y() - mid_12.y() + slop_12*mid_12.x() - slop_23*mid_23.x()), (slop_12 - slop_23))
+        x = (mid_23.y() - mid_12.y() + slop_12*mid_12.x() - slop_23*mid_23.x()) / (slop_12 - slop_23)
         y = (x - mid_12.x())*slop_12 + mid_12.y()
-        return QgsPointV2(x, y)
+        return QgsPoint(x, y)
 
     def radius(self):
         """

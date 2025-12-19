@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,21 +21,19 @@
  *                                                                         *
  ***************************************************************************/
 """
-from future.builtins import range
 
 from ..ui.show_settings_dialog import ShowSettingsDialog
 from ..ui.fields_settings_dialog import FieldsSettingsDialog
-from PyQt4.QtCore import (QCoreApplication,
+from qgis.PyQt.QtCore import (QCoreApplication,
                           QObject,
                           pyqtSignal,
                           QVariant)
-from PyQt4.QtGui import QMessageBox
+from qgis.PyQt.QtWidgets import QMessageBox
 from qgis.core import (QgsProject,
-                       QgsMapLayerRegistry,
-                       QgsWKBTypes,
+                       QgsWkbTypes,
                        edit,
                        QgsField,
-                       QGis,
+                       Qgis,
                        QgsMapLayer)
 from ..core.db_connector import DBConnector
 
@@ -130,19 +129,19 @@ class ShowSettings(QObject):
         """ Temporarly lines layer for the project """
         mll_id = QgsProject.instance().readEntry("VDLTools", "memory_lines_layer", None)[0]
 
-        for layer in list(QgsMapLayerRegistry.instance().mapLayers().values()):
+        for layer in list(QgsProject.instance().mapLayers().values()):
             if layer and layer.type() == QgsMapLayer.VectorLayer:
                 if layer.providerType() == "memory":
-                    if layer.geometryType() == QGis.Point:
+                    if layer.geometryType() == Qgis.GeometryType.Point:
                         if layer.id() == mpl_id:
                             self.__memoryPointsLayer = layer
-                    if layer.geometryType() == QGis.Line:
+                    if layer.geometryType() == Qgis.GeometryType.Line:
                         if layer.id() == mll_id:
                             self.__memoryLinesLayer = layer
-                if QGis.fromOldWkbType(layer.wkbType()) == QgsWKBTypes.LineStringZ:
+                if QgsWkbTypes.geometryType(layer.wkbType()) == QgsWKBTypes.LineStringZ:
                         if layer.id() == dd_id:
                             self.__drawdownLayer = layer
-                if QGis.fromOldWkbType(layer.wkbType()) == QgsWKBTypes.PointZ:
+                if QgsWkbTypes.geometryType(layer.wkbType()) == QgsWKBTypes.PointZ:
                         if layer.id() in ref_ids:
                             self.__refLayers.append(layer)
                         if layer.id() in adj_ids:
@@ -370,7 +369,7 @@ class ShowSettings(QObject):
         """
         self.__linesLayer = linesLayer
         if linesLayer:
-            fields = self.__linesLayer.pendingFields()
+            fields = self.__linesLayer.fields()
             fieldsNames = []
             for pos in range(fields.count()):
                 fieldsNames.append(fields.at(pos).name())

@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 
 # Resource object code
 #
 # Created by: The Resource Compiler for PyQt4 (Qt v4.8.7)
+# Migrated to PyQt5/QGIS 3.x
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt4 import QtCore
+from qgis.PyQt import QtCore
 
 qt_resource_data = "\
 \x00\x00\x02\x31\

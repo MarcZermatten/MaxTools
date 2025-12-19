@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,26 +21,23 @@
  *                                                                         *
  ***************************************************************************/
 """
-from __future__ import division
-from future.builtins import range
-from past.utils import old_div
 from math import (pi,
                   cos,
                   sin)
-from PyQt4.QtCore import (Qt,
+from qgis.PyQt.QtCore import (Qt,
                           QCoreApplication)
-from PyQt4.QtGui import QColor
-from qgis.core import (QgsPointV2,
+from qgis.PyQt.QtGui import QColor
+from qgis.core import (QgsPoint,
                        QgsEditFormConfig,
                        QgsSnappingUtils,
                        QgsPointLocator,
                        QgsTolerance,
-                       QgsLineStringV2,
-                       QgsCompoundCurveV2,
-                       QgsCircularStringV2,
-                       QgsCurvePolygonV2,
-                       QgsDataSourceURI,
-                       QGis,
+                       QgsLineString,
+                       QgsCompoundCurve,
+                       QgsCircularString,
+                       QgsCurvePolygon,
+                       QgsDataSourceUri,
+                       Qgis,
                        QgsGeometry,
                        QgsFeature,
                        QgsMapLayer)
@@ -145,7 +143,7 @@ class DuplicateTool(QgsMapTool):
         To check if we can enable the action for the selected layer
         :param layer: selected layer
         """
-        types = [QGis.Line, QGis.Polygon]
+        types = [Qgis.GeometryType.Line, Qgis.GeometryType.Polygon]
         if layer is not None and layer.type() == QgsMapLayer.VectorLayer and layer.geometryType() in types:
             if layer == self.__layer:
                 return
@@ -200,7 +198,7 @@ class DuplicateTool(QgsMapTool):
         """
         x = point.x() + cos(angle)*distance
         y = point.y() + sin(angle)*distance
-        pt = QgsPointV2(x, y)
+        pt = QgsPoint(x, y)
         pt.addZValue(point.z())
         return pt
 
@@ -215,7 +213,7 @@ class DuplicateTool(QgsMapTool):
             distance = float(self.__dstDlg.distanceEdit().text())
             if self.__dstDlg.directionCheck().checkState():
                 distance = -distance
-            if self.__layer.geometryType() == QGis.Polygon:
+            if self.__layer.geometryType() == Qgis.GeometryType.Polygon:
                 self.__polygonPreview(distance)
             else:
                 self.__linePreview(distance)
@@ -231,10 +229,10 @@ class DuplicateTool(QgsMapTool):
         To create the preview (rubberBand) of the duplicate line at a certain distance
         :param distance: the given distance
         """
-        self.__rubberBand = QgsRubberBand(self.canvas(), QGis.Line)
+        self.__rubberBand = QgsRubberBand(self.canvas(), Qgis.GeometryType.Line)
         line_v2, curved = GeometryV2.asLineV2(self.__selectedFeature.geometry(), self.__iface)
         if isinstance(curved, (list, tuple)):
-            self.__newFeature = QgsCompoundCurveV2()
+            self.__newFeature = QgsCompoundCurve()
             for pos in range(line_v2.nCurves()):
                 if curved[pos]:
                     curve_v2 = self.__newArc(line_v2.curveAt(pos), distance)
@@ -259,7 +257,7 @@ class DuplicateTool(QgsMapTool):
         :param distance: the given distance
         :return: the new curve
         """
-        curve_v2 = QgsCircularStringV2()
+        curve_v2 = QgsCircularString()
         points = []
         circle = Circle(arc_v2.pointN(0), arc_v2.pointN(1), arc_v2.pointN(2))
         points.append(self.__newPoint(circle.angle1(), arc_v2.pointN(0), distance))
@@ -275,20 +273,20 @@ class DuplicateTool(QgsMapTool):
         :param distance: the given distance
         :return: the new line
         """
-        curve_v2 = QgsLineStringV2()
+        curve_v2 = QgsLineString()
         points = []
         for pos in range(line_v2.numPoints()):
             if pos == 0:
-                angle = Circle.angle(line_v2.pointN(pos), line_v2.pointN(pos + 1)) + old_div(pi, 2)
+                angle = Circle.angle(line_v2.pointN(pos), line_v2.pointN(pos + 1)) + (pi / 2)
                 dist = distance
             elif pos == (line_v2.numPoints() - 1):
-                angle = Circle.angle(line_v2.pointN(pos - 1), line_v2.pointN(pos)) + old_div(pi, 2)
+                angle = Circle.angle(line_v2.pointN(pos - 1), line_v2.pointN(pos)) + (pi / 2)
                 dist = distance
             else:
                 angle1 = Circle.angle(line_v2.pointN(pos - 1), line_v2.pointN(pos))
                 angle2 = Circle.angle(line_v2.pointN(pos), line_v2.pointN(pos + 1))
-                angle = old_div(float(pi + angle1 + angle2), 2)
-                dist = old_div(float(distance), sin(old_div(float(pi + angle1 - angle2), 2)))
+                angle = (float(pi + angle1 + angle2) / 2)
+                dist = (float(distance) / sin(old_div(float(pi + angle1 - angle2), 2)))
             points.append(self.__newPoint(angle, line_v2.pointN(pos), dist))
         curve_v2.setPoints(points)
         return curve_v2
@@ -298,9 +296,9 @@ class DuplicateTool(QgsMapTool):
         To create the preview (rubberBand) of the duplicate polygon at a certain distance
         :param distance: the given distance
         """
-        self.__rubberBand = QgsRubberBand(self.canvas(), QGis.Line)
+        self.__rubberBand = QgsRubberBand(self.canvas(), Qgis.GeometryType.Line)
         polygon_v2, curved = GeometryV2.asPolygonV2(self.__selectedFeature.geometry(), self.__iface)
-        self.__newFeature = QgsCurvePolygonV2()
+        self.__newFeature = QgsCurvePolygon()
         line_v2 = self.__newPolygonCurve(polygon_v2.exteriorRing(), distance, curved[0])
         self.__newFeature.setExteriorRing(line_v2)
         self.__rubberBand.setToGeometry(QgsGeometry(line_v2.curveToLine()), None)
@@ -320,9 +318,9 @@ class DuplicateTool(QgsMapTool):
         :return: new duplicate curve
         """
         if curved:
-            new_line_v2 = QgsCircularStringV2()
+            new_line_v2 = QgsCircularString()
         else:
-            new_line_v2 = QgsLineStringV2()
+            new_line_v2 = QgsLineString()
         points = []
 
         for pos in range(curve_v2.numPoints()):
@@ -337,8 +335,8 @@ class DuplicateTool(QgsMapTool):
                 pos3 = pos + 1
             angle1 = Circle.angle(curve_v2.pointN(pos1), curve_v2.pointN(pos2))
             angle2 = Circle.angle(curve_v2.pointN(pos), curve_v2.pointN(pos3))
-            angle = old_div(float(pi + angle1 + angle2), 2)
-            dist = old_div(float(distance), sin(old_div(float(pi + angle1 - angle2), 2)))
+            angle = (float(pi + angle1 + angle2) / 2)
+            dist = (float(distance) / sin(old_div(float(pi + angle1 - angle2), 2)))
             points.append(self.__newPoint(angle, curve_v2.pointN(pos), dist))
         new_line_v2.setPoints(points)
         return new_line_v2
@@ -352,20 +350,20 @@ class DuplicateTool(QgsMapTool):
         geometry = QgsGeometry(self.__newFeature)
         if not geometry.isGeosValid():
             self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "Geos geometry problem"),
-                                                  level=QgsMessageBar.CRITICAL, duration=0)
-        feature = QgsFeature(self.__layer.pendingFields())
+                                                  level=Qgis.Critical, duration=0)
+        feature = QgsFeature(self.__layer.fields())
         feature.setGeometry(geometry)
-        primaryKey = QgsDataSourceURI(self.__layer.source()).keyColumn()
+        primaryKey = QgsDataSourceUri(self.__layer.source()).keyColumn()
         for field in self.__selectedFeature.fields():
             if field.name() != primaryKey:
                 feature.setAttribute(field.name(), self.__selectedFeature.attribute(field.name()))
         if len(self.__selectedFeature.fields()) > 0 and self.__layer.editFormConfig().suppress() != \
-                QgsEditFormConfig.SuppressOn:
+                Qgis.AttributeFormSuppression.On:
             self.__iface.openFeatureForm(self.__layer, feature)
         else:
             ok, outs = self.__layer.dataProvider().addFeatures([feature])
             self.__layer.updateExtents()
-            self.__layer.setCacheImage(None)
+            self.__layer  # setCacheImage obsolete in QGIS 3
             self.__layer.triggerRepaint()
             self.__layer.featureAdded.emit(outs[0].id())  # emit signal so feature is added to snapping index
         self.__cancel()
@@ -394,11 +392,11 @@ class DuplicateTool(QgsMapTool):
         if len(found_features) > 0:
             if len(found_features) > 1:
                 self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "One feature at a time"),
-                                                      level=QgsMessageBar.INFO)
+                                                      level=Qgis.Info)
                 return
             self.__selectedFeature = found_features[0]
             self.__isEditing = True
-            if self.__layer.geometryType() == QGis.Polygon\
+            if self.__layer.geometryType() == Qgis.GeometryType.Polygon\
                     and len(self.__selectedFeature.geometry().asPolygon()) > 1:
                 self.__setDistanceDialog(True)
             else:

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,16 +21,14 @@
  *                                                                         *
  ***************************************************************************/
 """
-from future.builtins import object
 
-from PyQt4.QtCore import QSettings
-from PyQt4.QtSql import QSqlDatabase
+from qgis.PyQt.QtCore import QSettings, QCoreApplication
+from qgis.PyQt.QtSql import QSqlDatabase
 from qgis.gui import QgsMessageBar
-from PyQt4.QtCore import QCoreApplication
 from qgis.core import (QgsMapLayer,
                        QgsCredentials,
-                       QgsMapLayerRegistry,
-                       QgsDataSourceURI)
+                       QgsProject,
+                       QgsDataSourceUri)
 
 
 class DBConnector(object):
@@ -106,9 +105,9 @@ class DBConnector(object):
         :return: databases uri list
         """
         dbs = {}
-        for layer in list(QgsMapLayerRegistry.instance().mapLayers().values()):
+        for layer in list(QgsProject.instance().mapLayers().values()):
             if layer is not None and layer.type() == QgsMapLayer.VectorLayer and layer.providerType() == "postgres":
-                uri = QgsDataSourceURI(layer.source())
+                uri = QgsDataSourceUri(layer.source())
                 if uri.database() not in dbs:
                     dbs[uri.database()] = uri
         return dbs

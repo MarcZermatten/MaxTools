@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,25 +21,15 @@
  *                                                                         *
  ***************************************************************************/
 """
-from future.builtins import next
 
 
 from qgis.gui import QgsMessageBar
-from PyQt4.QtGui import (QDialog,
-                         QScrollArea,
-                         QLineEdit,
-                         QGridLayout,
-                         QHBoxLayout,
-                         QPushButton,
-                         QLabel,
-                         QCheckBox,
-                         QWidget,
-                         QComboBox)
-from qgis.core import (QgsMapLayer,
+from qgis.PyQt.QtWidgets import (QDialog, QScrollArea, QLineEdit, QGridLayout, QHBoxLayout, QPushButton, QLabel, QCheckBox, QWidget, QComboBox)
+from qgis.core import Qgis, (QgsMapLayer,
                        QgsWKBTypes,
                        QgsMapLayerRegistry,
                        QGis)
-from PyQt4.QtCore import QCoreApplication
+from qgis.PyQt.QtCore import QCoreApplication
 from ..core.db_connector import DBConnector
 from ..core.signal import Signal
 
@@ -103,16 +94,16 @@ class ShowSettingsDialog(QDialog):
         self.__refChecks = []
         self.__adjChecks = []
 
-        for layer in list(QgsMapLayerRegistry.instance().mapLayers().values()):
+        for layer in list(QgsProject.instance().mapLayers().values()):
             if layer is not None and layer.type() == QgsMapLayer.VectorLayer:
                 if layer.providerType() == "memory":
-                    if layer.geometryType() == QGis.Point:
+                    if layer.geometryType() == QgsWkbTypes.PointGeometry:
                         self.__pointsLayers.append(layer)
-                    if layer.geometryType() == QGis.Line:
+                    if layer.geometryType() == QgsWkbTypes.LineGeometry:
                         self.__linesLayers.append(layer)
-                if QGis.fromOldWkbType(layer.wkbType()) == QgsWKBTypes.LineStringZ:
+                if QgsWkbTypes.type(layer.wkbType()) == QgsWKBTypes.LineStringZ:
                     self.__drawdownLayers.append(layer)
-                if QGis.fromOldWkbType(layer.wkbType()) == QgsWKBTypes.PointZ:
+                if QgsWkbTypes.type(layer.wkbType()) == QgsWKBTypes.PointZ:
                     self.__refAvailableLayers.append(layer)
 
         self.resize(600, 500)
@@ -431,7 +422,7 @@ class ShowSettingsDialog(QDialog):
                 ('pg_catalog', 'information_schema', 'topology') AND table_type = 'BASE TABLE' AND table_name NOT IN
                 (SELECT f_table_name FROM geometry_columns)""")
             if query.lastError().isValid():
-                self.__iface.messageBar().pushMessage(query.lastError().text(), level=QgsMessageBar.CRITICAL, duration=0)
+                self.__iface.messageBar().pushMessage(query.lastError().text(), level=Qgis.Critical, duration=0)
             else:
                 while next(query):
                     self.__schemas.append(query.value(0))
@@ -462,7 +453,7 @@ class ShowSettingsDialog(QDialog):
             query = db.exec_("""SELECT table_name FROM information_schema.tables WHERE table_schema = '""" + schema +
                              """' ORDER BY table_name""")
             if query.lastError().isValid():
-                self.__iface.messageBar().pushMessage(query.lastError().text(), level=QgsMessageBar.CRITICAL, duration=0)
+                self.__iface.messageBar().pushMessage(query.lastError().text(), level=Qgis.Critical, duration=0)
             else:
                 while next(query):
                     self.__tables.append(query.value(0))

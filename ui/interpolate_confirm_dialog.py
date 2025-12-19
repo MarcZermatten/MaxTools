@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,17 +21,9 @@
  *                                                                         *
  ***************************************************************************/
 """
-from future.builtins import range
 
-from PyQt4.QtGui import (QDialog,
-                         QWidget,
-                         QScrollArea,
-                         QButtonGroup,
-                         QGridLayout,
-                         QRadioButton,
-                         QPushButton,
-                         QLabel)
-from PyQt4.QtCore import QCoreApplication
+from qgis.PyQt.QtWidgets import (QDialog, QWidget, QScrollArea, QButtonGroup, QGridLayout, QRadioButton, QPushButton, QLabel)
+from qgis.PyQt.QtCore import QCoreApplication
 
 
 class InterpolateConfirmDialog(QDialog):

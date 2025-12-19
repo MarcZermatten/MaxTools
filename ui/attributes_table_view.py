@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -22,7 +23,7 @@
 """
 
 from qgis.gui import QgsDualView, QgsAttributeEditorContext
-from PyQt4.QtGui import QDialog, QVBoxLayout, QMenu
+from qgis.PyQt.QtWidgets import (QDialog, QVBoxLayout, QMenu)
 
 
 class AttributesTableView(QDialog):

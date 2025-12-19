@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,18 +21,16 @@
  *                                                                         *
  ***************************************************************************/
 """
-from __future__ import division
-from PyQt4.QtCore import QCoreApplication
-from PyQt4.QtGui import QProgressBar
+from qgis.PyQt.QtCore import QCoreApplication
+from qgis.PyQt.QtWidgets import QProgressBar
 from .area_tool import AreaTool
 from ..ui.choose_control_dialog import ChooseControlDialog
 from qgis.gui import QgsMessageBar
-from qgis.core import (QgsMapLayerRegistry,
-                       QgsVectorLayer,
-                       QgsDataSourceURI,
+from qgis.core import (QgsVectorLayer,
+                       QgsDataSourceUri,
                        QgsFeatureRequest,
                        QgsProject,
-                       QgsWKBTypes)
+                       QgsWkbTypes)
 from ..core.db_connector import DBConnector
 from datetime import datetime
 
@@ -82,19 +81,19 @@ class ControlTool(AreaTool):
         """
         if self.ownSettings is None:
             self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "No settings given !!"),
-                                                  level=QgsMessageBar.CRITICAL, duration=0)
+                                                  level=Qgis.Critical, duration=0)
             return
         if self.ownSettings.controlUriDb is None:
             self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "No control db given !!"),
-                                                  level=QgsMessageBar.CRITICAL, duration=0)
+                                                  level=Qgis.Critical, duration=0)
             return
         if self.ownSettings.controlSchemaDb is None:
             self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "No control db schema given !!"),
-                                                  level=QgsMessageBar.CRITICAL, duration=0)
+                                                  level=Qgis.Critical, duration=0)
             return
         if self.ownSettings.controlConfigTable is None:
             self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "No control config table given !!"),
-                                                  level=QgsMessageBar.CRITICAL, duration=0)
+                                                  level=Qgis.Critical, duration=0)
             return
 
         self.__configTable = self.ownSettings.controlConfigTable
@@ -106,7 +105,7 @@ class ControlTool(AreaTool):
         Test si la couche / table qui contient l'ensemble des contrôles existe bien dans le projet
         """
         if self.__db is not None:
-            uricfg = QgsDataSourceURI()
+            uricfg = QgsDataSourceUri()
             uricfg.setConnection(self.__db.hostName(),str(self.__db.port()), self.__db.databaseName(),
                                  self.__db.userName(),self.__db.password())
             uricfg.setDataSource(self.__schemaDb,self.__configTable,None,"","id")
@@ -121,12 +120,12 @@ class ControlTool(AreaTool):
              self.__iface.messageBar().pushMessage(
                  QCoreApplication.translate("VDLTools", "Request Area not defined, ") +
                  QCoreApplication.translate("VDLTools", "please define a control area (maintain mouse clic)")
-                 , level=QgsMessageBar.CRITICAL, duration=5)
+                 , level=Qgis.Critical, duration=5)
         else:
             if self.geom.area() > self.areaMax:
                 self.__iface.messageBar().pushMessage(
                     QCoreApplication.translate("VDLTools", "Please define a smaller control area, max = 1 km2"),
-                    level=QgsMessageBar.CRITICAL, duration=5)
+                    level=Qgis.Critical, duration=5)
             else:
                 """
                 Liste des contrôles actifs existants
@@ -165,7 +164,7 @@ class ControlTool(AreaTool):
                 self.__iface.messageBar().pushMessage(
                     "Avertissement",
                     QCoreApplication.translate("VDLTools", "No control selected"),
-                    level=QgsMessageBar.INFO, duration=5)
+                    level=Qgis.Info, duration=5)
             else:
                 self.__createCtrlLayers(self.__chooseDlg.controls())
             self.__cancel()
@@ -173,7 +172,7 @@ class ControlTool(AreaTool):
             self.__iface.messageBar().pushMessage(
                 "Avertissement",
                 QCoreApplication.translate("VDLTools", "Database onnection problem, or too small area"),
-                level=QgsMessageBar.INFO, duration=5)
+                level=Qgis.Info, duration=5)
 
     def __createCtrlLayers(self,requete):
         """
@@ -197,7 +196,7 @@ class ControlTool(AreaTool):
         bbox = "(SELECT ST_GeomFromText('" + self.geom.exportToWkt() + "'," + str(self.__crs) + "))"
 
         # paramètres de la source des couches à ajouter au projet
-        uri = QgsDataSourceURI()
+        uri = QgsDataSourceUri()
         uri.setConnection(self.__db.hostName(),str(self.__db.port()), self.__db.databaseName(),
                           self.__db.userName(),self.__db.password())
         uri.setSrid(str(self.__crs))
@@ -229,13 +228,13 @@ class ControlTool(AreaTool):
                 "Info",
                 QCoreApplication.translate("VDLTools", "All layers have been charged with success in the projet. |") +
                 QCoreApplication.translate("VDLTools", "Total errors : ") +
-                        str(totalError), level=QgsMessageBar.INFO, duration=10)
+                        str(totalError), level=Qgis.Info, duration=10)
         else:
             self.__iface.messageBar().clearWidgets()
             self.__iface.messageBar().pushMessage(
                 "Info",
                 QCoreApplication.translate("VDLTools", "Good !! No error detected on the defined area"),
-                level=QgsMessageBar.INFO, duration=5)
+                level=Qgis.Info, duration=5)
 
     def __addCtrlLayers(self, layers, styles):
         """
@@ -255,7 +254,7 @@ class ControlTool(AreaTool):
 
         for i in range(0,len(layers)):
             layers[i].loadNamedStyle(styles[i])
-            QgsMapLayerRegistry.instance().addMapLayer(layers[i],False)
+            QgsProject.instance().addMapLayer(layers[i],False)
             ctrl_group.insertLayer(i,layers[i])
         self.__iface.mapCanvas().refresh()                              # rafraîchir la carte
 

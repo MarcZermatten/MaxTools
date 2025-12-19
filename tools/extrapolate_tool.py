@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,22 +21,20 @@
  *                                                                         *
  ***************************************************************************/
 """
-from __future__ import division
-from past.utils import old_div
 
 from qgis.gui import (QgsMapTool,
                       QgsRubberBand,
                       QgsMessageBar)
-from qgis.core import (QGis,
+from qgis.core import (Qgis,
                        QgsPointLocator,
                        QgsSnappingUtils,
                        QgsTolerance,
                        QgsMapLayer,
                        QgsGeometry,
                        QgsWKBTypes)
-from PyQt4.QtCore import (Qt,
+from qgis.PyQt.QtCore import (Qt,
                           QCoreApplication)
-from PyQt4.QtGui import QColor
+from qgis.PyQt.QtGui import QColor
 from ..core.finder import Finder
 from ..core.geometry_v2 import GeometryV2
 from ..ui.extrapolate_confirm_dialog import ExtrapolateConfirmDialog
@@ -79,7 +78,7 @@ class ExtrapolateTool(QgsMapTool):
         When the action is selected
         """
         QgsMapTool.activate(self)
-        self.__rubber = QgsRubberBand(self.canvas(), QGis.Point)
+        self.__rubber = QgsRubberBand(self.canvas(), Qgis.GeometryType.Point)
         color = QColor("red")
         color.setAlphaF(0.78)
         self.__rubber.setColor(color)
@@ -143,7 +142,7 @@ class ExtrapolateTool(QgsMapTool):
         :param layer: selected layer
         """
         if layer is not None and layer.type() == QgsMapLayer.VectorLayer\
-                and QGis.fromOldWkbType(layer.wkbType()) == QgsWKBTypes.LineStringZ:
+                and QgsWkbTypes.geometryType(layer.wkbType()) == QgsWKBTypes.LineStringZ:
             if layer == self.__layer:
                 return
 
@@ -198,7 +197,7 @@ class ExtrapolateTool(QgsMapTool):
         if len(found_features) > 0:
             if len(found_features) > 1:
                 self.__iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools", "One feature at a time"), level=QgsMessageBar.INFO)
+                    QCoreApplication.translate("VDLTools", "One feature at a time"), level=Qgis.Info)
                 return
             geom = found_features[0].geometry()
             self.__selectedVertex = geom.closestVertex(event.mapPoint())[1]
@@ -216,8 +215,8 @@ class ExtrapolateTool(QgsMapTool):
                 small_d = Finder.sqrDistForPoints(pt1, pt)
                 self.__isEditing = True
                 self.__selectedFeature = found_features[0]
-                self.__elevation = round(pt0.z() + (1 + old_div(small_d, big_d)) * (pt1.z() - pt0.z()), 3)
-                if small_d < (old_div(big_d, 4)):
+                self.__elevation = round(pt0.z() + (1 + (small_d / big_d)) * (pt1.z() - pt0.z()), 3)
+                if small_d < ((big_d / 4)):
                     if pt.z() is not None and pt.z() != 0:
                         message = QCoreApplication.translate("VDLTools", "This vertex has already an elevation ") + \
                                   "(" + str(pt.z()) + ")" + \

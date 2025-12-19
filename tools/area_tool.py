@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
  VDLTools
@@ -20,15 +21,14 @@
  *                                                                         *
  ***************************************************************************/
 """
-from __future__ import division
-from PyQt4.QtCore import pyqtSignal
-from PyQt4.QtGui import QColor
+from qgis.PyQt.QtCore import pyqtSignal
+from qgis.PyQt.QtGui import QColor
 from qgis.gui import (QgsMapTool,
                       QgsRubberBand)
-from qgis.core import (QGis,
-                       QgsLineStringV2,
-                       QgsPolygonV2,
-                       QgsPointV2,
+from qgis.core import (Qgis,
+                       QgsLineString,
+                       QgsPolygon,
+                       QgsPoint,
                        QgsGeometry)
 
 
@@ -53,7 +53,7 @@ class AreaTool(QgsMapTool):
         When the action is selected
         """
         QgsMapTool.activate(self)
-        self.__rubber = QgsRubberBand(self.canvas(), QGis.Polygon)
+        self.__rubber = QgsRubberBand(self.canvas(), Qgis.GeometryType.Polygon)
         color = QColor("red")
         color.setAlphaF(0.6)
         self.__rubber.setBorderColor(color)
@@ -85,14 +85,14 @@ class AreaTool(QgsMapTool):
         """
         if self.__selecting:
             self.__rubber.reset()
-            firstV2 = QgsPointV2(self.first)
-            second = QgsPointV2(self.first.x(), event.mapPoint().y())
-            third = QgsPointV2(event.mapPoint())
-            fourth = QgsPointV2(event.mapPoint().x(), self.first.y())
+            firstV2 = QgsPoint(self.first)
+            second = QgsPoint(self.first.x(), event.mapPoint().y())
+            third = QgsPoint(event.mapPoint())
+            fourth = QgsPoint(event.mapPoint().x(), self.first.y())
 
-            lineV2 = QgsLineStringV2()
+            lineV2 = QgsLineString()
             lineV2.setPoints([firstV2, second, third, fourth, firstV2])
-            polygonV2 = QgsPolygonV2()
+            polygonV2 = QgsPolygon()
             polygonV2.setExteriorRing(lineV2)
             self.geom = QgsGeometry(polygonV2)
             self.__rubber.setToGeometry(self.geom, None)

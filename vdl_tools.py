@@ -9,6 +9,8 @@
         copyright            : (C) 2016 Ville de Lausanne
         author               : Christophe Gusthiot
         email                : christophe.gusthiot@lausanne.ch
+
+        Migrated to QGIS 3.x by GeoBrain (2025)
  ***************************************************************************/
 
 /***************************************************************************
@@ -20,14 +22,12 @@
  *                                                                         *
  ***************************************************************************/
 """
-from __future__ import absolute_import
-from future.builtins import object
-from PyQt4.QtCore import (QSettings,
-                          QTranslator,
-                          qVersion,
-                          QCoreApplication)
-from PyQt4.QtGui import (QAction,
-                         QIcon)
+from qgis.PyQt.QtCore import (QSettings,
+                              QTranslator,
+                              qVersion,
+                              QCoreApplication)
+from qgis.PyQt.QtWidgets import QAction
+from qgis.PyQt.QtGui import QIcon
 
 from .tools.duplicate_tool import DuplicateTool
 from .tools.intersect_tool import IntersectTool
@@ -50,7 +50,7 @@ from . import resources
 import os
 
 
-class VDLTools(object):
+class VDLTools:
     """
     Main plugin class
     """
@@ -83,7 +83,11 @@ class VDLTools(object):
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
         # initialize locale
-        locale = QSettings().value('locale/userLocale')[0:2]
+        locale_setting = QSettings().value('locale/userLocale')
+        if locale_setting:
+            locale = locale_setting[0:2]
+        else:
+            locale = 'en'
         locale_path = os.path.join(
             self.plugin_dir,
             'i18n',
