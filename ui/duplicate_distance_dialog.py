@@ -22,7 +22,8 @@
  ***************************************************************************/
 """
 
-from qgis.PyQt.QtWidgets import (QDialog, QGridLayout, QPushButton, QCheckBox, QLabel, QLineEdit, QDoubleValidator, QRadioButton, QButtonGroup)
+from qgis.PyQt.QtWidgets import (QDialog, QGridLayout, QPushButton, QCheckBox, QLabel, QLineEdit, QRadioButton, QButtonGroup)
+from qgis.PyQt.QtGui import QDoubleValidator
 from qgis.PyQt.QtCore import QCoreApplication
 
 
