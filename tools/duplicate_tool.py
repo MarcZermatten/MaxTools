@@ -360,13 +360,14 @@ class DuplicateTool(QgsMapTool):
                 feature.setAttribute(field.name(), self.__selectedFeature.attribute(field.name()))
         if len(self.__selectedFeature.fields()) > 0 and self.__layer.editFormConfig().suppress() != \
                 Qgis.AttributeFormSuppression.On:
+            # Use addFeature for edit buffer, then open form
+            self.__layer.addFeature(feature)
             self.__iface.openFeatureForm(self.__layer, feature)
         else:
-            ok, outs = self.__layer.dataProvider().addFeatures([feature])
+            # Add feature to edit buffer (not directly to data provider)
+            self.__layer.addFeature(feature)
             self.__layer.updateExtents()
-            self.__layer  # setCacheImage obsolete in QGIS 3
             self.__layer.triggerRepaint()
-            self.__layer.featureAdded.emit(outs[0].id())  # emit signal so feature is added to snapping index
         self.__cancel()
 
     def canvasMoveEvent(self, event):
