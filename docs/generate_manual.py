@@ -213,11 +213,11 @@ def generate():
     elements.append(Paragraph("Plugin QGIS pour la gestion des géodonnées", styles['GSubtitle']))
     elements.append(Spacer(1, 1 * cm))
 
-    # Logo si disponible
+    # Logo si disponible (conserver les proportions)
     logo_path = r"C:\Users\zema\GeoBrain\docs\Logos\GeoMind_Logo_tsp.png"
     if os.path.exists(logo_path):
         try:
-            img = Image(logo_path, width=6*cm, height=2.4*cm)
+            img = Image(logo_path, width=5*cm, height=5*cm, kind='proportional')
             img.hAlign = 'CENTER'
             elements.append(img)
         except:
