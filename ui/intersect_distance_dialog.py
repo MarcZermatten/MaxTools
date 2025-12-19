@@ -25,6 +25,8 @@
 from qgis.PyQt.QtWidgets import (QDialog, QGridLayout, QPushButton, QLabel, QLineEdit, QDoubleSpinBox)
 from qgis.PyQt.QtCore import (QCoreApplication)
 
+from .theme import apply_theme, add_geomind_footer, style_accent_button
+
 
 class IntersectDistanceDialog(QDialog):
     """
@@ -39,7 +41,10 @@ class IntersectDistanceDialog(QDialog):
         QDialog.__init__(self)
         self.__mapPoint = mapPoint
         self.setWindowTitle(QCoreApplication.translate("MaxTools", "Choose radius"))
-        self.resize(275, 177)
+        self.resize(290, 190)
+
+        # Apply dark neon theme
+        apply_theme(self)
         self.__gridLayout = QGridLayout()
 
         self.__label = QLabel(QCoreApplication.translate("MaxTools", "Radius"))
@@ -81,7 +86,13 @@ class IntersectDistanceDialog(QDialog):
         self.__y.setEnabled(False)
         self.__gridLayout.addWidget(self.__y, 1, 2, 1, 2)
 
+        # Style OK button as primary
+        style_accent_button(self.__okButton)
+
         self.setLayout(self.__gridLayout)
+
+        # Add GeoMind footer
+        add_geomind_footer(self)
 
     def observation(self):
         """

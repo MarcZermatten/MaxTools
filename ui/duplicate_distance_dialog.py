@@ -22,9 +22,11 @@
  ***************************************************************************/
 """
 
-from qgis.PyQt.QtWidgets import (QDialog, QGridLayout, QPushButton, QCheckBox, QLabel, QLineEdit, QRadioButton, QButtonGroup)
+from qgis.PyQt.QtWidgets import (QDialog, QGridLayout, QPushButton, QCheckBox, QLabel, QLineEdit, QRadioButton, QButtonGroup, QVBoxLayout, QSpacerItem, QSizePolicy)
 from qgis.PyQt.QtGui import QDoubleValidator
 from qgis.PyQt.QtCore import QCoreApplication
+
+from .theme import apply_theme, add_geomind_footer, style_accent_button
 
 
 class DuplicateDistanceDialog(QDialog):
@@ -39,7 +41,10 @@ class DuplicateDistanceDialog(QDialog):
         """
         QDialog.__init__(self)
         self.setWindowTitle(QCoreApplication.translate("MaxTools", "Duplicate"))
-        self.resize(300, 100)
+        self.resize(320, 140)
+
+        # Apply dark neon theme
+        apply_theme(self)
         self.__distanceLabel = QLabel(QCoreApplication.translate("MaxTools", "distance :"))
         self.__distanceLabel.setMinimumHeight(20)
         self.__distanceLabel.setMinimumWidth(50)
@@ -86,7 +91,14 @@ class DuplicateDistanceDialog(QDialog):
         self.__layout.addWidget(self.__previewButton, 3, 0)
         self.__layout.addWidget(self.__okButton, 3, 1)
         self.__layout.addWidget(self.__cancelButton, 3, 2)
+
+        # Style OK button as primary
+        style_accent_button(self.__okButton)
+
         self.setLayout(self.__layout)
+
+        # Add GeoMind footer
+        add_geomind_footer(self)
 
     def previewButton(self):
         """
