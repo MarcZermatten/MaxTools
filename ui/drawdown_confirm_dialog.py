@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2018-11-07
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -35,7 +35,7 @@ class DrawdownConfirmDialog(QDialog):
         Constructor
         """
         QDialog.__init__(self)
-        self.setWindowTitle(QCoreApplication.translate("VDLTools", "Edition Confirmation"))
+        self.setWindowTitle(QCoreApplication.translate("MaxTools", "Edition Confirmation"))
         self.resize(300, 100)
         self.__layout = QGridLayout()
 
@@ -43,11 +43,11 @@ class DrawdownConfirmDialog(QDialog):
 
         self.__layout.addWidget(self.__confirmLabel, 0, 0, 1, 2)
 
-        self.__okButton = QPushButton(QCoreApplication.translate("VDLTools", "Yes"))
+        self.__okButton = QPushButton(QCoreApplication.translate("MaxTools", "Yes"))
         self.__okButton.setMinimumHeight(20)
         self.__okButton.setMinimumWidth(300)
 
-        self.__cancelButton = QPushButton(QCoreApplication.translate("VDLTools", "No"))
+        self.__cancelButton = QPushButton(QCoreApplication.translate("MaxTools", "No"))
         self.__cancelButton.setMinimumHeight(20)
         self.__cancelButton.setMinimumWidth(100)
 

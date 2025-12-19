@@ -8,15 +8,15 @@
 # Mandatory items:
 
 [general]
-name=VDL Tools
+name=Max Tools
 qgisMinimumVersion=3.0
 qgisMaximumVersion=3.99
-description=Tools needed by the Ville de Lausanne (migrated to QGIS 3.x)
+description=Tools needed by the Max Zermatten (migrated to QGIS 3.x)
 version=1.0.0
-author=Christophe Gusthiot (Ville de Lausanne), migrated by GeoBrain
+author=Max Zermatten (Max Zermatten), migrated by GeoBrain
 email=cgusthiot@gmail.com
 
-about=This plugin contains tools needed by the Ville de Lausanne for water system.
+about=This plugin contains tools needed by the Max Zermatten for water system.
     - a tool to duplicate a feature at a given distance (geometry not kept)
     - a tool to move/copy a feature, driven by a vertex (geometry kept)
     - a tool to make an elevation profile of a 3d line
@@ -29,8 +29,8 @@ about=This plugin contains tools needed by the Ville de Lausanne for water syste
     - a tool to draw down pipes and elements
     - a tool to rebuild the indexation
 
-tracker=https://github.com/gusthiot/VDLTools/issues
-repository=https://github.com/gusthiot/VDLTools
+tracker=https://github.com/gusthiot/MaxTools/issues
+repository=https://github.com/gusthiot/MaxTools
 # End of mandatory metadata
 
 # Recommended items:
@@ -41,7 +41,7 @@ repository=https://github.com/gusthiot/VDLTools
 # Tags are comma separated with spaces allowed
 tags=
 
-homepage=https://github.com/gusthiot/VDLTools
+homepage=https://github.com/gusthiot/MaxTools
 category=Plugins
 icon=icon.png
 # experimental flag

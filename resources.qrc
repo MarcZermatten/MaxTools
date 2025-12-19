@@ -1,44 +1,44 @@
 <RCC>
-    <qresource prefix="/plugins/VDLTools" >
+    <qresource prefix="/plugins/MaxTools" >
         <file>icons/duplicate_icon.png</file>
     </qresource>
-    <qresource prefix="/plugins/VDLTools" >
+    <qresource prefix="/plugins/MaxTools" >
         <file>icons/intersect_icon.png</file>
     </qresource>
-    <qresource prefix="/plugins/VDLTools" >
+    <qresource prefix="/plugins/MaxTools" >
         <file>icons/profile_icon.png</file>
     </qresource>
-    <qresource prefix="/plugins/VDLTools" >
+    <qresource prefix="/plugins/MaxTools" >
         <file>icons/extrapolate_icon.png</file>
     </qresource>
-    <qresource prefix="/plugins/VDLTools" >
+    <qresource prefix="/plugins/MaxTools" >
         <file>icons/interpolate_icon.png</file>
     </qresource>
-    <qresource prefix="/plugins/VDLTools" >
+    <qresource prefix="/plugins/MaxTools" >
         <file>icons/move_icon.png</file>
     </qresource>
-    <qresource prefix="/plugins/VDLTools" >
+    <qresource prefix="/plugins/MaxTools" >
         <file>icons/import_icon.png</file>
     </qresource>
-    <qresource prefix="/plugins/VDLTools" >
+    <qresource prefix="/plugins/MaxTools" >
         <file>icons/settings_icon.png</file>
     </qresource>
-    <qresource prefix="/plugins/VDLTools" >
+    <qresource prefix="/plugins/MaxTools" >
         <file>icons/profile_2_icon.png</file>
     </qresource>
-    <qresource prefix="/plugins/VDLTools" >
+    <qresource prefix="/plugins/MaxTools" >
         <file>icons/pointer_icon.png</file>
     </qresource>
-    <qresource prefix="/plugins/VDLTools" >
+    <qresource prefix="/plugins/MaxTools" >
         <file>icons/select_icon.png</file>
     </qresource>
-    <qresource prefix="/plugins/VDLTools" >
+    <qresource prefix="/plugins/MaxTools" >
         <file>icons/control_icon.png</file>
     </qresource>
-    <qresource prefix="/plugins/VDLTools" >
+    <qresource prefix="/plugins/MaxTools" >
         <file>icons/drawdown_icon.png</file>
     </qresource>
-    <qresource prefix="/plugins/VDLTools" >
+    <qresource prefix="/plugins/MaxTools" >
         <file>icons/rebuild_icon.png</file>
     </qresource>
 </RCC>

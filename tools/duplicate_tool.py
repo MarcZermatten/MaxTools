@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-04-05
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -63,8 +63,8 @@ class DuplicateTool(QgsMapTool):
         """
         QgsMapTool.__init__(self, iface.mapCanvas())
         self.__iface = iface
-        self.icon_path = ':/plugins/VDLTools/icons/duplicate_icon.png'
-        self.text = QCoreApplication.translate("VDLTools", "Duplicate a feature")
+        self.icon_path = ':/plugins/MaxTools/icons/duplicate_icon.png'
+        self.text = QCoreApplication.translate("MaxTools", "Duplicate a feature")
         self.setCursor(Qt.ArrowCursor)
         self.__isEditing = False
         self.__layer = None
@@ -86,7 +86,7 @@ class DuplicateTool(QgsMapTool):
         To get the tool name
         :return: tool name
         """
-        return QCoreApplication.translate("VDLTools", "Duplicate")
+        return QCoreApplication.translate("MaxTools", "Duplicate")
 
     def startEditing(self):
         """
@@ -349,7 +349,7 @@ class DuplicateTool(QgsMapTool):
         self.__dstDlg.accept()
         geometry = QgsGeometry(self.__newFeature)
         if not geometry.isGeosValid():
-            self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "Geos geometry problem"),
+            self.__iface.messageBar().pushMessage(QCoreApplication.translate("MaxTools", "Geos geometry problem"),
                                                   level=Qgis.Critical, duration=0)
         feature = QgsFeature(self.__layer.fields())
         feature.setGeometry(geometry)
@@ -391,7 +391,7 @@ class DuplicateTool(QgsMapTool):
         found_features = self.__layer.selectedFeatures()
         if len(found_features) > 0:
             if len(found_features) > 1:
-                self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "One feature at a time"),
+                self.__iface.messageBar().pushMessage(QCoreApplication.translate("MaxTools", "One feature at a time"),
                                                       level=Qgis.Info)
                 return
             self.__selectedFeature = found_features[0]

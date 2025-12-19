@@ -2,13 +2,13 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2019-11-05
         git sha              : $Format:%H$
-        copyright            : (C) 2019 Ville de Lausanne
-        author               : Ingénierie Informatique Gusthiot, Christophe Gusthiot
+        copyright            : (C) 2019 Max Zermatten
+        author               : Ingénierie Informatique Gusthiot, Max Zermatten
         email                : i2g@gusthiot.ch
  ***************************************************************************/
 
@@ -37,8 +37,8 @@ class RebuildIndex(object):
         :param iface: interface
         """
         self.__iface = iface
-        self.icon_path = ':/plugins/VDLTools/icons/rebuild_icon.png'
-        self.text = QCoreApplication.translate("VDLTools", "Rebuild Index")
+        self.icon_path = ':/plugins/MaxTools/icons/rebuild_icon.png'
+        self.text = QCoreApplication.translate("MaxTools", "Rebuild Index")
         self.killed = False
 
     def start(self):
@@ -48,12 +48,12 @@ class RebuildIndex(object):
         snap_util = self.__iface.mapCanvas().snappingUtils()
         extent = self.__iface.mapCanvas().extent()
         self.__progressDialog = QProgressDialog()
-        self.__progressDialog.setWindowTitle(QCoreApplication.translate("VDLTools", "Rebuild Index..."))
-        self.__progressDialog.setLabelText(QCoreApplication.translate("VDLTools", "Percentage of indexed layers"))
+        self.__progressDialog.setWindowTitle(QCoreApplication.translate("MaxTools", "Rebuild Index..."))
+        self.__progressDialog.setLabelText(QCoreApplication.translate("MaxTools", "Percentage of indexed layers"))
         progressBar = QProgressBar(self.__progressDialog)
         progressBar.setTextVisible(True)
         cancelButton = QPushButton()
-        cancelButton.setText(QCoreApplication.translate("VDLTools", "Cancel"))
+        cancelButton.setText(QCoreApplication.translate("MaxTools", "Cancel"))
         cancelButton.clicked.connect(self.kill)
         self.__progressDialog.setBar(progressBar)
         self.__progressDialog.setCancelButton(cancelButton)

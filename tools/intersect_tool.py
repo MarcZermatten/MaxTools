@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-04-13
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -52,8 +52,8 @@ class IntersectTool(QgsMapTool):
         """
         QgsMapTool.__init__(self, iface.mapCanvas())
         self.__iface = iface
-        self.icon_path = ':/plugins/VDLTools/icons/intersect_icon.png'
-        self.text = QCoreApplication.translate("VDLTools", "From intersection")
+        self.icon_path = ':/plugins/MaxTools/icons/intersect_icon.png'
+        self.text = QCoreApplication.translate("MaxTools", "From intersection")
         self.setCursor(Qt.ArrowCursor)
         self.__lineLayerID = None
         self.__pointLayerID = None

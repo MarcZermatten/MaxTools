@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-05-30
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -45,7 +45,7 @@ class ProfileMessageDialog(QDialog):
         self.__names = names
         num_lines = len(points[0]['z']) - len(names) + 1
         self.__points = points
-        self.setWindowTitle(QCoreApplication.translate("VDLTools", "Elevations situations"))
+        self.setWindowTitle(QCoreApplication.translate("MaxTools", "Elevations situations"))
         self.__layout = QGridLayout()
 
         self.__msgLabels = []
@@ -58,9 +58,9 @@ class ProfileMessageDialog(QDialog):
             ptz = self.__points[line['point']]['z'][line['layer']+num_lines-1]
             if 'poz' in line:
                 ptz = ptz[line['poz']]
-            msg = "- point " + str(line['point']) + QCoreApplication.translate("VDLTools", " in layer '") + \
+            msg = "- point " + str(line['point']) + QCoreApplication.translate("MaxTools", " in layer '") + \
                   self.__names[line['layer']] + "' (point: " + str(ptz) + "m |" + \
-                  QCoreApplication.translate("VDLTools", "line vertex: ") + str(line['vertex']) + "m) \n"
+                  QCoreApplication.translate("MaxTools", "line vertex: ") + str(line['vertex']) + "m) \n"
 
             msgLabel = QLabel(msg)
             self.__msgLabels.append(msgLabel)
@@ -73,7 +73,7 @@ class ProfileMessageDialog(QDialog):
         for i in range(len(self.__differences)):
             line = self.__differences[i]
             msg = "- point " + str(line['point']) + \
-                  QCoreApplication.translate("VDLTools", " in layer : different elevations on same position ") + "(" +\
+                  QCoreApplication.translate("MaxTools", " in layer : different elevations on same position ") + "(" +\
                   str(line['v1']) + "m and" + str(line['v2']) + "m) \n"
             difLabel = QLabel(msg)
             self.__difLabels.append(difLabel)
@@ -88,18 +88,18 @@ class ProfileMessageDialog(QDialog):
 
         self.__layout.addWidget(scroll, 1, 0, 1, 3)
 
-        self.__passButton = QPushButton(QCoreApplication.translate("VDLTools", "Pass"))
+        self.__passButton = QPushButton(QCoreApplication.translate("MaxTools", "Pass"))
         self.__passButton.setMinimumHeight(20)
         self.__passButton.setMinimumWidth(100)
 
         pos = len(self.__situations) + len(self.__differences) + 1
         self.__layout.addWidget(self.__passButton, pos, 0)
 
-        self.__onPointsButton = QPushButton(QCoreApplication.translate("VDLTools", "Apply line elevations to points"))
+        self.__onPointsButton = QPushButton(QCoreApplication.translate("MaxTools", "Apply line elevations to points"))
         self.__onPointsButton.setMinimumHeight(20)
         self.__onPointsButton.setMinimumWidth(200)
 
-        self.__onLineButton = QPushButton(QCoreApplication.translate("VDLTools", "Apply points elevations to line"))
+        self.__onLineButton = QPushButton(QCoreApplication.translate("MaxTools", "Apply points elevations to line"))
         self.__onLineButton.setMinimumHeight(20)
         self.__onLineButton.setMinimumWidth(200)
 

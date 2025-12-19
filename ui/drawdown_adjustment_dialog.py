@@ -2,13 +2,13 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2018-09-04
         git sha              : $Format:%H$
-        copyright            : (C) 2018 Ville de Lausanne
-        author               : Ingénierie Informatique Gusthiot, Christophe Gusthiot
+        copyright            : (C) 2018 Max Zermatten
+        author               : Ingénierie Informatique Gusthiot, Max Zermatten
         email                : i2g@gusthiot.ch
  ***************************************************************************/
 
@@ -38,7 +38,7 @@ class DrawdownAdjustmentDialog(QDialog):
         QDialog.__init__(self)
         self.__adjustements = adjustments
         self.__altitudes = altitudes
-        self.setWindowTitle(QCoreApplication.translate("VDLTools", "Elevations adjustments"))
+        self.setWindowTitle(QCoreApplication.translate("MaxTools", "Elevations adjustments"))
         self.setMinimumWidth(550)
         self.setMinimumHeight(500)
         self.__layout = QGridLayout()
@@ -57,9 +57,9 @@ class DrawdownAdjustmentDialog(QDialog):
             pt = adj['point']
             alti = self.__altitudes[pt]
             if pt > pt_last:
-                msg = str(pt) + QCoreApplication.translate("VDLTools", ") height : ") + str(alti['diam']) + "m"
+                msg = str(pt) + QCoreApplication.translate("MaxTools", ") height : ") + str(alti['diam']) + "m"
                 if alti['alt'] is not None:
-                    msg += QCoreApplication.translate("VDLTools", ", invert elevation")
+                    msg += QCoreApplication.translate("MaxTools", ", invert elevation")
                 if alti['drawdown'] is not None:
                     msg += " (" + alti['drawdown'] + ")"
                 if alti['alt'] is not None:
@@ -79,7 +79,7 @@ class DrawdownAdjustmentDialog(QDialog):
             msg += " : " + str(previous) + "m"
             if adj['delta'] and alti['alt'] is not None:
                 delta = alti['alt'] - previous
-                msg += QCoreApplication.translate("VDLTools", ", adjustment : ") + str(delta) + "m"
+                msg += QCoreApplication.translate("MaxTools", ", adjustment : ") + str(delta) + "m"
             msgLabel = QLabel(msg)
             self.__msgLabels.append(msgLabel)
             self.__scrollLayout.addWidget(self.__msgLabels[pos], pos+1, 0, 1, 2)
@@ -103,14 +103,14 @@ class DrawdownAdjustmentDialog(QDialog):
 
         self.__layout.addWidget(scroll, 1, 0, 1, 3)
 
-        self.__cancelButton = QPushButton(QCoreApplication.translate("VDLTools", "Cancel"))
+        self.__cancelButton = QPushButton(QCoreApplication.translate("MaxTools", "Cancel"))
         self.__cancelButton.setMinimumHeight(20)
         self.__cancelButton.setMinimumWidth(100)
 
         pos = len(self.__adjustements) + 1
         self.__layout.addWidget(self.__cancelButton, pos, 0)
 
-        self.__applyButton = QPushButton(QCoreApplication.translate("VDLTools", "Apply correction(s)"))
+        self.__applyButton = QPushButton(QCoreApplication.translate("MaxTools", "Apply correction(s)"))
         self.__applyButton.setMinimumHeight(20)
         self.__applyButton.setMinimumWidth(300)
         if displayButton:

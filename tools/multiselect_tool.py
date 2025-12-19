@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2017-01-31
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -82,7 +82,7 @@ class MultiselectTool(AreaTool):
                                     will = renderer.willRenderFeature(feature)
                                 except:
                                     self.__iface.messageBar().pushMessage(
-                                        QCoreApplication.translate("VDLTools", "Error"),
+                                        QCoreApplication.translate("MaxTools", "Error"),
                                         "will renderer still not working", level=Qgis.Critical, duration=0)
                                     return
                             if will:

@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-05-09
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -40,17 +40,17 @@ class ProfileLayersDialog(QDialog):
         QDialog.__init__(self)
         self.__pointLayers = pointLayers
         self.__with_mnt = with_mnt
-        self.setWindowTitle(QCoreApplication.translate("VDLTools", "Add Points Layers Profiles"))
+        self.setWindowTitle(QCoreApplication.translate("MaxTools", "Add Points Layers Profiles"))
         self.__layout = QGridLayout()
-        self.__okButton = QPushButton(QCoreApplication.translate("VDLTools", "OK"))
+        self.__okButton = QPushButton(QCoreApplication.translate("MaxTools", "OK"))
         self.__okButton.setMinimumHeight(20)
         self.__okButton.setMinimumWidth(100)
 
-        self.__cancelButton = QPushButton(QCoreApplication.translate("VDLTools", "Cancel"))
+        self.__cancelButton = QPushButton(QCoreApplication.translate("MaxTools", "Cancel"))
         self.__cancelButton.setMinimumHeight(20)
         self.__cancelButton.setMinimumWidth(100)
 
-        self.__layersLabel = QLabel(QCoreApplication.translate("VDLTools", "Also points layers profile ? :"))
+        self.__layersLabel = QLabel(QCoreApplication.translate("MaxTools", "Also points layers profile ? :"))
         self.__layersLabel.setMinimumHeight(20)
         self.__layersLabel.setMinimumWidth(50)
 

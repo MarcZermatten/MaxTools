@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-05-30
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -53,8 +53,8 @@ class ExtrapolateTool(QgsMapTool):
         """
         QgsMapTool.__init__(self, iface.mapCanvas())
         self.__iface = iface
-        self.icon_path = ':/plugins/VDLTools/icons/extrapolate_icon.png'
-        self.text = QCoreApplication.translate("VDLTools",
+        self.icon_path = ':/plugins/MaxTools/icons/extrapolate_icon.png'
+        self.text = QCoreApplication.translate("MaxTools",
                                                  "Extrapolate the elevation of a vertex and a "
                                                  "point at the extremity of a line")
         self.__layer = None
@@ -197,7 +197,7 @@ class ExtrapolateTool(QgsMapTool):
         if len(found_features) > 0:
             if len(found_features) > 1:
                 self.__iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools", "One feature at a time"), level=Qgis.Info)
+                    QCoreApplication.translate("MaxTools", "One feature at a time"), level=Qgis.Info)
                 return
             geom = found_features[0].geometry()
             self.__selectedVertex = geom.closestVertex(event.mapPoint())[1]
@@ -218,9 +218,9 @@ class ExtrapolateTool(QgsMapTool):
                 self.__elevation = round(pt0.z() + (1 + (small_d / big_d)) * (pt1.z() - pt0.z()), 3)
                 if small_d < ((big_d / 4)):
                     if pt.z() is not None and pt.z() != 0:
-                        message = QCoreApplication.translate("VDLTools", "This vertex has already an elevation ") + \
+                        message = QCoreApplication.translate("MaxTools", "This vertex has already an elevation ") + \
                                   "(" + str(pt.z()) + ")" + \
-                                  QCoreApplication.translate("VDLTools",
+                                  QCoreApplication.translate("MaxTools",
                                                              " do you really want to change it (new elevation : ") + \
                                   str(self.__elevation) + ") ?"
                         self.__confDlg = ExtrapolateConfirmDialog(message)
@@ -231,7 +231,7 @@ class ExtrapolateTool(QgsMapTool):
                     else:
                         self.__edit()
                 else:
-                    message = QCoreApplication.translate("VDLTools",
+                    message = QCoreApplication.translate("MaxTools",
                                                          "The segment is too big, do you really want "
                                                          "to extrapolate anyway ? (elevation : ") + \
                               str(self.__elevation) + ") ?"

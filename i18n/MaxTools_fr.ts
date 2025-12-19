@@ -2,7 +2,7 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fr_FR">
 <context>
-    <name>VDLTools</name>
+    <name>MaxTools</name>
     <message>
         <location filename="../tools/duplicate_tool.py" line="69"/>
         <source>Duplicate a feature</source>

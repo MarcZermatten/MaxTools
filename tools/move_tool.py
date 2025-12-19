@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-07-12
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -59,8 +59,8 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
         """
         QgsMapToolAdvancedDigitizing.__init__(self,  iface.mapCanvas(), iface.cadDockWidget())
         self.__iface = iface
-        self.icon_path = ':/plugins/VDLTools/icons/move_icon.png'
-        self.text = QCoreApplication.translate("VDLTools", "Move/Copy a feature")
+        self.icon_path = ':/plugins/MaxTools/icons/move_icon.png'
+        self.text = QCoreApplication.translate("MaxTools", "Move/Copy a feature")
         self.setCursor(Qt.ArrowCursor)
         self.__isEditing = False
         self.__findVertex = False
@@ -96,7 +96,7 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
         To get the tool name
         :return: tool name
         """
-        return QCoreApplication.translate("VDLTools", "Move/Copy")
+        return QCoreApplication.translate("MaxTools", "Move/Copy")
 
     def startEditing(self):
         """
@@ -285,7 +285,7 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
         geometry = QgsGeometry(self.__newFeature)
         if not geometry.isGeosValid():
             self.__iface.messageBar().pushMessage(
-                QCoreApplication.translate("VDLTools", "Geos geometry problem"), level=Qgis.Critical, duration=0)
+                QCoreApplication.translate("MaxTools", "Geos geometry problem"), level=Qgis.Critical, duration=0)
         self.__layer.changeGeometry(self.__selectedFeature.id(), geometry)
         self.__confDlg.accept()
         self.__cancel()
@@ -297,7 +297,7 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
         geometry = QgsGeometry(self.__newFeature)
         if not geometry.isGeosValid():
             self.__iface.messageBar().pushMessage(
-                QCoreApplication.translate("VDLTools", "Geos geometry problem"), level=Qgis.Critical, duration=0)
+                QCoreApplication.translate("MaxTools", "Geos geometry problem"), level=Qgis.Critical, duration=0)
         feature = QgsFeature(self.__layer.fields())
         feature.setGeometry(geometry)
         primaryKey = QgsDataSourceUri(self.__layer.source()).keyColumn()
@@ -408,12 +408,12 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
             if len(found_features) > 0:
                 if len(found_features) > 1:
                     self.__iface.messageBar().pushMessage(
-                        QCoreApplication.translate("VDLTools", "One feature at a time"), level=Qgis.Info)
+                        QCoreApplication.translate("MaxTools", "One feature at a time"), level=Qgis.Info)
                     return
                 self.__selectedFeature = found_features[0]
                 if self.__layer.geometryType() != Qgis.GeometryType.Point:
                     self.__iface.messageBar().pushMessage(
-                        QCoreApplication.translate("VDLTools",
+                        QCoreApplication.translate("MaxTools",
                                                    "Select vertex for moving (ESC to undo)"),
                         level=Qgis.Info, duration=3)
                     self.__findVertex = True

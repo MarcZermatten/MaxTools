@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-06-20
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -52,8 +52,8 @@ class ShowSettings(QObject):
         """
         QObject.__init__(self)
         self.__iface = iface
-        self.icon_path = ':/plugins/VDLTools/icons/settings_icon.png'
-        self.text = QCoreApplication.translate("VDLTools", "Settings")
+        self.icon_path = ':/plugins/MaxTools/icons/settings_icon.png'
+        self.text = QCoreApplication.translate("MaxTools", "Settings")
         self.__showDlg = None
         self.__importConfigTable = None
         self.__importUriDb = None
@@ -82,52 +82,52 @@ class ShowSettings(QObject):
         """
 
         """ Reference point layers for drawdown tool """
-        str_ids = QgsProject.instance().readEntry("VDLTools", "ref_layers", "None")[0]
+        str_ids = QgsProject.instance().readEntry("MaxTools", "ref_layers", "None")[0]
         ref_ids = str_ids.split(',')
 
         """ Adjustable point layers for drawdown tool """
-        str_ids = QgsProject.instance().readEntry("VDLTools", "adj_layers", "None")[0]
+        str_ids = QgsProject.instance().readEntry("MaxTools", "adj_layers", "None")[0]
         adj_ids = str_ids.split(',')
 
         """ Level attribute for drawdown tool """
-        self.__levelAtt = QgsProject.instance().readEntry("VDLTools", "level_att", "None")[0]
+        self.__levelAtt = QgsProject.instance().readEntry("MaxTools", "level_att", "None")[0]
 
         """ Level value for drawdown tool """
-        value = QgsProject.instance().readEntry("VDLTools", "level_val", "None")[0]
+        value = QgsProject.instance().readEntry("MaxTools", "level_val", "None")[0]
         self.__levelVals = value.split(",")
 
         """ Drawdown line layer """
-        dd_id = QgsProject.instance().readEntry("VDLTools", "drawdown_layer", "None")[0]
+        dd_id = QgsProject.instance().readEntry("MaxTools", "drawdown_layer", "None")[0]
 
         """ Pipe diameter attribute for drawdown line layer """
-        self.__pipeDiam = QgsProject.instance().readEntry("VDLTools", "pipe_diam", "None")[0]
+        self.__pipeDiam = QgsProject.instance().readEntry("MaxTools", "pipe_diam", "None")[0]
 
         """ Url used to get mnt values on a line """
-        self.__mntUrl = QgsProject.instance().readEntry("VDLTools", "mnt_url", "None")[0]
+        self.__mntUrl = QgsProject.instance().readEntry("MaxTools", "mnt_url", "None")[0]
 
         """ Config table in Database for importing new Lausanne data """
-        self.__importConfigTable = QgsProject.instance().readEntry("VDLTools", "import_config_table", None)[0]
+        self.__importConfigTable = QgsProject.instance().readEntry("MaxTools", "import_config_table", None)[0]
 
         """ Config table in Database for controling """
-        self.__controlConfigTable = QgsProject.instance().readEntry("VDLTools", "control_config_table", None)[0]
+        self.__controlConfigTable = QgsProject.instance().readEntry("MaxTools", "control_config_table", None)[0]
 
         """ Database used for importing new Lausanne data """
-        importDbName = QgsProject.instance().readEntry("VDLTools", "import_db_name", None)[0]
+        importDbName = QgsProject.instance().readEntry("MaxTools", "import_db_name", None)[0]
 
         """ Database used for controling """
-        controlDbName = QgsProject.instance().readEntry("VDLTools", "control_db_name", None)[0]
+        controlDbName = QgsProject.instance().readEntry("MaxTools", "control_db_name", None)[0]
 
         """ Schema of the Database used for importing new Lausanne data """
-        self.__importSchemaDb = QgsProject.instance().readEntry("VDLTools", "import_schema_db", None)[0]
+        self.__importSchemaDb = QgsProject.instance().readEntry("MaxTools", "import_schema_db", None)[0]
 
         """ Schema of the Database used for controling """
-        self.__controlSchemaDb = QgsProject.instance().readEntry("VDLTools", "control_schema_db", None)[0]
+        self.__controlSchemaDb = QgsProject.instance().readEntry("MaxTools", "control_schema_db", None)[0]
 
         """ Temporarly points layer for the project """
-        mpl_id = QgsProject.instance().readEntry("VDLTools", "memory_points_layer", None)[0]
+        mpl_id = QgsProject.instance().readEntry("MaxTools", "memory_points_layer", None)[0]
 
         """ Temporarly lines layer for the project """
-        mll_id = QgsProject.instance().readEntry("VDLTools", "memory_lines_layer", None)[0]
+        mll_id = QgsProject.instance().readEntry("MaxTools", "memory_lines_layer", None)[0]
 
         for layer in list(QgsProject.instance().mapLayers().values()):
             if layer and layer.type() == QgsMapLayer.VectorLayer:
@@ -178,8 +178,8 @@ class ShowSettings(QObject):
         for v in values:
             if not v.isdigit():
                 QMessageBox.information(
-                    None, QCoreApplication.translate("VDLTools", "Error"),
-                    QCoreApplication.translate("VDLTools", "Point code attribute has to be numbers separated by comma")
+                    None, QCoreApplication.translate("MaxTools", "Error"),
+                    QCoreApplication.translate("MaxTools", "Point code attribute has to be numbers separated by comma")
                 )
                 return
 
@@ -212,21 +212,21 @@ class ShowSettings(QObject):
         To delete the saved memory lines layer
         """
         self.__memoryLinesLayer = None
-        QgsProject.instance().writeEntry("VDLTools", "memory_lines_layer", None)
+        QgsProject.instance().writeEntry("MaxTools", "memory_lines_layer", None)
 
     def __memoryPointsLayerDeleted(self):
         """
         To delete the saved memory points layer
         """
         self.__memoryPointsLayer = None
-        QgsProject.instance().writeEntry("VDLTools", "memory_points_layer", None)
+        QgsProject.instance().writeEntry("MaxTools", "memory_points_layer", None)
 
     def __drawdownLayerDeleted(self):
         """
         To delete the saved drawdown layer
         """
         self.__drawdownLayer = None
-        QgsProject.instance().writeEntry("VDLTools", "drawdown_layer", None)
+        QgsProject.instance().writeEntry("MaxTools", "drawdown_layer", None)
 
     @property
     def pointsLayer(self):
@@ -359,7 +359,7 @@ class ShowSettings(QObject):
         if pointsLayer:
             layer_id = pointsLayer.id()
             self.__memoryPointsLayer.layerDeleted.connect(self.__memoryPointsLayerDeleted)
-        QgsProject.instance().writeEntry("VDLTools", "memory_points_layer", layer_id)
+        QgsProject.instance().writeEntry("MaxTools", "memory_points_layer", layer_id)
 
     @linesLayer.setter
     def linesLayer(self, linesLayer):
@@ -427,7 +427,7 @@ class ShowSettings(QObject):
         if self.__linesLayer:
             layer_id = self.__linesLayer.id()
             self.__memoryLinesLayer.layerDeleted.connect(self.__memoryLinesLayerDeleted)
-        QgsProject.instance().writeEntry("VDLTools", "memory_lines_layer", layer_id)
+        QgsProject.instance().writeEntry("MaxTools", "memory_lines_layer", layer_id)
         self.__cancel()
 
     @mntUrl.setter
@@ -438,7 +438,7 @@ class ShowSettings(QObject):
         """
         self.__mntUrl = mntUrl
         if mntUrl is not None:
-            QgsProject.instance().writeEntry("VDLTools", "mnt_url", mntUrl)
+            QgsProject.instance().writeEntry("MaxTools", "mnt_url", mntUrl)
 
     @refLayers.setter
     def refLayers(self, refLayers):
@@ -454,7 +454,7 @@ class ShowSettings(QObject):
                     ids += ","
                 ids += str(layer.id())
                 # layer.layerDeleted.connect(self.__refLayerDeleted)
-        QgsProject.instance().writeEntry("VDLTools", "ref_layers", ids)
+        QgsProject.instance().writeEntry("MaxTools", "ref_layers", ids)
 
     @adjLayers.setter
     def adjLayers(self, adjLayers):
@@ -469,7 +469,7 @@ class ShowSettings(QObject):
                 if ids != "":
                     ids += ","
                 ids += str(layer.id())
-        QgsProject.instance().writeEntry("VDLTools", "adj_layers", ids)
+        QgsProject.instance().writeEntry("MaxTools", "adj_layers", ids)
 
     @levelAtt.setter
     def levelAtt(self, levelAtt):
@@ -479,7 +479,7 @@ class ShowSettings(QObject):
         """
         self.__levelAtt = levelAtt
         if levelAtt is not None:
-            QgsProject.instance().writeEntry("VDLTools", "level_att", levelAtt)
+            QgsProject.instance().writeEntry("MaxTools", "level_att", levelAtt)
 
     @levelVals.setter
     def levelVals(self, levelVals):
@@ -489,7 +489,7 @@ class ShowSettings(QObject):
         """
         self.__levelVals = levelVals.split(",")
         if levelVals is not None:
-            QgsProject.instance().writeEntry("VDLTools", "level_val", levelVals)
+            QgsProject.instance().writeEntry("MaxTools", "level_val", levelVals)
 
     @drawdownLayer.setter
     def drawdownLayer(self, drawdownLayer):
@@ -502,7 +502,7 @@ class ShowSettings(QObject):
         if drawdownLayer:
             layer_id = drawdownLayer.id()
             self.__drawdownLayer.layerDeleted.connect(self.__drawdownLayerDeleted)
-        QgsProject.instance().writeEntry("VDLTools", "drawdown_layer", layer_id)
+        QgsProject.instance().writeEntry("MaxTools", "drawdown_layer", layer_id)
 
     @pipeDiam.setter
     def pipeDiam(self, pipeDiam):
@@ -512,7 +512,7 @@ class ShowSettings(QObject):
         """
         self.__pipeDiam = pipeDiam
         if pipeDiam is not None:
-            QgsProject.instance().writeEntry("VDLTools", "pipe_diam", pipeDiam)
+            QgsProject.instance().writeEntry("MaxTools", "pipe_diam", pipeDiam)
 
     @importConfigTable.setter
     def importConfigTable(self, importConfigTable):
@@ -522,7 +522,7 @@ class ShowSettings(QObject):
         """
         self.__importConfigTable = importConfigTable
         if importConfigTable is not None:
-            QgsProject.instance().writeEntry("VDLTools", "import_config_table", importConfigTable)
+            QgsProject.instance().writeEntry("MaxTools", "import_config_table", importConfigTable)
 
     @importUriDb.setter
     def importUriDb(self, importUriDb):
@@ -532,7 +532,7 @@ class ShowSettings(QObject):
         """
         self.__importUriDb = importUriDb
         if importUriDb is not None:
-            QgsProject.instance().writeEntry("VDLTools", "import_db_name", importUriDb.database())
+            QgsProject.instance().writeEntry("MaxTools", "import_db_name", importUriDb.database())
 
     @importSchemaDb.setter
     def importSchemaDb(self, importSchemaDb):
@@ -542,7 +542,7 @@ class ShowSettings(QObject):
         """
         self.__importSchemaDb = importSchemaDb
         if importSchemaDb is not None:
-            QgsProject.instance().writeEntry("VDLTools", "import_schema_db", importSchemaDb)
+            QgsProject.instance().writeEntry("MaxTools", "import_schema_db", importSchemaDb)
 
     @controlConfigTable.setter
     def controlConfigTable(self, controlConfigTable):
@@ -552,7 +552,7 @@ class ShowSettings(QObject):
         """
         self.__controlConfigTable = controlConfigTable
         if controlConfigTable is not None:
-            QgsProject.instance().writeEntry("VDLTools", "control_config_table", controlConfigTable)
+            QgsProject.instance().writeEntry("MaxTools", "control_config_table", controlConfigTable)
 
     @controlUriDb.setter
     def controlUriDb(self, controlUriDb):
@@ -562,7 +562,7 @@ class ShowSettings(QObject):
         """
         self.__controlUriDb = controlUriDb
         if controlUriDb is not None:
-            QgsProject.instance().writeEntry("VDLTools", "control_db_name", controlUriDb.database())
+            QgsProject.instance().writeEntry("MaxTools", "control_db_name", controlUriDb.database())
 
     @controlSchemaDb.setter
     def controlSchemaDb(self, controlSchemaDb):
@@ -572,4 +572,4 @@ class ShowSettings(QObject):
         """
         self.__controlSchemaDb = controlSchemaDb
         if controlSchemaDb is not None:
-            QgsProject.instance().writeEntry("VDLTools", "control_schema_db", controlSchemaDb)
+            QgsProject.instance().writeEntry("MaxTools", "control_schema_db", controlSchemaDb)

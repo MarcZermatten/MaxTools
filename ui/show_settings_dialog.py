@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-06-20
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -79,7 +79,7 @@ class ShowSettingsDialog(QDialog):
         self.__levelVal = levelVal
         self.__drawdowmLayer = drawdowmLayer
         self.__pipeDiam = pipeDiam
-        self.setWindowTitle(QCoreApplication.translate("VDLTools", "Settings"))
+        self.setWindowTitle(QCoreApplication.translate("MaxTools", "Settings"))
         self.__pointsLayers = []
         self.__linesLayers = []
         self.__refAvailableLayers = []
@@ -111,12 +111,12 @@ class ShowSettingsDialog(QDialog):
         self.__scrollLayout = QGridLayout()
         line = 0
 
-        intersectLabel = QLabel(QCoreApplication.translate("VDLTools", "Intersect "))
+        intersectLabel = QLabel(QCoreApplication.translate("MaxTools", "Intersect "))
         self.__scrollLayout.addWidget(intersectLabel, line, 0)
 
         line += 1
 
-        pointLabel = QLabel(QCoreApplication.translate("VDLTools", "Working points layer : "))
+        pointLabel = QLabel(QCoreApplication.translate("MaxTools", "Working points layer : "))
         self.__scrollLayout.addWidget(pointLabel, line, 1)
 
         self.__pointCombo = QComboBox()
@@ -133,7 +133,7 @@ class ShowSettingsDialog(QDialog):
 
         line += 1
 
-        lineLabel = QLabel(QCoreApplication.translate("VDLTools", "Working lines layer : "))
+        lineLabel = QLabel(QCoreApplication.translate("MaxTools", "Working lines layer : "))
         self.__scrollLayout.addWidget(lineLabel, line, 1)
 
         self.__lineCombo = QComboBox()
@@ -150,12 +150,12 @@ class ShowSettingsDialog(QDialog):
 
         line += 1
 
-        profilesLabel = QLabel(QCoreApplication.translate("VDLTools", "Profiles "))
+        profilesLabel = QLabel(QCoreApplication.translate("MaxTools", "Profiles "))
         self.__scrollLayout.addWidget(profilesLabel, line, 0)
 
         line += 1
 
-        mntLabel = QLabel(QCoreApplication.translate("VDLTools", "Url for MNT : "))
+        mntLabel = QLabel(QCoreApplication.translate("MaxTools", "Url for MNT : "))
         self.__scrollLayout.addWidget(mntLabel, line, 1)
 
         self.__mntText = QLineEdit()
@@ -169,17 +169,17 @@ class ShowSettingsDialog(QDialog):
 
         line += 1
 
-        ddLabel = QLabel(QCoreApplication.translate("VDLTools", "Drawdown "))
+        ddLabel = QLabel(QCoreApplication.translate("MaxTools", "Drawdown "))
         self.__scrollLayout.addWidget(ddLabel, line, 0)
 
         line += 1
 
-        self.__scrollLayout.addWidget(QLabel(QCoreApplication.translate("VDLTools", "Layer")), line, 1)
+        self.__scrollLayout.addWidget(QLabel(QCoreApplication.translate("MaxTools", "Layer")), line, 1)
 
         namesLayout = QHBoxLayout()
         namesWidget = QWidget()
-        namesLayout.addWidget(QLabel(QCoreApplication.translate("VDLTools", "Reference")))
-        namesLayout.addWidget(QLabel(QCoreApplication.translate("VDLTools", "Adjustable")))
+        namesLayout.addWidget(QLabel(QCoreApplication.translate("MaxTools", "Reference")))
+        namesLayout.addWidget(QLabel(QCoreApplication.translate("MaxTools", "Adjustable")))
         namesLayout.setContentsMargins(0,0,0,0)
         namesWidget.setLayout(namesLayout)
         self.__scrollLayout.addWidget(namesWidget, line, 2)
@@ -209,7 +209,7 @@ class ShowSettingsDialog(QDialog):
 
             line += 1
 
-        levelAttLabel = QLabel(QCoreApplication.translate("VDLTools", "Code(s) on pipe : "))
+        levelAttLabel = QLabel(QCoreApplication.translate("MaxTools", "Code(s) on pipe : "))
         self.__scrollLayout.addWidget(levelAttLabel, line, 1)
 
         self.__levelAttCombo = QComboBox()
@@ -230,7 +230,7 @@ class ShowSettingsDialog(QDialog):
 
         line += 1
 
-        levelValLabel = QLabel(QCoreApplication.translate("VDLTools", "Point code attribute : "))
+        levelValLabel = QLabel(QCoreApplication.translate("MaxTools", "Point code attribute : "))
         self.__scrollLayout.addWidget(levelValLabel, line, 1)
 
         self.__levelValText = QLineEdit()
@@ -242,7 +242,7 @@ class ShowSettingsDialog(QDialog):
 
         line += 1
 
-        drawdownLabel = QLabel(QCoreApplication.translate("VDLTools", "drawdown layer : "))
+        drawdownLabel = QLabel(QCoreApplication.translate("MaxTools", "drawdown layer : "))
         self.__scrollLayout.addWidget(drawdownLabel, line, 1)
 
         self.__drawdownCombo = QComboBox()
@@ -255,7 +255,7 @@ class ShowSettingsDialog(QDialog):
 
         line += 1
 
-        pipeDiamLabel = QLabel(QCoreApplication.translate("VDLTools", "Pipe diameter attribute [cm] : "))
+        pipeDiamLabel = QLabel(QCoreApplication.translate("MaxTools", "Pipe diameter attribute [cm] : "))
         self.__scrollLayout.addWidget(pipeDiamLabel, line, 1)
 
         self.__pipeDiamCombo = QComboBox()
@@ -273,12 +273,12 @@ class ShowSettingsDialog(QDialog):
 
         line += 1
 
-        controlLabel = QLabel(QCoreApplication.translate("VDLTools", "Control "))
+        controlLabel = QLabel(QCoreApplication.translate("MaxTools", "Control "))
         self.__scrollLayout.addWidget(controlLabel, line, 0)
 
         line += 1
 
-        controlDbLabel = QLabel(QCoreApplication.translate("VDLTools", "Control database : "))
+        controlDbLabel = QLabel(QCoreApplication.translate("MaxTools", "Control database : "))
         self.__scrollLayout.addWidget(controlDbLabel, line, 1)
 
         self.__controlDbCombo = QComboBox()
@@ -291,7 +291,7 @@ class ShowSettingsDialog(QDialog):
 
         line += 1
 
-        controlSchemaLabel = QLabel(QCoreApplication.translate("VDLTools", "Control database schema : "))
+        controlSchemaLabel = QLabel(QCoreApplication.translate("MaxTools", "Control database schema : "))
         self.__scrollLayout.addWidget(controlSchemaLabel, line, 1)
 
         self.__controlSchemaCombo = QComboBox()
@@ -302,7 +302,7 @@ class ShowSettingsDialog(QDialog):
 
         line += 1
 
-        controlTableLabel = QLabel(QCoreApplication.translate("VDLTools", "Control config table : "))
+        controlTableLabel = QLabel(QCoreApplication.translate("MaxTools", "Control config table : "))
         self.__scrollLayout.addWidget(controlTableLabel, line, 1)
 
         self.__controlTableCombo = QComboBox()
@@ -322,12 +322,12 @@ class ShowSettingsDialog(QDialog):
         if moreTools:
             line += 1
 
-            importLabel = QLabel(QCoreApplication.translate("VDLTools", "Import "))
+            importLabel = QLabel(QCoreApplication.translate("MaxTools", "Import "))
             self.__scrollLayout.addWidget(importLabel, line, 0)
 
             line += 1
 
-            importDbLabel = QLabel(QCoreApplication.translate("VDLTools", "Import database : "))
+            importDbLabel = QLabel(QCoreApplication.translate("MaxTools", "Import database : "))
             self.__scrollLayout.addWidget(importDbLabel, line, 1)
 
             self.__importDbCombo = QComboBox()
@@ -340,7 +340,7 @@ class ShowSettingsDialog(QDialog):
 
             line += 1
 
-            importSchemaLabel = QLabel(QCoreApplication.translate("VDLTools", "Import database schema : "))
+            importSchemaLabel = QLabel(QCoreApplication.translate("MaxTools", "Import database schema : "))
             self.__scrollLayout.addWidget(importSchemaLabel, line, 1)
 
             self.__importSchemaCombo = QComboBox()
@@ -351,7 +351,7 @@ class ShowSettingsDialog(QDialog):
 
             line += 1
 
-            importTableLabel = QLabel(QCoreApplication.translate("VDLTools", "Import config table : "))
+            importTableLabel = QLabel(QCoreApplication.translate("MaxTools", "Import config table : "))
             self.__scrollLayout.addWidget(importTableLabel, line, 1)
 
             self.__importTableCombo = QComboBox()
@@ -382,11 +382,11 @@ class ShowSettingsDialog(QDialog):
 
         self.__layout.addWidget(scroll, 1, 0, 1, 2)
 
-        self.__okButton = QPushButton(QCoreApplication.translate("VDLTools", "OK"))
+        self.__okButton = QPushButton(QCoreApplication.translate("MaxTools", "OK"))
         self.__okButton.setMinimumHeight(20)
         self.__okButton.setMinimumWidth(100)
 
-        self.__cancelButton = QPushButton(QCoreApplication.translate("VDLTools", "Cancel"))
+        self.__cancelButton = QPushButton(QCoreApplication.translate("MaxTools", "Cancel"))
         self.__cancelButton.setMinimumHeight(20)
         self.__cancelButton.setMinimumWidth(100)
 

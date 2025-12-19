@@ -1,5 +1,5 @@
-# VDLTools
-Outils QGIS pour la Ville de Lausanne
+# MaxTools
+Outils QGIS pour la Max Zermatten
 -------------------------------------
 
 > **Version 1.0.0** - Migré vers QGIS 3.x par GeoBrain (2025)
@@ -14,12 +14,12 @@ Outils QGIS pour la Ville de Lausanne
 ## Installation
 
 1. Télécharger ou cloner ce dépôt
-2. Copier le dossier `VDLTools` dans :
+2. Copier le dossier `MaxTools` dans :
    - **Windows** : `%APPDATA%\QGIS\QGIS3\profiles\default\python\plugins\`
    - **Linux** : `~/.local/share/QGIS/QGIS3/profiles/default/python/plugins/`
    - **macOS** : `~/Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins/`
 3. Redémarrer QGIS
-4. Activer le plugin : `Extensions` → `Gérer les extensions` → Cocher "VDL Tools"
+4. Activer le plugin : `Extensions` → `Gérer les extensions` → Cocher "Max Tools"
 
 ## Outils disponibles
 
@@ -63,7 +63,7 @@ L'outil "Intersect" permet de créer un cercle de construction d'un rayon donné
 - choisir le diamètre
 - en cliquant sur OK le point central est enregistré dans une couche mémoire de points et le cercle dans une couche mémoire de lignes
 
-Ces couches peuvent être choisies dans les paramètres (`Extension` → `VDLTools`).
+Ces couches peuvent être choisies dans les paramètres (`Extension` → `MaxTools`).
 
 ![Intersect Gif](./gifs/intersect.gif)
 
@@ -154,7 +154,7 @@ Cette version a été migrée de QGIS 2.18 vers QGIS 3.x. Principales modificati
 
 ## Crédits
 
-- **Auteur original** : Christophe Gusthiot (Ville de Lausanne)
+- **Auteur original** : Max Zermatten (Max Zermatten)
 - **Migration QGIS 3.x** : GeoBrain (2025)
 - **Licence** : GPL v2
 

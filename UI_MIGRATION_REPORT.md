@@ -1,4 +1,4 @@
-# VDLTools UI Migration to QGIS 3.x - Report
+# MaxTools UI Migration to QGIS 3.x - Report
 
 **Date**: 2025-12-19
 **Auteur**: GeoBrain
@@ -6,7 +6,7 @@
 
 ## Fichiers migrés
 
-Total: **22 fichiers** dans `VDLTools/ui/`
+Total: **22 fichiers** dans `MaxTools/ui/`
 
 ### Liste des fichiers
 
@@ -190,7 +190,7 @@ Exemple:
 
 1. **Tester l'ouverture des dialogues**:
    ```python
-   from VDLTools.ui.choose_control_dialog import ChooseControlDialog
+   from MaxTools.ui.choose_control_dialog import ChooseControlDialog
    dialog = ChooseControlDialog(names=[])
    ```
 
@@ -247,4 +247,4 @@ grep -r "QgsMessageBar\.(CRITICAL|WARNING|INFO)" ui/
 ---
 
 **Généré par**: GeoBrain (Claude AI)
-**Script de migration**: `C:/Users/zema/GeoBrain/VDLTools/migrate_ui.py`
+**Script de migration**: `C:/Users/zema/GeoBrain/MaxTools/migrate_ui.py`

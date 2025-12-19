@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2017-02-06
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -41,8 +41,8 @@ class MultiAttributesTool(MultiselectTool):
         """
         MultiselectTool.__init__(self, iface, True)
         self.__iface = iface
-        self.icon_path = ':/plugins/VDLTools/icons/select_icon.png'
-        self.text = QCoreApplication.translate("VDLTools", "Select features on multiple layers")
+        self.icon_path = ':/plugins/MaxTools/icons/select_icon.png'
+        self.text = QCoreApplication.translate("MaxTools", "Select features on multiple layers")
         self.selectedSignal.connect(self.__selected)
         self.__confDlg = None
         # self.__tables = []
@@ -52,7 +52,7 @@ class MultiAttributesTool(MultiselectTool):
         To get the tool name
         :return: tool name
         """
-        return QCoreApplication.translate("VDLTools", "Multiselect")
+        return QCoreApplication.translate("MaxTools", "Multiselect")
 
     def setTool(self):
         """

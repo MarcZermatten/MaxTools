@@ -2,13 +2,13 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2017-07-14
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
         email                : cgusthiott@gmail.com
  ***************************************************************************/
 

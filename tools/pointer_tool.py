@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2017-01-23
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -47,8 +47,8 @@ class PointerTool(QgsMapTool):
         """
         QgsMapTool.__init__(self, iface.mapCanvas())
         self.__iface = iface
-        self.icon_path = ':/plugins/VDLTools/icons/pointer_icon.png'
-        self.text = QCoreApplication.translate("VDLTools", "Elevation pointer")
+        self.icon_path = ':/plugins/MaxTools/icons/pointer_icon.png'
+        self.text = QCoreApplication.translate("MaxTools", "Elevation pointer")
         self.setCursor(Qt.ArrowCursor)
 
     def setTool(self):
@@ -79,11 +79,11 @@ class PointerTool(QgsMapTool):
                             alt = f.geometry().geometry().zAt(closest[1])
                         elif f.geometry().type() == Qgis.GeometryType.Polygon:
                             self.__iface.messageBar().pushMessage(
-                                QCoreApplication.translate("VDLTools", "Polygon not yet implemented"),
+                                QCoreApplication.translate("MaxTools", "Polygon not yet implemented"),
                                 level=Qgis.Warning)
                             continue
                         else:
                             continue
                         display += "    " + str(f.id()) + " | " + str(alt) + " m.\n"
         if display != "":
-            QMessageBox.information(None, QCoreApplication.translate("VDLTools", "Id | Elevation"), display)
+            QMessageBox.information(None, QCoreApplication.translate("MaxTools", "Id | Elevation"), display)

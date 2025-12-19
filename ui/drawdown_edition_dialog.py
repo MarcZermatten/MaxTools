@@ -2,13 +2,13 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2018-11-07
         git sha              : $Format:%H$
-        copyright            : (C) 2018 Ville de Lausanne
-        author               : Ingénierie Informatique Gusthiot, Christophe Gusthiot
+        copyright            : (C) 2018 Max Zermatten
+        author               : Ingénierie Informatique Gusthiot, Max Zermatten
         email                : i2g@gusthiot.ch
  ***************************************************************************/
 
@@ -37,10 +37,10 @@ class DrawdownEditionDialog(QDialog):
         """
         QDialog.__init__(self)
         self.__layers = layers
-        self.setWindowTitle(QCoreApplication.translate("VDLTools", "Edition Confirmation"))
+        self.setWindowTitle(QCoreApplication.translate("MaxTools", "Edition Confirmation"))
         self.__layout = QGridLayout()
 
-        titleLabel = QLabel(QCoreApplication.translate("VDLTools", "Do you really want to edit these layers ?"))
+        titleLabel = QLabel(QCoreApplication.translate("MaxTools", "Do you really want to edit these layers ?"))
         self.__layout.addWidget(titleLabel, 0, 0, 1, 2)
 
         pos = 1
@@ -49,14 +49,14 @@ class DrawdownEditionDialog(QDialog):
             self.__layout.addWidget(label, pos, 0, 1, 2)
             pos += 1
 
-        self.__cancelButton = QPushButton(QCoreApplication.translate("VDLTools", "Cancel"))
+        self.__cancelButton = QPushButton(QCoreApplication.translate("MaxTools", "Cancel"))
         self.__cancelButton.setMinimumHeight(20)
         self.__cancelButton.setMinimumWidth(100)
 
         pos = len(self.__layers) + 1
         self.__layout.addWidget(self.__cancelButton, pos, 0)
 
-        self.__okButton = QPushButton(QCoreApplication.translate("VDLTools", "OK"))
+        self.__okButton = QPushButton(QCoreApplication.translate("MaxTools", "OK"))
         self.__okButton.setMinimumHeight(20)
         self.__okButton.setMinimumWidth(100)
         self.__layout.addWidget(self.__okButton, pos, 1)

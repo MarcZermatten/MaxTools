@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-05-09
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -61,8 +61,8 @@ class ProfileTool(QgsMapTool):
         """
         QgsMapTool.__init__(self, iface.mapCanvas())
         self.__iface = iface
-        self.icon_path = ':/plugins/VDLTools/icons/profile_icon.png'
-        self.text = QCoreApplication.translate("VDLTools", "Profile of a line")
+        self.icon_path = ':/plugins/MaxTools/icons/profile_icon.png'
+        self.text = QCoreApplication.translate("MaxTools", "Profile of a line")
         self.__lineLayer = None
         self.setCursor(Qt.ArrowCursor)
         self.__isChoosed = False
@@ -216,7 +216,7 @@ class ProfileTool(QgsMapTool):
         self.__confDlg = ProfileConfirmDialog()
         if origin == 0 and not self.__lineLayer.isEditable():
             self.__confDlg.setMessage(
-                QCoreApplication.translate("VDLTools", "Do you really want to edit the LineString layer ?"))
+                QCoreApplication.translate("MaxTools", "Do you really want to edit the LineString layer ?"))
             self.__confDlg.rejected.connect(self.__checkZeros)
             self.__confDlg.okButton().clicked.connect(self.__onConfirmLine)
             self.__confDlg.cancelButton().clicked.connect(self.__onConfirmCancel)
@@ -231,7 +231,7 @@ class ProfileTool(QgsMapTool):
                     break
             if not case:
                 self.__confDlg.setMessage(
-                    QCoreApplication.translate("VDLTools", "Do you really want to edit the Point layer(s) ?"))
+                    QCoreApplication.translate("MaxTools", "Do you really want to edit the Point layer(s) ?"))
                 self.__confDlg.rejected.connect(self.__checkZeros)
                 self.__confDlg.okButton().clicked.connect(self.__onConfirmPoints)
                 self.__confDlg.cancelButton().clicked.connect(self.__onConfirmCancel)
@@ -396,7 +396,7 @@ class ProfileTool(QgsMapTool):
         message = ""
         for extra in self.__extras:
             message += str(extra[0]) + ") " + \
-                       QCoreApplication.translate("VDLTools",
+                       QCoreApplication.translate("MaxTools",
                                                   "The segment is too big, do you really want "
                                                   "to extrapolate anyway ? (elevation : ") + \
                        str(extra[1]) + "m) ? \n"
@@ -502,8 +502,8 @@ class ProfileTool(QgsMapTool):
                 diff = abs(point - points[s['point']])
                 if diff > 0.001:
                     QMessageBox.information(
-                        None, QCoreApplication.translate("VDLTools", "Elevation"),
-                        QCoreApplication.translate("VDLTools", "There is more than one elevation for the point ") +
+                        None, QCoreApplication.translate("MaxTools", "Elevation"),
+                        QCoreApplication.translate("MaxTools", "There is more than one elevation for the point ") +
                         str(s['point'])
                     )
                     return
@@ -624,7 +624,7 @@ class ProfileTool(QgsMapTool):
                     break
             if selected is None:
                 self.__iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools", "Error on selected"), level=Qgis.Critical,
+                    QCoreApplication.translate("MaxTools", "Error on selected"), level=Qgis.Critical,
                     duration=0
                 )
                 continue
@@ -642,9 +642,9 @@ class ProfileTool(QgsMapTool):
                 for position in rg_positions:
                     if position['x'] == x and position['y'] == y and position['iden'] == iden:
                         self.__iface.messageBar().pushMessage(
-                           QCoreApplication.translate("VDLTools", "Beware! the line ") + str(iden) +
-                           QCoreApplication.translate("VDLTools", " has 2 identical summits on the vertex ") +
-                           str(i-1) + QCoreApplication.translate("VDLTools", " same coordinates (X and Y). "
+                           QCoreApplication.translate("MaxTools", "Beware! the line ") + str(iden) +
+                           QCoreApplication.translate("MaxTools", " has 2 identical summits on the vertex ") +
+                           str(i-1) + QCoreApplication.translate("MaxTools", " same coordinates (X and Y). "
                                                                              "Please correct the line geometry."),
                            level=Qgis.Critical, duration=0
                         )
@@ -873,7 +873,7 @@ class ProfileTool(QgsMapTool):
                 self.__inSelection = True
                 line = self.__lastFeature.geometry().asPolyline()
                 self.__iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools",
+                    QCoreApplication.translate("MaxTools",
                                                "Select more lines with click left or process "
                                                "with click right (ESC to undo)"),
                     level=Qgis.Info, duration=3)
@@ -935,7 +935,7 @@ class ProfileTool(QgsMapTool):
                     zz.append(i)
             if len(zz) == 0:
                 self.__iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools", "No line z ?!?"), level=Qgis.Warning)
+                    QCoreApplication.translate("MaxTools", "No line z ?!?"), level=Qgis.Warning)
             elif len(zz) == 1:
                 z0 = pt['z'][zz[0]]
                 for i in range(num_lines, len(pt['z'])):
@@ -969,7 +969,7 @@ class ProfileTool(QgsMapTool):
                                 situations.append({'point': p, 'layer': (i-num_lines+1), 'vertex': z0})
             else:
                 self.__iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools", "More than 2 lines z ?!?"), level=Qgis.Warning)
+                    QCoreApplication.translate("MaxTools", "More than 2 lines z ?!?"), level=Qgis.Warning)
 
         if (len(situations) > 0) or (len(differences) > 0):
             self.__setMessageDialog(situations, differences, self.__getNames())

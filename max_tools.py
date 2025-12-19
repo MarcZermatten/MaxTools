@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-04-05
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
 
         Migrated to QGIS 3.x by GeoBrain (2025)
  ***************************************************************************/
@@ -50,7 +50,7 @@ from . import resources
 import os
 
 
-class VDLTools:
+class MaxTools:
     """
     Main plugin class
     """
@@ -77,7 +77,7 @@ class VDLTools:
         self.showSettings = None
         self.rebuildIndex = None
         self.controlTool = None
-        if VDLTools.MORE_TOOLS:
+        if MaxTools.MORE_TOOLS:
             self.importMeasures = None
 
         # initialize plugin directory
@@ -91,7 +91,7 @@ class VDLTools:
         locale_path = os.path.join(
             self.plugin_dir,
             'i18n',
-            'VDLTools_{}.qm'.format(locale))
+            'MaxTools_{}.qm'.format(locale))
 
         if os.path.exists(locale_path):
             self.translator = QTranslator()
@@ -102,9 +102,9 @@ class VDLTools:
 
         # Declare instance attributes
         self.actions = []
-        self.menu = QCoreApplication.translate("VDLTools", "&VDL Tools")
-        self.toolbar = self.iface.addToolBar("VDLTools")
-        self.toolbar.setObjectName("VDLTools")
+        self.menu = QCoreApplication.translate("MaxTools", "&Max Tools")
+        self.toolbar = self.iface.addToolBar("MaxTools")
+        self.toolbar.setObjectName("MaxTools")
 
     def add_action(self, tool, parent, enable=True, isMapTool=True, inToolBar=True):
         """To add an available action.
@@ -186,7 +186,7 @@ class VDLTools:
         self.drawdownTool.setEnable()
         self.showSettings.changedSignal.connect(self.drawdownTool.setEnable)
 
-        if VDLTools.MORE_TOOLS:
+        if MaxTools.MORE_TOOLS:
             self.importMeasures = ImportMeasures(self.iface)
             self.add_action(self.importMeasures, self.iface.mainWindow(), isMapTool=False)
 
@@ -198,7 +198,7 @@ class VDLTools:
         """
         for action in self.actions:
             self.iface.removePluginMenu(
-                QCoreApplication.translate("VDLTools", "&VDL Tools"),
+                QCoreApplication.translate("MaxTools", "&Max Tools"),
                 action)
             self.iface.removeToolBarIcon(action)
         # remove the toolbar

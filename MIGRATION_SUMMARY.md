@@ -1,4 +1,4 @@
-# Migration VDLTools UI vers QGIS 3.x - Résumé
+# Migration MaxTools UI vers QGIS 3.x - Résumé
 
 **Date**: 19 décembre 2025
 **Statut**: ✅ Migration complétée avec succès
@@ -6,7 +6,7 @@
 
 ## Résultat
 
-Tous les fichiers Python du dossier `C:\Users\zema\GeoBrain\VDLTools\ui\` ont été migrés de PyQt4 vers qgis.PyQt (compatible QGIS 3.x).
+Tous les fichiers Python du dossier `C:\Users\zema\GeoBrain\MaxTools\ui\` ont été migrés de PyQt4 vers qgis.PyQt (compatible QGIS 3.x).
 
 ### Fichiers migrés
 
@@ -171,7 +171,7 @@ ui/drawdown_adjustment_dialog.py.bak
 Exécutez cette commande pour vérifier qu'il ne reste aucun import PyQt4:
 
 ```bash
-cd C:\Users\zema\GeoBrain\VDLTools\ui
+cd C:\Users\zema\GeoBrain\MaxTools\ui
 grep -r "from PyQt4" *.py
 grep -r "import PyQt4" *.py
 ```
@@ -183,7 +183,7 @@ grep -r "import PyQt4" *.py
 Si nécessaire, exécutez le script de correction:
 
 ```bash
-cd C:\Users\zema\GeoBrain\VDLTools
+cd C:\Users\zema\GeoBrain\MaxTools
 python fix_import_issues.py
 ```
 
@@ -193,7 +193,7 @@ Testez chaque dialogue dans QGIS 3.x:
 
 ```python
 # Dans la console Python QGIS
-from VDLTools.ui.choose_control_dialog import ChooseControlDialog
+from MaxTools.ui.choose_control_dialog import ChooseControlDialog
 dialog = ChooseControlDialog(names=[])
 dialog.show()
 ```
@@ -255,16 +255,16 @@ import sys
 sys.path.append(r'C:\Users\zema\GeoBrain')
 
 # Tester un import simple
-from VDLTools.ui.attributes_table_view import AttributesTableView
+from MaxTools.ui.attributes_table_view import AttributesTableView
 print("✅ Import attributes_table_view OK")
 
-from VDLTools.ui.choose_control_dialog import ChooseControlDialog
+from MaxTools.ui.choose_control_dialog import ChooseControlDialog
 print("✅ Import choose_control_dialog OK")
 
-from VDLTools.ui.profile_dock_widget import ProfileDockWidget
+from MaxTools.ui.profile_dock_widget import ProfileDockWidget
 print("✅ Import profile_dock_widget OK")
 
-from VDLTools.ui.show_settings_dialog import ShowSettingsDialog
+from MaxTools.ui.show_settings_dialog import ShowSettingsDialog
 print("✅ Import show_settings_dialog OK")
 
 print("\n✅ Migration réussie!")
@@ -280,4 +280,4 @@ En cas de problème, contacter:
 
 **Généré par**: GeoBrain
 **Date**: 2025-12-19
-**Localisation**: `C:\Users\zema\GeoBrain\VDLTools\`
+**Localisation**: `C:\Users\zema\GeoBrain\MaxTools\`

@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-05-23
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -57,7 +57,7 @@ class GeometryV2(object):
             polygon = wktPolygon.replace('CurvePolygon', '')
         else:
             iface.messageBar().pushMessage(
-                QCoreApplication.translate("VDLTools", "This geometry is not yet implemented"),
+                QCoreApplication.translate("MaxTools", "This geometry is not yet implemented"),
                 level=QgsMessageBar.WARNING)
             return None
         polygon = polygon.strip()[1:-1]
@@ -110,7 +110,7 @@ class GeometryV2(object):
                 compound = wktLine.replace('CompoundCurve', '')
             else:
                 iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools", "This geometry is not yet implemented"),
+                    QCoreApplication.translate("MaxTools", "This geometry is not yet implemented"),
                     level=QgsMessageBar.WARNING)
                 return None
             compound = compound.strip()[1:-1]
@@ -173,7 +173,7 @@ class GeometryV2(object):
             point = wktPoint.replace('Point', '')
         else:
             iface.messageBar().pushMessage(
-                QCoreApplication.translate("VDLTools", "This geometry is not yet implemented"),
+                QCoreApplication.translate("MaxTools", "This geometry is not yet implemented"),
                 level=QgsMessageBar.WARNING)
             return None
         point = point.strip()[1:-1]

@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2017-01-09
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -45,8 +45,8 @@ class SubProfileTool(QgsMapTool):
         """
         QgsMapTool.__init__(self, iface.mapCanvas())
         self.__iface = iface
-        self.icon_path = ':/plugins/VDLTools/icons/profile_2_icon.png'
-        self.text = QCoreApplication.translate("VDLTools", "Line for MNT profile")
+        self.icon_path = ':/plugins/MaxTools/icons/profile_2_icon.png'
+        self.text = QCoreApplication.translate("MaxTools", "Line for MNT profile")
         self.setCursor(Qt.ArrowCursor)
         self.__isSelected = False
         self.__dockWdg = None

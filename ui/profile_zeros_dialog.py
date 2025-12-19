@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-11-01
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -37,7 +37,7 @@ class ProfileZerosDialog(QDialog):
         """
         QDialog.__init__(self)
         self.__zeros = zeros
-        self.setWindowTitle(QCoreApplication.translate("VDLTools", "Zeros"))
+        self.setWindowTitle(QCoreApplication.translate("MaxTools", "Zeros"))
         self.__layout = QGridLayout()
 
         self.__zeroLabels = []
@@ -49,15 +49,15 @@ class ProfileZerosDialog(QDialog):
 
         for i in range(len(self.__zeros)):
             msg = "- vertex " + str(self.__zeros[i][0])
-            msg += QCoreApplication.translate("VDLTools", ", elevation : '0', ")
+            msg += QCoreApplication.translate("MaxTools", ", elevation : '0', ")
             if self.__zeros[i][1] is not None:
                 if self.__zeros[i][3] == 'E':
-                    msg += QCoreApplication.translate("VDLTools", "extrapolated elevation : ")
+                    msg += QCoreApplication.translate("MaxTools", "extrapolated elevation : ")
                 else:
-                    msg += QCoreApplication.translate("VDLTools", "interpolated elevation : ")
+                    msg += QCoreApplication.translate("MaxTools", "interpolated elevation : ")
                 msg += str(self.__zeros[i][1]) + "m"
                 if self.__zeros[i][2] > 1:
-                    msg += QCoreApplication.translate("VDLTools", " (and apply to point)")
+                    msg += QCoreApplication.translate("MaxTools", " (and apply to point)")
                 msgCheck = QCheckBox()
                 msgCheck.setChecked(True)
                 self.__zeroChecks.append(msgCheck)
@@ -65,9 +65,9 @@ class ProfileZerosDialog(QDialog):
                 displayButton = True
             else:
                 if self.__zeros[i][3] == 'E':
-                    msg += QCoreApplication.translate("VDLTools", "no extrapolated elevation")
+                    msg += QCoreApplication.translate("MaxTools", "no extrapolated elevation")
                 else:
-                    msg += QCoreApplication.translate("VDLTools", "no interpolated elevation")
+                    msg += QCoreApplication.translate("MaxTools", "no interpolated elevation")
                 self.__zeroChecks.append(None)
 
             zeroLabel = QLabel(msg)
@@ -83,14 +83,14 @@ class ProfileZerosDialog(QDialog):
 
         self.__layout.addWidget(scroll, 1, 0, 1, 2)
 
-        self.__passButton = QPushButton(QCoreApplication.translate("VDLTools", "Pass"))
+        self.__passButton = QPushButton(QCoreApplication.translate("MaxTools", "Pass"))
         self.__passButton.setMinimumHeight(20)
         self.__passButton.setMinimumWidth(100)
 
         pos = len(self.__zeros) + 1
         self.__layout.addWidget(self.__passButton, pos, 0)
 
-        self.__applyButton = QPushButton(QCoreApplication.translate("VDLTools", "Apply adjustments"))
+        self.__applyButton = QPushButton(QCoreApplication.translate("MaxTools", "Apply adjustments"))
         self.__applyButton.setMinimumHeight(20)
         self.__applyButton.setMinimumWidth(100)
         if displayButton:

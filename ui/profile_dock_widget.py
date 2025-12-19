@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-10-05
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -70,7 +70,7 @@ class ProfileDockWidget(QDockWidget):
         :param width: dock widget geometry
         """
         QDockWidget.__init__(self)
-        self.setWindowTitle(QCoreApplication.translate("VDLTools", "Profile Tool"))
+        self.setWindowTitle(QCoreApplication.translate("MaxTools", "Profile Tool"))
         self.__iface = iface
         self.__geom = geometry
         self.__canvas = self.__iface.mapCanvas()
@@ -87,7 +87,7 @@ class ProfileDockWidget(QDockWidget):
         else:
             self.__lib = None
             self.__iface.messageBar().pushMessage(
-                QCoreApplication.translate("VDLTools", "No graph lib available (qwt5 or matplotlib)"),
+                QCoreApplication.translate("MaxTools", "No graph lib available (qwt5 or matplotlib)"),
                 level=Qgis.Critical, duration=0)
 
         self.__doTracking = False
@@ -140,14 +140,14 @@ class ProfileDockWidget(QDockWidget):
 
         if mntButton:
             self.__displayMnt = False
-            self.__mntButton = QPushButton(QCoreApplication.translate("VDLTools", "Display MNT"))
+            self.__mntButton = QPushButton(QCoreApplication.translate("MaxTools", "Display MNT"))
             self.__mntButton.setFixedSize(size)
             self.__mntButton.clicked.connect(self.__mnt)
             self.__vertLayout.addWidget(self.__mntButton)
 
         if zerosButton:
             self.__displayZeros = False
-            self.__zerosButton = QPushButton(QCoreApplication.translate("VDLTools", "Display Zeros"))
+            self.__zerosButton = QPushButton(QCoreApplication.translate("MaxTools", "Display Zeros"))
             self.__zerosButton.setFixedSize(size)
             self.__zerosButton.clicked.connect(self.__zeros)
             self.__vertLayout.addWidget(self.__zerosButton)
@@ -155,7 +155,7 @@ class ProfileDockWidget(QDockWidget):
             self.__displayZeros = True
 
         self.__scale11 = False
-        self.__scaleButton = QPushButton(QCoreApplication.translate("VDLTools", "Scale 1:1"))
+        self.__scaleButton = QPushButton(QCoreApplication.translate("MaxTools", "Scale 1:1"))
         self.__scaleButton.setFixedSize(size)
         self.__scaleButton.clicked.connect(self.__scale)
         if self.__lib == 'Qwt5':
@@ -188,7 +188,7 @@ class ProfileDockWidget(QDockWidget):
         self.__typeCombo.setFixedSize(size)
         self.__typeCombo.addItems(self.__types)
         self.__vertLayout.addWidget(self.__typeCombo)
-        self.__saveButton = QPushButton(QCoreApplication.translate("VDLTools", "Save"))
+        self.__saveButton = QPushButton(QCoreApplication.translate("MaxTools", "Save"))
         self.__saveButton.setFixedSize(size)
         self.__saveButton.clicked.connect(self.__save)
         self.__vertLayout.addWidget(self.__saveButton)
@@ -236,10 +236,10 @@ class ProfileDockWidget(QDockWidget):
     def __scale(self):
         if self.__scale11:
             self.__scale11 = False
-            self.__scaleButton.setText(QCoreApplication.translate("VDLTools", "Scale 1:1"))
+            self.__scaleButton.setText(QCoreApplication.translate("MaxTools", "Scale 1:1"))
         else:
             self.__scale11 = True
-            self.__scaleButton.setText(QCoreApplication.translate("VDLTools", "Auto scale"))
+            self.__scaleButton.setText(QCoreApplication.translate("MaxTools", "Auto scale"))
 
     def __mnt(self):
         """
@@ -247,10 +247,10 @@ class ProfileDockWidget(QDockWidget):
         """
         if self.__displayMnt:
             self.__displayMnt = False
-            self.__mntButton.setText(QCoreApplication.translate("VDLTools", "Display MNT"))
+            self.__mntButton.setText(QCoreApplication.translate("MaxTools", "Display MNT"))
         else:
             self.__displayMnt = True
-            self.__mntButton.setText(QCoreApplication.translate("VDLTools", "Remove MNT"))
+            self.__mntButton.setText(QCoreApplication.translate("MaxTools", "Remove MNT"))
 
     def __zeros(self):
         """
@@ -258,10 +258,10 @@ class ProfileDockWidget(QDockWidget):
         """
         if self.__displayZeros:
             self.__displayZeros = False
-            self.__zerosButton.setText(QCoreApplication.translate("VDLTools", "Display Zeros"))
+            self.__zerosButton.setText(QCoreApplication.translate("MaxTools", "Display Zeros"))
         else:
             self.__displayZeros = True
-            self.__zerosButton.setText(QCoreApplication.translate("VDLTools", "Remove Zeros"))
+            self.__zerosButton.setText(QCoreApplication.translate("MaxTools", "Remove Zeros"))
 
     def __changePlotWidget(self):
         """
@@ -286,10 +286,10 @@ class ProfileDockWidget(QDockWidget):
             self.__plotWdg.plotLayout().setSpacing(100)
             self.__plotWdg.plotLayout().setCanvasMargin(10, QwtPlot.xBottom)
             self.__plotWdg.plotLayout().setCanvasMargin(10, QwtPlot.yLeft)
-            title = QwtText(QCoreApplication.translate("VDLTools", "Distance [m]"))
+            title = QwtText(QCoreApplication.translate("MaxTools", "Distance [m]"))
             title.setFont(QFont("Helvetica", 10))
             self.__plotWdg.setAxisTitle(QwtPlot.xBottom, title)
-            title.setText(QCoreApplication.translate("VDLTools", "Elevation [m]"))
+            title.setText(QCoreApplication.translate("MaxTools", "Elevation [m]"))
             title.setFont(QFont("Helvetica", 10))
             self.__plotWdg.setAxisTitle(QwtPlot.yLeft, title)
             self.__zoomer = QwtPlotZoomer(QwtPlot.xBottom, QwtPlot.yLeft, QwtPicker.DragSelection, QwtPicker.AlwaysOff,
@@ -396,16 +396,16 @@ class ProfileDockWidget(QDockWidget):
             self.__mntPoints.append(mnt_z)
         except HTTPError as e:
             self.__iface.messageBar().pushMessage(
-                QCoreApplication.translate("VDLTools", "HTTP Error"),
-                QCoreApplication.translate("VDLTools", "status error") + "[" + str(e.code) + "] : " + e.reason,
+                QCoreApplication.translate("MaxTools", "HTTP Error"),
+                QCoreApplication.translate("MaxTools", "status error") + "[" + str(e.code) + "] : " + e.reason,
                 level=Qgis.Critical, duration=0)
         except URLError as e:
             self.__iface.messageBar().pushMessage(
-                QCoreApplication.translate("VDLTools", "URL Error"),
+                QCoreApplication.translate("MaxTools", "URL Error"),
                 e.reason, level=Qgis.Critical, duration=0)
         except ValueError as e:
             self.__iface.messageBar().pushMessage(
-                QCoreApplication.translate("VDLTools", "No MNT values here"),
+                QCoreApplication.translate("MaxTools", "No MNT values here"),
                 level=Qgis.Critical, duration=0)
 
 
@@ -523,7 +523,7 @@ class ProfileDockWidget(QDockWidget):
             self.__reScalePlot(None, True)
         except:
             self.__iface.messageBar().pushMessage(
-                QCoreApplication.translate("VDLTools", "Rescale problem... (trace printed)"),
+                QCoreApplication.translate("MaxTools", "Rescale problem... (trace printed)"),
                 level=Qgis.Critical, duration=0)
             print(sys.exc_info()[0], traceback.format_exc())
         if self.__lib == 'Qwt5':
@@ -729,7 +729,7 @@ class ProfileDockWidget(QDockWidget):
             self.__outPNG()
         else:
             self.__iface.messageBar().pushMessage(
-                QCoreApplication.translate("VDLTools", "Invalid index ") + str(idx),
+                QCoreApplication.translate("MaxTools", "Invalid index ") + str(idx),
                 level=Qgis.Critical, duration=0)
 
     def __outPDF(self):
@@ -737,12 +737,12 @@ class ProfileDockWidget(QDockWidget):
         To save the profile as pdf file
         """
         fileName = QFileDialog.getSaveFileName(
-            self.__iface.mainWindow(), QCoreApplication.translate("VDLTools", "Save As"),
-            QCoreApplication.translate("VDLTools", "Profile.pdf"),"Portable Document Format (*.pdf)")
+            self.__iface.mainWindow(), QCoreApplication.translate("MaxTools", "Save As"),
+            QCoreApplication.translate("MaxTools", "Profile.pdf"),"Portable Document Format (*.pdf)")
         if fileName is not None:
             if self.__lib == 'Qwt5':
                 printer = QPrinter()
-                printer.setCreator(QCoreApplication.translate("VDLTools", "QGIS Profile Plugin"))
+                printer.setCreator(QCoreApplication.translate("MaxTools", "QGIS Profile Plugin"))
                 printer.setOutputFileName(fileName)
                 printer.setOutputFormat(QPrinter.PdfFormat)
                 printer.setOrientation(QPrinter.Landscape)
@@ -755,8 +755,8 @@ class ProfileDockWidget(QDockWidget):
         To save the profile as png file
         """
         fileName = QFileDialog.getSaveFileName(
-            self.__iface.mainWindow(), QCoreApplication.translate("VDLTools", "Save As"),
-            QCoreApplication.translate("VDLTools", "Profile.png"),"Portable Network Graphics (*.png)")
+            self.__iface.mainWindow(), QCoreApplication.translate("MaxTools", "Save As"),
+            QCoreApplication.translate("MaxTools", "Profile.png"),"Portable Network Graphics (*.png)")
         if fileName is not None:
             self.__printWdg.grab().save(fileName, "PNG")
 
@@ -801,8 +801,8 @@ class ProfileDockWidget(QDockWidget):
         axe.minorticks_on()
         axe.tick_params(axis="both", which="minor", direction="out", length=5, width=1, bottom=True, top=False,
                         left=True, right=False)
-        axe.set_xlabel(QCoreApplication.translate("VDLTools", "Distance [m]"))
-        axe.set_ylabel(QCoreApplication.translate("VDLTools", "Elevation [m]"))
+        axe.set_xlabel(QCoreApplication.translate("MaxTools", "Distance [m]"))
+        axe.set_ylabel(QCoreApplication.translate("MaxTools", "Elevation [m]"))
 
     def __activateMouseTracking(self, activate):
         """
@@ -824,7 +824,7 @@ class ProfileDockWidget(QDockWidget):
                     self.__plotWdg.draw()
             except Exception as e:
                 self.__iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools", "Tracking exception : ") + str(e),
+                    QCoreApplication.translate("MaxTools", "Tracking exception : ") + str(e),
                     level=Qgis.Critical, duration=0)
 
     def __mouseevent_mpl(self, event):
@@ -838,7 +838,7 @@ class ProfileDockWidget(QDockWidget):
                     self.__plotWdg.figure.get_axes()[0].lines.remove(self.__vline)
             except Exception as e:
                 self.__iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools", "Mouse event exception : ") + str(e),
+                    QCoreApplication.translate("MaxTools", "Mouse event exception : ") + str(e),
                     level=Qgis.Critical, duration=0)
             xdata = float(event.xdata)
             self.__vline = self.__plotWdg.figure.get_axes()[0].axvline(xdata, linewidth=2, color='k')

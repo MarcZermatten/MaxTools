@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-07-18
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -93,7 +93,7 @@ class DBConnector(object):
         ok = db.open()
         if not ok:
             self.__iface.messageBar().pushMessage(
-                QCoreApplication.translate("VDLTools", "Database Error: ") + db.lastError().text(),
+                QCoreApplication.translate("MaxTools", "Database Error: ") + db.lastError().text(),
                 level=QgsMessageBar.CRITICAL, duration=0)
             return None
         return db

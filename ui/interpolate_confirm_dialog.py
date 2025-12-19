@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-06-13
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -36,20 +36,20 @@ class InterpolateConfirmDialog(QDialog):
         Constructor
         """
         QDialog.__init__(self)
-        self.setWindowTitle(QCoreApplication.translate("VDLTools", "Edition Confirmation"))
+        self.setWindowTitle(QCoreApplication.translate("MaxTools", "Edition Confirmation"))
         self.__layout = QGridLayout()
 
         self.__confirmLabel = QLabel(
-            QCoreApplication.translate("VDLTools", "This LineString layer is not editable, what do you want to do ?"))
+            QCoreApplication.translate("MaxTools", "This LineString layer is not editable, what do you want to do ?"))
 
         self.__layout.addWidget(self.__confirmLabel, 0, 0, 1, 2)
 
         self.__radios = []
 
         self.__radios.append(QRadioButton(
-            QCoreApplication.translate("VDLTools", "Create point, and edit line with new vertex")))
-        self.__radios.append(QRadioButton(QCoreApplication.translate("VDLTools", "Create only the point")))
-        self.__radios.append(QRadioButton(QCoreApplication.translate("VDLTools", "Just edit line with new vertex")))
+            QCoreApplication.translate("MaxTools", "Create point, and edit line with new vertex")))
+        self.__radios.append(QRadioButton(QCoreApplication.translate("MaxTools", "Create only the point")))
+        self.__radios.append(QRadioButton(QCoreApplication.translate("MaxTools", "Just edit line with new vertex")))
 
         self.__scrollLayout = QGridLayout()
 
@@ -68,13 +68,13 @@ class InterpolateConfirmDialog(QDialog):
 
         self.__layout.addWidget(scroll, 1, 0, 1, 2)
 
-        self.__okButton = QPushButton(QCoreApplication.translate("VDLTools", "OK"))
+        self.__okButton = QPushButton(QCoreApplication.translate("MaxTools", "OK"))
         self.__okButton.setMinimumHeight(20)
         self.__okButton.setMinimumWidth(100)
 
         self.__layout.addWidget(self.__okButton, 4, 0)
 
-        self.__cancelButton = QPushButton(QCoreApplication.translate("VDLTools", "Cancel"))
+        self.__cancelButton = QPushButton(QCoreApplication.translate("MaxTools", "Cancel"))
         self.__cancelButton.setMinimumHeight(20)
         self.__cancelButton.setMinimumWidth(100)
 

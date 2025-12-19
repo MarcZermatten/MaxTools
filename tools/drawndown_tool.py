@@ -2,13 +2,13 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2018-08-21
         git sha              : $Format:%H$
-        copyright            : (C) 2018 Ville de Lausanne
-        author               : Ingénierie Informatique Gusthiot, Christophe Gusthiot
+        copyright            : (C) 2018 Max Zermatten
+        author               : Ingénierie Informatique Gusthiot, Max Zermatten
         email                : i2g@gusthiot.ch
  ***************************************************************************/
 
@@ -57,8 +57,8 @@ class DrawdownTool(QgsMapTool):
         """
         QgsMapTool.__init__(self, iface.mapCanvas())
         self.__iface = iface
-        self.icon_path = ':/plugins/VDLTools/icons/drawdown_icon.png'
-        self.text = QCoreApplication.translate("VDLTools", "Drawdown")
+        self.icon_path = ':/plugins/MaxTools/icons/drawdown_icon.png'
+        self.text = QCoreApplication.translate("MaxTools", "Drawdown")
         self.setCursor(Qt.ArrowCursor)
         self.__isChoosed = False
         self.__lastFeatureId = None
@@ -256,17 +256,17 @@ class DrawdownTool(QgsMapTool):
                             if (level - point_v2.z()) > 0.005:
                                 self.__iface.messageBar().pushMessage(
                                     QCoreApplication.translate(
-                                        "VDLTools", "More than one reference point, with 2 different elevations !!"),
+                                        "MaxTools", "More than one reference point, with 2 different elevations !!"),
                                     level=Qgis.Critical, duration=0)
                                 self.__cancel()
                                 return
                         level = point_v2.z()
-                    comp = QCoreApplication.translate("VDLTools", " (at invert)")
+                    comp = QCoreApplication.translate("MaxTools", " (at invert)")
                     if str(feature.attribute(self.ownSettings.levelAtt)) in self.ownSettings.levelVals:
                         drawdown = True
-                        comp = QCoreApplication.translate("VDLTools", " (on pipe)")
+                        comp = QCoreApplication.translate("MaxTools", " (on pipe)")
                     if point_v2.z() == 0:
-                        comp = QCoreApplication.translate("VDLTools", " (no elevation)")
+                        comp = QCoreApplication.translate("MaxTools", " (no elevation)")
 
                     self.__adjustments.append({'point': p, 'previous': point_v2.z(), 'line': False,
                                                'layer': layer, 'comp': comp, 'feature': feature, 'delta': False})
@@ -307,7 +307,7 @@ class DrawdownTool(QgsMapTool):
                                     if dtemp > diam:
                                         diam = dtemp
                                     self.__adjustments.append({'point': p, 'previous': zp, 'line': False, 'diam': dtemp,
-                                                               'comp': QCoreApplication.translate("VDLTools", " connected"),
+                                                               'comp': QCoreApplication.translate("MaxTools", " connected"),
                                                                'feature': f, 'layer': layer, 'delta': True})
                                     if zp is None or zp != zp:
                                         zz.append(0)
@@ -338,7 +338,7 @@ class DrawdownTool(QgsMapTool):
 
             dd = None
             if drawdown:
-                dd = QCoreApplication.translate("VDLTools", "drawdown")
+                dd = QCoreApplication.translate("MaxTools", "drawdown")
             self.__altitudes.append({'diam': diam, 'drawdown': dd, 'alt': alt})
 
         last = len(self.__altitudes)-1
@@ -430,7 +430,7 @@ class DrawdownTool(QgsMapTool):
         message = ""
         for extra in self.__extras:
             message += str(extra[0]) + ") " + \
-                       QCoreApplication.translate("VDLTools",
+                       QCoreApplication.translate("MaxTools",
                                                   "The segment is too big, do you really want "
                                                   "to extrapolate anyway ? (elevation : ") + \
                        str(extra[1]) + "m) ? \n"
@@ -455,7 +455,7 @@ class DrawdownTool(QgsMapTool):
         """
         self.__confDlg.reject()
         for extra in self.__extras:
-            self.__altitudes[extra[0]]['drawdown'] = QCoreApplication.translate("VDLTools", "cannot be extrapolated")
+            self.__altitudes[extra[0]]['drawdown'] = QCoreApplication.translate("MaxTools", "cannot be extrapolated")
         self.__setAdjustements()
 
     def __onAdjOk(self):
@@ -572,7 +572,7 @@ class DrawdownTool(QgsMapTool):
                     break
             if selected is None:
                 self.__iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools", "Error on selected"), level=Qgis.Critical,
+                    QCoreApplication.translate("MaxTools", "Error on selected"), level=Qgis.Critical,
                     duration=0
                 )
                 continue
@@ -590,9 +590,9 @@ class DrawdownTool(QgsMapTool):
                 for position in rg_positions:
                     if position['x'] == x and position['y'] == y and position['iden'] == iden:
                         self.__iface.messageBar().pushMessage(
-                           QCoreApplication.translate("VDLTools", "Beware! the line ") + str(iden) +
-                           QCoreApplication.translate("VDLTools", " has 2 identical summits on the vertex ") +
-                           str(i-1) + QCoreApplication.translate("VDLTools", " same coordinates (X and Y). "
+                           QCoreApplication.translate("MaxTools", "Beware! the line ") + str(iden) +
+                           QCoreApplication.translate("MaxTools", " has 2 identical summits on the vertex ") +
+                           str(i-1) + QCoreApplication.translate("MaxTools", " same coordinates (X and Y). "
                                                                              "Please correct the line geometry."),
                            level=Qgis.Critical, duration=0
                         )
@@ -737,7 +737,7 @@ class DrawdownTool(QgsMapTool):
                 self.__inSelection = True
                 line = self.__lastFeature.geometry().asPolyline()
                 self.__iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools",
+                    QCoreApplication.translate("MaxTools",
                                                "Select more lines with click left or process "
                                                "with click right (ESC to undo)"),
                     level=Qgis.Info, duration=3)

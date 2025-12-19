@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-07-19
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -43,8 +43,8 @@ class ImportMeasures(object):
         :param iface: interface
         """
         self.__iface = iface
-        self.icon_path = ':/plugins/VDLTools/icons/import_icon.png'
-        self.text = QCoreApplication.translate("VDLTools", "Import Measures")
+        self.icon_path = ':/plugins/MaxTools/icons/import_icon.png'
+        self.text = QCoreApplication.translate("MaxTools", "Import Measures")
         self.ownSettings = None
         self.__configTable = None
         self.__schemaDb = None
@@ -64,19 +64,19 @@ class ImportMeasures(object):
         To start the importation
         """
         if self.ownSettings is None:
-            self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "No settings given !!"),
+            self.__iface.messageBar().pushMessage(QCoreApplication.translate("MaxTools", "No settings given !!"),
                                                   level=Qgis.Critical, duration=0)
             return
         if self.ownSettings.importUriDb is None:
-            self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "No import db given !!"),
+            self.__iface.messageBar().pushMessage(QCoreApplication.translate("MaxTools", "No import db given !!"),
                                                   level=Qgis.Critical, duration=0)
             return
         if self.ownSettings.importSchemaDb is None:
-            self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "No import db schema given !!"),
+            self.__iface.messageBar().pushMessage(QCoreApplication.translate("MaxTools", "No import db schema given !!"),
                                                   level=Qgis.Critical, duration=0)
             return
         if self.ownSettings.importConfigTable is None:
-            self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "No import config table given !!"),
+            self.__iface.messageBar().pushMessage(QCoreApplication.translate("MaxTools", "No import config table given !!"),
                                                   level=Qgis.Critical, duration=0)
             return
         self.__configTable = self.ownSettings.importConfigTable
@@ -97,7 +97,7 @@ class ImportMeasures(object):
                         self.__sourceTable = query.value(0)
                     elif self.__sourceTable != query.value(0):
                         self.__iface.messageBar().pushMessage(
-                            QCoreApplication.translate("VDLTools", "different sources in config table ?!?"),
+                            QCoreApplication.translate("MaxTools", "different sources in config table ?!?"),
                             level=Qgis.Warning)
                 for layer in self.__iface.mapCanvas().layers():
                     if layer is not None and layer.type() == QgsMapLayer.VectorLayer and \
@@ -209,7 +209,7 @@ class ImportMeasures(object):
                         self.__data.append(data)
                     else:
                         self.__iface.messageBar().pushMessage(
-                            QCoreApplication.translate("VDLTools", "Code not in config table, measure not processed"),
+                            QCoreApplication.translate("MaxTools", "Code not in config table, measure not processed"),
                             level=Qgis.Critical, duration=0)
                 self.__checkIfExist()
 
@@ -237,9 +237,9 @@ class ImportMeasures(object):
                     self.__data[self.__iter]['point'] = point
                     self.__confDlg = ImportConfirmDialog()
                     self.__confDlg.setMessage(
-                        QCoreApplication.translate("VDLTools", "There is already a ") + point +
-                                                   QCoreApplication.translate("VDLTools", " in table ") + data['schema_table'] + """.""" +
-                                                   data['name_table'] + ".\n" + QCoreApplication.translate("VDLTools", "Would you like to add it anyway ? "))
+                        QCoreApplication.translate("MaxTools", "There is already a ") + point +
+                                                   QCoreApplication.translate("MaxTools", " in table ") + data['schema_table'] + """.""" +
+                                                   data['name_table'] + ".\n" + QCoreApplication.translate("MaxTools", "Would you like to add it anyway ? "))
                     self.__confDlg.rejected.connect(self.__cancelAndNext)
                     self.__confDlg.accepted.connect(self.__confirmAndNext)
                     self.__confDlg.okButton().clicked.connect(self.__onConfirmOk)
@@ -310,7 +310,7 @@ class ImportMeasures(object):
                             destLayer = query.value(0)
                         elif destLayer != query.value(0):
                             self.__iface.messageBar().pushMessage(
-                                QCoreApplication.translate("VDLTools",
+                                QCoreApplication.translate("MaxTools",
                                                            "different destination layer in config table ?!?"),
                                 level=Qgis.Warning)
                         columns += "," + query.value(1)
@@ -354,7 +354,7 @@ class ImportMeasures(object):
         """
         if self.__num > 0:
             self.__iface.messageBar().pushMessage(
-                str(self.__num) + QCoreApplication.translate("VDLTools", " points inserted !"),level=Qgis.Info)
+                str(self.__num) + QCoreApplication.translate("MaxTools", " points inserted !"),level=Qgis.Info)
         self.__cancel()
 
     def __onDeleteCancel(self):

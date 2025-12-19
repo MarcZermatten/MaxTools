@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-05-30
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -58,9 +58,9 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
         """
         QgsMapToolAdvancedDigitizing.__init__(self, iface.mapCanvas(), iface.cadDockWidget())
         self.__iface = iface
-        self.icon_path = ':/plugins/VDLTools/icons/interpolate_icon.png'
+        self.icon_path = ':/plugins/MaxTools/icons/interpolate_icon.png'
         self.text = QCoreApplication.translate(
-            "VDLTools", "Interpolate the elevation of a vertex and a point in the middle of a line")
+            "MaxTools", "Interpolate the elevation of a vertex and a point in the middle of a line")
         self.__layer = None
         self.setCursor(Qt.ArrowCursor)
         self.__isEditing = False
@@ -295,13 +295,13 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
             found_features = self.__lastLayer.selectedFeatures()
             if len(found_features) > 0:
                 if len(found_features) > 1:
-                    self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "One feature at a time"),
+                    self.__iface.messageBar().pushMessage(QCoreApplication.translate("MaxTools", "One feature at a time"),
                                                           level=Qgis.Info)
                     return
                 self.__selectedFeature = found_features[0]
 
                 self.__iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools",
+                    QCoreApplication.translate("MaxTools",
                                                "Select the position for interpolation (ESC to undo)"),
                     level=Qgis.Info, duration=3)
                 self.setMode(self.CaptureNone)
@@ -349,9 +349,9 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
                     else:
                         self.__confDlg = InterpolateConfirmDialog()
                         if self.__lastLayer.isEditable():
-                            self.__confDlg.setMainLabel(QCoreApplication.translate("VDLTools", "What do you want to do ?"))
-                            self.__confDlg.setAllLabel(QCoreApplication.translate("VDLTools", "Create point and new vertex"))
-                            self.__confDlg.setVtLabel(QCoreApplication.translate("VDLTools", "Create only the vertex"))
+                            self.__confDlg.setMainLabel(QCoreApplication.translate("MaxTools", "What do you want to do ?"))
+                            self.__confDlg.setAllLabel(QCoreApplication.translate("MaxTools", "Create point and new vertex"))
+                            self.__confDlg.setVtLabel(QCoreApplication.translate("MaxTools", "Create only the vertex"))
                         self.__confDlg.rejected.connect(self.__done)
                         self.__confDlg.okButton().clicked.connect(self.__onConfirmOk)
                         self.__confDlg.cancelButton().clicked.connect(self.__onConfirmCancel)
@@ -433,12 +433,12 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
             found_features = self.__lastLayer.selectedFeatures()
             if len(found_features) > 0:
                 if len(found_features) > 1:
-                    self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "One feature at a time"),
+                    self.__iface.messageBar().pushMessage(QCoreApplication.translate("MaxTools", "One feature at a time"),
                                                           level=Qgis.Info)
                 else:
                     self.__selectedFeature = found_features[0]
             else:
-                self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "No more feature selected"),
+                self.__iface.messageBar().pushMessage(QCoreApplication.translate("MaxTools", "No more feature selected"),
                                                           level=Qgis.Info)
 
         self.__iface.mapCanvas().refresh()

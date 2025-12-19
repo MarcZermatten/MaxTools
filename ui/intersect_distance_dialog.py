@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-04-05
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -38,11 +38,11 @@ class IntersectDistanceDialog(QDialog):
         """
         QDialog.__init__(self)
         self.__mapPoint = mapPoint
-        self.setWindowTitle(QCoreApplication.translate("VDLTools", "Choose radius"))
+        self.setWindowTitle(QCoreApplication.translate("MaxTools", "Choose radius"))
         self.resize(275, 177)
         self.__gridLayout = QGridLayout()
 
-        self.__label = QLabel(QCoreApplication.translate("VDLTools", "Radius"))
+        self.__label = QLabel(QCoreApplication.translate("MaxTools", "Radius"))
         self.__gridLayout.addWidget(self.__label, 2, 1, 1, 1)
 
         self.__observation = QDoubleSpinBox()
@@ -54,11 +54,11 @@ class IntersectDistanceDialog(QDialog):
         self.__label_3 = QLabel("m")
         self.__gridLayout.addWidget(self.__label_3, 2, 3, 1, 1)
 
-        self.__okButton = QPushButton(QCoreApplication.translate("VDLTools", "OK"))
+        self.__okButton = QPushButton(QCoreApplication.translate("MaxTools", "OK"))
         self.__okButton.setMinimumHeight(20)
         self.__okButton.setMinimumWidth(100)
 
-        self.__cancelButton = QPushButton(QCoreApplication.translate("VDLTools", "Cancel"))
+        self.__cancelButton = QPushButton(QCoreApplication.translate("MaxTools", "Cancel"))
         self.__cancelButton.setMinimumHeight(20)
         self.__cancelButton.setMinimumWidth(100)
 

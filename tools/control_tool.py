@@ -2,12 +2,12 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2017-08-21
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
+        copyright            : (C) 2016 Max Zermatten
         author               : Daniel Savary
         email                : daniel.savary@lausanne.ch
  ***************************************************************************/
@@ -47,8 +47,8 @@ class ControlTool(AreaTool):
         """
         AreaTool.__init__(self, iface)
         self.__iface = iface
-        self.icon_path = ':/plugins/VDLTools/icons/control_icon.png'
-        self.text = QCoreApplication.translate("VDLTools", "Make control requests on selected area")
+        self.icon_path = ':/plugins/MaxTools/icons/control_icon.png'
+        self.text = QCoreApplication.translate("MaxTools", "Make control requests on selected area")
         self.releasedSignal.connect(self.__released)
         self.__chooseDlg = None
         self.__db = None
@@ -67,7 +67,7 @@ class ControlTool(AreaTool):
         To get the tool name
         :return: tool name
         """
-        return QCoreApplication.translate("VDLTools", "Control")
+        return QCoreApplication.translate("MaxTools", "Control")
 
     def setTool(self):
         """
@@ -80,19 +80,19 @@ class ControlTool(AreaTool):
         When selection is complete
         """
         if self.ownSettings is None:
-            self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "No settings given !!"),
+            self.__iface.messageBar().pushMessage(QCoreApplication.translate("MaxTools", "No settings given !!"),
                                                   level=Qgis.Critical, duration=0)
             return
         if self.ownSettings.controlUriDb is None:
-            self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "No control db given !!"),
+            self.__iface.messageBar().pushMessage(QCoreApplication.translate("MaxTools", "No control db given !!"),
                                                   level=Qgis.Critical, duration=0)
             return
         if self.ownSettings.controlSchemaDb is None:
-            self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "No control db schema given !!"),
+            self.__iface.messageBar().pushMessage(QCoreApplication.translate("MaxTools", "No control db schema given !!"),
                                                   level=Qgis.Critical, duration=0)
             return
         if self.ownSettings.controlConfigTable is None:
-            self.__iface.messageBar().pushMessage(QCoreApplication.translate("VDLTools", "No control config table given !!"),
+            self.__iface.messageBar().pushMessage(QCoreApplication.translate("MaxTools", "No control config table given !!"),
                                                   level=Qgis.Critical, duration=0)
             return
 
@@ -118,13 +118,13 @@ class ControlTool(AreaTool):
 
         if self.geom is None:
              self.__iface.messageBar().pushMessage(
-                 QCoreApplication.translate("VDLTools", "Request Area not defined, ") +
-                 QCoreApplication.translate("VDLTools", "please define a control area (maintain mouse clic)")
+                 QCoreApplication.translate("MaxTools", "Request Area not defined, ") +
+                 QCoreApplication.translate("MaxTools", "please define a control area (maintain mouse clic)")
                  , level=Qgis.Critical, duration=5)
         else:
             if self.geom.area() > self.areaMax:
                 self.__iface.messageBar().pushMessage(
-                    QCoreApplication.translate("VDLTools", "Please define a smaller control area, max = 1 km2"),
+                    QCoreApplication.translate("MaxTools", "Please define a smaller control area, max = 1 km2"),
                     level=Qgis.Critical, duration=5)
             else:
                 """
@@ -163,7 +163,7 @@ class ControlTool(AreaTool):
             if len(self.__chooseDlg.controls()) == 0:
                 self.__iface.messageBar().pushMessage(
                     "Avertissement",
-                    QCoreApplication.translate("VDLTools", "No control selected"),
+                    QCoreApplication.translate("MaxTools", "No control selected"),
                     level=Qgis.Info, duration=5)
             else:
                 self.__createCtrlLayers(self.__chooseDlg.controls())
@@ -171,7 +171,7 @@ class ControlTool(AreaTool):
         else:
             self.__iface.messageBar().pushMessage(
                 "Avertissement",
-                QCoreApplication.translate("VDLTools", "Database onnection problem, or too small area"),
+                QCoreApplication.translate("MaxTools", "Database onnection problem, or too small area"),
                 level=Qgis.Info, duration=5)
 
     def __createCtrlLayers(self,requete):
@@ -226,14 +226,14 @@ class ControlTool(AreaTool):
             self.__iface.messageBar().clearWidgets()
             self.__iface.messageBar().pushMessage(
                 "Info",
-                QCoreApplication.translate("VDLTools", "All layers have been charged with success in the projet. |") +
-                QCoreApplication.translate("VDLTools", "Total errors : ") +
+                QCoreApplication.translate("MaxTools", "All layers have been charged with success in the projet. |") +
+                QCoreApplication.translate("MaxTools", "Total errors : ") +
                         str(totalError), level=Qgis.Info, duration=10)
         else:
             self.__iface.messageBar().clearWidgets()
             self.__iface.messageBar().pushMessage(
                 "Info",
-                QCoreApplication.translate("VDLTools", "Good !! No error detected on the defined area"),
+                QCoreApplication.translate("MaxTools", "Good !! No error detected on the defined area"),
                 level=Qgis.Info, duration=5)
 
     def __addCtrlLayers(self, layers, styles):

@@ -2,14 +2,14 @@
 # Migrated to QGIS 3.x by GeoBrain (2025)
 """
 /***************************************************************************
- VDLTools
-                                 A QGIS plugin for the Ville de Lausanne
+ MaxTools
+                                 A QGIS plugin for the Max Zermatten
                               -------------------
         begin                : 2016-07-13
         git sha              : $Format:%H$
-        copyright            : (C) 2016 Ville de Lausanne
-        author               : Christophe Gusthiot
-        email                : christophe.gusthiot@lausanne.ch
+        copyright            : (C) 2016 Max Zermatten
+        author               : Max Zermatten
+        email                : max@bussigny.ch
  ***************************************************************************/
 
 /***************************************************************************
@@ -36,24 +36,24 @@ class MoveConfirmDialog(QDialog):
         Constructor
         """
         QDialog.__init__(self)
-        self.setWindowTitle(QCoreApplication.translate("VDLTools", "Move/Copy Confirmation"))
+        self.setWindowTitle(QCoreApplication.translate("MaxTools", "Move/Copy Confirmation"))
         self.resize(300, 100)
         self.__layout = QGridLayout()
 
         self.__confirmLabel = QLabel(
-            QCoreApplication.translate("VDLTools", "Would you like to move or to copy this feature ?"))
+            QCoreApplication.translate("MaxTools", "Would you like to move or to copy this feature ?"))
 
         self.__layout.addWidget(self.__confirmLabel, 0, 0, 1, 3)
 
-        self.__moveButton = QPushButton(QCoreApplication.translate("VDLTools", "Move"))
+        self.__moveButton = QPushButton(QCoreApplication.translate("MaxTools", "Move"))
         self.__moveButton.setMinimumHeight(20)
         self.__moveButton.setMinimumWidth(100)
 
-        self.__copyButton = QPushButton(QCoreApplication.translate("VDLTools", "Copy"))
+        self.__copyButton = QPushButton(QCoreApplication.translate("MaxTools", "Copy"))
         self.__copyButton.setMinimumHeight(20)
         self.__copyButton.setMinimumWidth(100)
 
-        self.__cancelButton = QPushButton(QCoreApplication.translate("VDLTools", "Cancel"))
+        self.__cancelButton = QPushButton(QCoreApplication.translate("MaxTools", "Cancel"))
         self.__cancelButton.setMinimumHeight(20)
         self.__cancelButton.setMinimumWidth(100)
 
