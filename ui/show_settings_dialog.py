@@ -102,9 +102,9 @@ class ShowSettingsDialog(QDialog):
                         self.__pointsLayers.append(layer)
                     if layer.geometryType() == QgsWkbTypes.LineGeometry:
                         self.__linesLayers.append(layer)
-                if QgsWkbTypes.type(layer.wkbType()) == QgsWKBTypes.LineStringZ:
+                if QgsWkbTypes.hasZ(layer.wkbType()) and QgsWkbTypes.geometryType(layer.wkbType()) == QgsWkbTypes.LineGeometry:
                     self.__drawdownLayers.append(layer)
-                if QgsWkbTypes.type(layer.wkbType()) == QgsWKBTypes.PointZ:
+                if QgsWkbTypes.hasZ(layer.wkbType()) and QgsWkbTypes.geometryType(layer.wkbType()) == QgsWkbTypes.PointGeometry:
                     self.__refAvailableLayers.append(layer)
 
         self.resize(600, 500)

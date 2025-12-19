@@ -138,10 +138,10 @@ class ShowSettings(QObject):
                     if layer.geometryType() == Qgis.GeometryType.Line:
                         if layer.id() == mll_id:
                             self.__memoryLinesLayer = layer
-                if QgsWkbTypes.geometryType(layer.wkbType()) == QgsWKBTypes.LineStringZ:
+                if QgsWkbTypes.geometryType(layer.wkbType()) == QgsWkbTypes.LineGeometry:
                         if layer.id() == dd_id:
                             self.__drawdownLayer = layer
-                if QgsWkbTypes.geometryType(layer.wkbType()) == QgsWKBTypes.PointZ:
+                if QgsWkbTypes.geometryType(layer.wkbType()) == QgsWkbTypes.PointGeometry:
                         if layer.id() in ref_ids:
                             self.__refLayers.append(layer)
                         if layer.id() in adj_ids:

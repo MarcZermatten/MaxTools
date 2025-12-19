@@ -28,7 +28,7 @@ from qgis.core import (QgsMapLayer,
                        Qgis,
                        QgsTolerance,
                        QgsPoint,
-                       QgsWKBTypes)
+                       QgsWkbTypes)
 from qgis.gui import (QgsMapTool,
                       QgsMessageBar,
                       QgsRubberBand)
@@ -165,7 +165,7 @@ class ProfileTool(QgsMapTool):
         :param layer: selected layer
         """
         if layer is not None and layer.type() == QgsMapLayer.VectorLayer and QgsWkbTypes.geometryType(layer.wkbType()) == \
-                QgsWKBTypes.LineStringZ:
+                QgsWkbTypes.LineGeometry:
             self.__lineLayer = layer
             self.action().setEnabled(True)
             return
@@ -247,8 +247,8 @@ class ProfileTool(QgsMapTool):
         :return: layers list
         """
         layerList = []
-        types = [QgsWKBTypes.PointZ, QgsWKBTypes.LineStringZ, QgsWKBTypes.CircularStringZ, QgsWKBTypes.CompoundCurveZ,
-                 QgsWKBTypes.CurvePolygonZ, QgsWKBTypes.PolygonZ]
+        types = [QgsWkbTypes.PointZ, QgsWkbTypes.LineStringZ, QgsWkbTypes.CircularStringZ, QgsWkbTypes.CompoundCurveZ,
+                 QgsWkbTypes.CurvePolygonZ, QgsWkbTypes.PolygonZ]
         for layer in self.canvas().layers():
             if layer.type() == QgsMapLayer.VectorLayer and QgsWkbTypes.geometryType(layer.wkbType()) in types:
                 layerList.append(layer)

@@ -31,7 +31,7 @@ from qgis.core import (Qgis,
                        QgsTolerance,
                        QgsMapLayer,
                        QgsGeometry,
-                       QgsWKBTypes)
+                       QgsWkbTypes)
 from qgis.PyQt.QtCore import (Qt,
                           QCoreApplication)
 from qgis.PyQt.QtGui import QColor
@@ -142,7 +142,7 @@ class ExtrapolateTool(QgsMapTool):
         :param layer: selected layer
         """
         if layer is not None and layer.type() == QgsMapLayer.VectorLayer\
-                and QgsWkbTypes.geometryType(layer.wkbType()) == QgsWKBTypes.LineStringZ:
+                and QgsWkbTypes.geometryType(layer.wkbType()) == QgsWkbTypes.LineGeometry:
             if layer == self.__layer:
                 return
 

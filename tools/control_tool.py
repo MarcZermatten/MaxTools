@@ -208,7 +208,7 @@ class ControlTool(AreaTool):
             for q in self.__layerCfgControl.getFeatures(QgsFeatureRequest(int(name))):
                 query_fct = q["sql_function"]
                 query_fct = query_fct.replace("bbox",bbox)
-                geom_type = QgsWKBTypes.parseType(q["geom_type"])
+                geom_type = QgsWkbTypes.parseType(q["geom_type"])
                     # récupérer le type de géométrie QGIS "QgsWKBTypes" depuis un type de géométrie WKT Postgis
                 uri.setWkbType(geom_type)
                 uri.setDataSource('',query_fct,q["geom_name"],"",q["key_attribute"])

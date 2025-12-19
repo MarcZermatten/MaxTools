@@ -21,7 +21,7 @@
  *                                                                         *
  ***************************************************************************/
 """
-from qgis.core import (QgsWKBTypes,
+from qgis.core import (QgsWkbTypes,
                        QgsMapLayer,
                        QgsSnappingUtils,
                        QgsTolerance,
@@ -62,8 +62,8 @@ class PointerTool(QgsMapTool):
         When the mouse is clicked
         :param event: mouse event
         """
-        types = [QgsWKBTypes.PointZ, QgsWKBTypes.LineStringZ, QgsWKBTypes.CircularStringZ, QgsWKBTypes.CompoundCurveZ,
-                 QgsWKBTypes.CurvePolygonZ, QgsWKBTypes.PolygonZ]
+        types = [QgsWkbTypes.PointZ, QgsWkbTypes.LineStringZ, QgsWkbTypes.CircularStringZ, QgsWkbTypes.CompoundCurveZ,
+                 QgsWkbTypes.CurvePolygonZ, QgsWkbTypes.PolygonZ]
         display = ""
         for layer in self.canvas().layers():
             if layer.type() == QgsMapLayer.VectorLayer and QgsWkbTypes.geometryType(layer.wkbType()) in types:
