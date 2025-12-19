@@ -61,7 +61,8 @@ class ProfileTool(QgsMapTool):
         """
         QgsMapTool.__init__(self, iface.mapCanvas())
         self.__iface = iface
-        self.icon_path = ':/plugins/MaxTools/icons/profile_icon.png'
+        from ..core.icons import get_icon_path
+        self.icon_path = get_icon_path('profile_icon.png')
         self.text = QCoreApplication.translate("MaxTools", "Profile of a line")
         self.__lineLayer = None
         self.setCursor(Qt.ArrowCursor)

@@ -53,7 +53,8 @@ class ExtrapolateTool(QgsMapTool):
         """
         QgsMapTool.__init__(self, iface.mapCanvas())
         self.__iface = iface
-        self.icon_path = ':/plugins/MaxTools/icons/extrapolate_icon.png'
+        from ..core.icons import get_icon_path
+        self.icon_path = get_icon_path('extrapolate_icon.png')
         self.text = QCoreApplication.translate("MaxTools",
                                                  "Extrapolate the elevation of a vertex and a "
                                                  "point at the extremity of a line")

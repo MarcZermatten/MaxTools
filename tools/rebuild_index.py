@@ -37,7 +37,8 @@ class RebuildIndex(object):
         :param iface: interface
         """
         self.__iface = iface
-        self.icon_path = ':/plugins/MaxTools/icons/rebuild_icon.png'
+        from ..core.icons import get_icon_path
+        self.icon_path = get_icon_path('rebuild_icon.png')
         self.text = QCoreApplication.translate("MaxTools", "Rebuild Index")
         self.killed = False
 

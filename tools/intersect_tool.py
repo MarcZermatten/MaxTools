@@ -52,7 +52,8 @@ class IntersectTool(QgsMapTool):
         """
         QgsMapTool.__init__(self, iface.mapCanvas())
         self.__iface = iface
-        self.icon_path = ':/plugins/MaxTools/icons/intersect_icon.png'
+        from ..core.icons import get_icon_path
+        self.icon_path = get_icon_path('intersect_icon.png')
         self.text = QCoreApplication.translate("MaxTools", "From intersection")
         self.setCursor(Qt.ArrowCursor)
         self.__lineLayerID = None

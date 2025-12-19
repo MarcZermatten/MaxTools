@@ -45,7 +45,8 @@ class SubProfileTool(QgsMapTool):
         """
         QgsMapTool.__init__(self, iface.mapCanvas())
         self.__iface = iface
-        self.icon_path = ':/plugins/MaxTools/icons/profile_2_icon.png'
+        from ..core.icons import get_icon_path
+        self.icon_path = get_icon_path('profile_2_icon.png')
         self.text = QCoreApplication.translate("MaxTools", "Line for MNT profile")
         self.setCursor(Qt.ArrowCursor)
         self.__isSelected = False

@@ -52,7 +52,8 @@ class ShowSettings(QObject):
         """
         QObject.__init__(self)
         self.__iface = iface
-        self.icon_path = ':/plugins/MaxTools/icons/settings_icon.png'
+        from ..core.icons import get_icon_path
+        self.icon_path = get_icon_path('settings_icon.png')
         self.text = QCoreApplication.translate("MaxTools", "Settings")
         self.__showDlg = None
         self.__importConfigTable = None

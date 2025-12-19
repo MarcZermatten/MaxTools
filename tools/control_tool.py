@@ -47,7 +47,8 @@ class ControlTool(AreaTool):
         """
         AreaTool.__init__(self, iface)
         self.__iface = iface
-        self.icon_path = ':/plugins/MaxTools/icons/control_icon.png'
+        from ..core.icons import get_icon_path
+        self.icon_path = get_icon_path('control_icon.png')
         self.text = QCoreApplication.translate("MaxTools", "Make control requests on selected area")
         self.releasedSignal.connect(self.__released)
         self.__chooseDlg = None

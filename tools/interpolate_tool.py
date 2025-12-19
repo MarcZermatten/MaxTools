@@ -58,7 +58,8 @@ class InterpolateTool(QgsMapToolAdvancedDigitizing):
         """
         QgsMapToolAdvancedDigitizing.__init__(self, iface.mapCanvas(), iface.cadDockWidget())
         self.__iface = iface
-        self.icon_path = ':/plugins/MaxTools/icons/interpolate_icon.png'
+        from ..core.icons import get_icon_path
+        self.icon_path = get_icon_path('interpolate_icon.png')
         self.text = QCoreApplication.translate(
             "MaxTools", "Interpolate the elevation of a vertex and a point in the middle of a line")
         self.__layer = None

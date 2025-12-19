@@ -43,7 +43,8 @@ class ImportMeasures(object):
         :param iface: interface
         """
         self.__iface = iface
-        self.icon_path = ':/plugins/MaxTools/icons/import_icon.png'
+        from ..core.icons import get_icon_path
+        self.icon_path = get_icon_path('import_icon.png')
         self.text = QCoreApplication.translate("MaxTools", "Import Measures")
         self.ownSettings = None
         self.__configTable = None

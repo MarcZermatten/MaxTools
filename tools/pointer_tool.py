@@ -47,7 +47,8 @@ class PointerTool(QgsMapTool):
         """
         QgsMapTool.__init__(self, iface.mapCanvas())
         self.__iface = iface
-        self.icon_path = ':/plugins/MaxTools/icons/pointer_icon.png'
+        from ..core.icons import get_icon_path
+        self.icon_path = get_icon_path('pointer_icon.png')
         self.text = QCoreApplication.translate("MaxTools", "Elevation pointer")
         self.setCursor(Qt.ArrowCursor)
 

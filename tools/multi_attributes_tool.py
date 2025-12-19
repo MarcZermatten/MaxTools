@@ -41,7 +41,8 @@ class MultiAttributesTool(MultiselectTool):
         """
         MultiselectTool.__init__(self, iface, True)
         self.__iface = iface
-        self.icon_path = ':/plugins/MaxTools/icons/select_icon.png'
+        from ..core.icons import get_icon_path
+        self.icon_path = get_icon_path('select_icon.png')
         self.text = QCoreApplication.translate("MaxTools", "Select features on multiple layers")
         self.selectedSignal.connect(self.__selected)
         self.__confDlg = None

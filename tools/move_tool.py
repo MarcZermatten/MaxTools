@@ -59,7 +59,8 @@ class MoveTool(QgsMapToolAdvancedDigitizing):
         """
         QgsMapToolAdvancedDigitizing.__init__(self,  iface.mapCanvas(), iface.cadDockWidget())
         self.__iface = iface
-        self.icon_path = ':/plugins/MaxTools/icons/move_icon.png'
+        from ..core.icons import get_icon_path
+        self.icon_path = get_icon_path('move_icon.png')
         self.text = QCoreApplication.translate("MaxTools", "Move/Copy a feature")
         self.setCursor(Qt.ArrowCursor)
         self.__isEditing = False

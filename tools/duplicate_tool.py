@@ -63,7 +63,8 @@ class DuplicateTool(QgsMapTool):
         """
         QgsMapTool.__init__(self, iface.mapCanvas())
         self.__iface = iface
-        self.icon_path = ':/plugins/MaxTools/icons/duplicate_icon.png'
+        from ..core.icons import get_icon_path
+        self.icon_path = get_icon_path('duplicate_icon.png')
         self.text = QCoreApplication.translate("MaxTools", "Duplicate a feature")
         self.setCursor(Qt.ArrowCursor)
         self.__isEditing = False
