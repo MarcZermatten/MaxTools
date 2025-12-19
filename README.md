@@ -4,6 +4,12 @@ Outils QGIS pour Max Francken
 
 > **Version 1.0.0** - Migré vers QGIS 3.x par Marc Zermatten via GeoMind (2025)
 
+## 📖 Documentation
+
+**[📥 Télécharger le Manuel Utilisateur (PDF)](docs/MaxTools_Manuel_Utilisateur.pdf)**
+
+Le manuel complet contient la documentation de tous les outils avec exemples d'utilisation.
+
 ## Compatibilité
 
 | Version | QGIS | Python | Qt |
