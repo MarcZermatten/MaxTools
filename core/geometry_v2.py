@@ -94,6 +94,23 @@ class GeometryV2(object):
         """
         wktLine = geometry.asWkt()
         curved = False
+
+        # Handle MultiLineString by extracting first part
+        if wktLine.startswith('MultiLineStringZ'):
+            # Extract first linestring from multi: MultiLineStringZ ((x y z, ...), (...))
+            inner = wktLine.replace('MultiLineStringZ', '').strip()[1:-1]  # Remove outer ()
+            # Find first complete linestring (up to first ),)
+            first_end = inner.find(')')
+            if first_end > 0:
+                line = inner[1:first_end]  # Remove leading ( and get coordinates
+                return GeometryV2.__createLine(line.split(','), False), False
+        elif wktLine.startswith('MultiLineString'):
+            inner = wktLine.replace('MultiLineString', '').strip()[1:-1]
+            first_end = inner.find(')')
+            if first_end > 0:
+                line = inner[1:first_end]
+                return GeometryV2.__createLine(line.split(','), False), False
+
         if wktLine.startswith('LineStringZ'):
             line = wktLine.replace('LineStringZ', '')
         elif wktLine.startswith('LineString'):
