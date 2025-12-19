@@ -287,7 +287,7 @@ class DuplicateTool(QgsMapTool):
                 angle1 = Circle.angle(line_v2.pointN(pos - 1), line_v2.pointN(pos))
                 angle2 = Circle.angle(line_v2.pointN(pos), line_v2.pointN(pos + 1))
                 angle = (float(pi + angle1 + angle2) / 2)
-                dist = (float(distance) / sin(old_div(float(pi + angle1 - angle2), 2)))
+                dist = (float(distance) / sin(float(pi + angle1 - angle2) / 2))
             points.append(self.__newPoint(angle, line_v2.pointN(pos), dist))
         curve_v2.setPoints(points)
         return curve_v2

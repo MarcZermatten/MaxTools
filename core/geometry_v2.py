@@ -29,7 +29,8 @@ from qgis.core import (QgsPoint,
                        QgsCompoundCurve,
                        QgsLineString,
                        QgsCurvePolygon,
-                       QgsCircularString)
+                       QgsCircularString,
+                       Qgis)
 
 
 class GeometryV2(object):
@@ -58,7 +59,7 @@ class GeometryV2(object):
         else:
             iface.messageBar().pushMessage(
                 QCoreApplication.translate("MaxTools", "This geometry is not yet implemented"),
-                level=QgsMessageBar.WARNING)
+                level=Qgis.Warning)
             return None
         polygon = polygon.strip()[1:-1]
         lines = polygon.split('),')
@@ -111,7 +112,7 @@ class GeometryV2(object):
             else:
                 iface.messageBar().pushMessage(
                     QCoreApplication.translate("MaxTools", "This geometry is not yet implemented"),
-                    level=QgsMessageBar.WARNING)
+                    level=Qgis.Warning)
                 return None
             compound = compound.strip()[1:-1]
             lines = compound.split('),')
@@ -174,7 +175,7 @@ class GeometryV2(object):
         else:
             iface.messageBar().pushMessage(
                 QCoreApplication.translate("MaxTools", "This geometry is not yet implemented"),
-                level=QgsMessageBar.WARNING)
+                level=Qgis.Warning)
             return None
         point = point.strip()[1:-1]
         pt_tab = point.strip().split()

@@ -25,6 +25,7 @@ from qgis.PyQt.QtCore import (Qt,
                           QCoreApplication)
 from qgis.PyQt.QtGui import QColor, QMoveEvent
 from qgis.core import (QgsPoint,
+                       QgsPointXY,
                        QgsEditFormConfig,
                        QgsSnappingUtils,
                        QgsTolerance,

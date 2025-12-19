@@ -30,7 +30,8 @@ from qgis.core import (QgsVectorLayer,
                        QgsDataSourceUri,
                        QgsFeatureRequest,
                        QgsProject,
-                       QgsWkbTypes)
+                       QgsWkbTypes,
+                       Qgis)
 from ..core.db_connector import DBConnector
 from datetime import datetime
 

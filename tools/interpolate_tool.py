@@ -36,6 +36,7 @@ from qgis.core import (Qgis,
                        QgsFeature,
                        QgsGeometry,
                        QgsPoint,
+                       QgsPointXY,
                        QgsVertexId)
 from qgis.PyQt.QtCore import (Qt,
                           QCoreApplication)

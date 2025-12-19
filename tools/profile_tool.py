@@ -28,6 +28,7 @@ from qgis.core import (QgsMapLayer,
                        Qgis,
                        QgsTolerance,
                        QgsPoint,
+                       QgsPointXY,
                        QgsWkbTypes)
 from qgis.gui import (QgsMapTool,
                       QgsMessageBar,
