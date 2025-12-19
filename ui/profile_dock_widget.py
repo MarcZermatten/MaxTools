@@ -26,8 +26,9 @@ from qgis.core import Qgis, QgsPoint
 from qgis.gui import (QgsVertexMarker,
                       QgsMessageBar)
 from qgis.PyQt.QtWidgets import (QDockWidget, QVBoxLayout, QFrame, QHBoxLayout, QSpinBox, QLabel, QComboBox, QWidget, QPushButton, QFileDialog, QSizePolicy)
-from qgis.PyQt.QtGui import (QPen, QColor, QFont, QPixmap, QPrinter)
-from qgis.PyQt.QtCore import (QSize,                          QRectF,                          QCoreApplication,                          Qt,                          pyqtSignal)
+from qgis.PyQt.QtGui import (QPen, QColor, QFont, QPixmap)
+from qgis.PyQt.QtPrintSupport import QPrinter
+from qgis.PyQt.QtCore import (QSize, QRectF, QCoreApplication, Qt, pyqtSignal)
 import itertools
 import traceback
 import sys
